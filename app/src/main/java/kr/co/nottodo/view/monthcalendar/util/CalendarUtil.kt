@@ -1,7 +1,5 @@
-package kr.co.nottodo.view.monthlycalendar.util
+package kr.co.nottodo.view.monthcalendar.util
 
-import android.os.Build.VERSION_CODES.M
-import retrofit2.http.GET
 import java.util.*
 import java.util.Calendar.*
 
