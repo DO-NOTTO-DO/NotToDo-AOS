@@ -1,11 +1,13 @@
-package kr.co.nottodo.view.monthlycalendar.viewholder
+package kr.co.nottodo.view.monthcalendar.viewholder
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ViewNotToDoCalendarDayBinding
 import kr.co.nottodo.databinding.ViewNotToDoCalendarEmptyBinding
 import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
-import kr.co.nottodo.view.monthlycalendar.CalendarData
+import kr.co.nottodo.view.monthcalendar.CalendarData
+import timber.log.Timber
 
 // 리스너
 abstract class NotToDoCalendarViewHolder(view: View) : ViewHolder(view) {
@@ -21,7 +23,10 @@ class NotToDoMonthViewHolder(
     override fun onBind(data: CalendarData) {
         if (data is CalendarData.Month) {
             monthData = data
-            binding.monthItem = data
+            binding.apply {
+                monthItem = data
+                executePendingBindings()
+            }
         }
     }
 }
@@ -36,6 +41,10 @@ class NotToDoDayViewHolder(
     override fun onBind(data: CalendarData) {
         if (data is CalendarData.Day) {
             dayData = data
+            binding.apply {
+                dayItem = data
+                executePendingBindings()
+            }
         }
 
         if (!binding.root.hasOnClickListeners()) {

@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthlycalendar.adapter
+package kr.co.nottodo.view.monthcalendar.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewNotToDoCalendarDayBinding
 import kr.co.nottodo.databinding.ViewNotToDoCalendarEmptyBinding
 import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
-import kr.co.nottodo.view.monthlycalendar.CalendarData
-import kr.co.nottodo.view.monthlycalendar.CalendarType
-import kr.co.nottodo.view.monthlycalendar.viewholder.NotToDoCalendarViewHolder
-import kr.co.nottodo.view.monthlycalendar.viewholder.NotToDoDayViewHolder
-import kr.co.nottodo.view.monthlycalendar.viewholder.NotToDoEmptyViewHolder
-import kr.co.nottodo.view.monthlycalendar.viewholder.NotToDoMonthViewHolder
+import kr.co.nottodo.view.monthcalendar.CalendarData
+import kr.co.nottodo.view.monthcalendar.CalendarType
+import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoCalendarViewHolder
+import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoDayViewHolder
+import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoEmptyViewHolder
+import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoMonthViewHolder
 
 class NotToDoMonthCalendarAdapter : RecyclerView.Adapter<NotToDoCalendarViewHolder>() {
 
