@@ -5,13 +5,16 @@ import java.util.Calendar.*
 
 fun Calendar.toPrettyMonthString(
     style: Int = LONG,
-    locale: Locale = Locale.getDefault()
+    locale: Locale = Locale.KOREA
 ): String {
     val month = getDisplayName(MONTH, style, locale)
     val year = get(YEAR).toString()
     require(month != null) { throw IllegalStateException("Cannot get pretty name") }
-    // TODO 순서는 바뀔 수 있습니다.
-    return "$month $year"
+    if (locale.country.equals(Locale.KOREA.country)) {
+        return "${year}년 $month"
+    } else {
+        return "$year $month"
+    }
 }
 
 fun Calendar.toPrettyDateString(): String {
