@@ -7,23 +7,13 @@
 
         <variable
             name="month_item"
-            type="kr.co.nottodo.view.monthcalendar.CalendarData.Month" />
+            type="kr.co.nottodo.view.monthcalendar.Month" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
-
-        <include
-            layout="@layout/view_not_to_do_calendar_week"
-            android:id="@+id/view_calendar_week"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_month_name"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <!-- TODO fontFamily 적용해야합니다 -->
         <TextView
@@ -42,6 +32,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/view_calendar_week" />
+
+        <include
+            layout="@layout/view_not_to_do_calendar_week"
+            android:id="@+id/view_calendar_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_month_name" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_calendar_week" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
