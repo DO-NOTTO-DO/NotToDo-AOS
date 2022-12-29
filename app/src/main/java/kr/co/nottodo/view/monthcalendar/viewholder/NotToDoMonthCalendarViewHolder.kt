@@ -1,32 +1,53 @@
 package kr.co.nottodo.view.monthcalendar.viewholder
 
-import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ViewNotToDoCalendarDayBinding
 import kr.co.nottodo.databinding.ViewNotToDoCalendarEmptyBinding
 import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
 import kr.co.nottodo.view.monthcalendar.CalendarData
-import timber.log.Timber
+import kr.co.nottodo.view.monthcalendar.DAY_COLUMN_COUNT
+import kr.co.nottodo.view.monthcalendar.Month
+import kr.co.nottodo.view.monthcalendar.TOTAL_COLUMN_COUNT
+import kr.co.nottodo.view.monthcalendar.adapter.NotToDoDayAdapter
 
-// 리스너
 abstract class NotToDoCalendarViewHolder(view: View) : ViewHolder(view) {
     abstract fun onBind(data: CalendarData)
 }
 
 class NotToDoMonthViewHolder(
     private val binding: ViewNotToDoCalendarMonthBinding
-) : NotToDoCalendarViewHolder(binding.root) {
+) : ViewHolder(binding.root) {
 
-    private lateinit var monthData: CalendarData.Month
+    private lateinit var monthData: Month
 
-    override fun onBind(data: CalendarData) {
-        if (data is CalendarData.Month) {
-            monthData = data
-            binding.apply {
-                monthItem = data
-                executePendingBindings()
+    private val dayAdapter: NotToDoDayAdapter = NotToDoDayAdapter()
+
+    init {
+        initRecyclerView()
+    }
+
+    fun onBind(data : Month) {
+        monthData = data
+        binding.apply {
+            monthItem = monthData
+            dayAdapter.submitList(data.dayList)
+            executePendingBindings()
+        }
+    }
+
+    private fun initRecyclerView() {
+        binding.rvMonth.apply {
+            layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        // TODO 여기 어떻게 해야할 지 생각좀?
+                        return DAY_COLUMN_COUNT
+                    }
+                }
             }
+            adapter = dayAdapter
         }
     }
 }
