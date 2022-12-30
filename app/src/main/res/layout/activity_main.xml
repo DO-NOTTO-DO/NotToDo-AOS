@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="18dp"
-        app:labelVisibilityMode="labeled"
         app:itemTextColor="@color/black"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu" />
 
