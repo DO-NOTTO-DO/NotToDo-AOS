@@ -15,6 +15,8 @@ import java.util.Calendar.*
 
 /**
  * created by ssong-develop on 2022.12.28
+ *
+ * Click이 없는 성취 뷰 캘린더 입니다.
  */
 class NotToDoMonthlyCalendar @JvmOverloads constructor(
     context: Context,
@@ -32,8 +34,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
 
     private val endCalendar = Calendar.getInstance(timeZone, locale)
 
-    // ? 생긱
-    private var calendarDataList: List<Month> = listOf()
+    private var calendarDataList: List<NotToDoCalendarMonth> = listOf()
 
     private val snapHelper = PagerSnapHelper()
 
@@ -43,6 +44,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         true,
         object : SnapPagerScrollListener.OnChangeListener {
             override fun onSnapped(position: Int) {
+                // TODO position 이동이 swipe로 이루어졌을 때에 대한 listener로직
                 Log.d("ssong-develop","$position")
             }
         }
@@ -71,8 +73,9 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         notToDoMonthlyCalendarAdapter.submitList(calendarDataList)
     }
 
-    private fun buildCalendarData(): List<Month> {
-        val list = mutableListOf<Month>()
+    private fun buildCalendarData(): List<NotToDoCalendarMonth> {
+        // TODO renaming
+        val list = mutableListOf<NotToDoCalendarMonth>()
         val dateCalendar = Calendar.getInstance(timeZone, locale)
         val monthCalendar = Calendar.getInstance(timeZone, locale)
 
@@ -82,10 +85,10 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         val monthDifference = endCalendar.totalMonthDifference(startCalendar)
 
         dateCalendar.set(DAY_OF_MONTH, 1)
-        dateCalendar.set(DAY_OF_MONTH, 1)
+        monthCalendar.set(DAY_OF_MONTH, 1)
         (0..monthDifference).forEach { _ ->
             val totalDayInMonth = dateCalendar.getActualMaximum(DAY_OF_MONTH)
-            val subList = mutableListOf<CalendarData>()
+            val subList = mutableListOf<NotToDoCalendarDay>()
             var dayOfYear = -1
             (1..totalDayInMonth).forEach { _ ->
                 val day = dateCalendar.get(DAY_OF_MONTH)
@@ -104,7 +107,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                     1 -> {
                         subList.addAll(createStartEmptyView(dayOfWeek))
                         subList.add(
-                            CalendarData.Day(
+                            NotToDoCalendarDay.Day(
                                 day.toString(),
                                 dateCalendar.toPrettyDateString(),
                                 dateCalendar.time,
@@ -114,7 +117,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                     }
                     totalDayInMonth -> {
                         subList.add(
-                            CalendarData.Day(
+                            NotToDoCalendarDay.Day(
                                 day.toString(),
                                 dateCalendar.toPrettyDateString(),
                                 dateCalendar.time,
@@ -125,7 +128,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                     }
                     else -> {
                         subList.add(
-                            CalendarData.Day(
+                            NotToDoCalendarDay.Day(
                                 day.toString(),
                                 dateCalendar.toPrettyDateString(),
                                 dateCalendar.time,
@@ -137,8 +140,10 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                 dateCalendar.add(DATE, 1)
             }
             list.add(
-                Month(
-                    monthCalendar.toPrettyMonthString(),
+                NotToDoCalendarMonth(
+                    monthCalendar.toPrettyMonthString(
+                        locale = locale
+                    ),
                     dayOfYear.toString(),
                     subList
                 )
@@ -167,7 +172,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         }
     }
 
-    private fun createEndEmptyView(dayOfWeek: Int): List<CalendarData.Empty> {
+    private fun createEndEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
         val numberOfEmptyView = when (dayOfWeek) {
             SUNDAY -> 6
             MONDAY -> 5
@@ -178,12 +183,12 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
             else -> 6
         }
 
-        val listEmpty = mutableListOf<CalendarData.Empty>()
-        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(CalendarData.Empty) }
+        val listEmpty = mutableListOf<NotToDoCalendarDay.Empty>()
+        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(NotToDoCalendarDay.Empty) }
         return listEmpty
     }
 
-    private fun createStartEmptyView(dayOfWeek: Int): List<CalendarData.Empty> {
+    private fun createStartEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
         val numberOfEmptyView = when (dayOfWeek) {
             MONDAY -> 1
             TUESDAY -> 2
@@ -194,8 +199,8 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
             else -> 0
         }
 
-        val listEmpty = mutableListOf<CalendarData.Empty>()
-        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(CalendarData.Empty) }
+        val listEmpty = mutableListOf<NotToDoCalendarDay.Empty>()
+        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(NotToDoCalendarDay.Empty) }
         return listEmpty
     }
 

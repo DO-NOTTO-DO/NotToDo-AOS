@@ -9,24 +9,24 @@ const val DAY_COLUMN_COUNT = 1
 const val EMPTY_COLUMN_COUNT = 1
 
 // TODO renaming
-data class Month(
+data class NotToDoCalendarMonth(
     val label: String,
     val year: String,
-    val dayList: List<CalendarData>
+    val dayList: List<NotToDoCalendarDay>
 )
 
-sealed class CalendarData(
+sealed class NotToDoCalendarDay(
     val columnCount: Int,
     val calendarType: Int
 ) {
-    object Week : CalendarData(WEEK_COLUMN_COUNT, CalendarType.WEEK.ordinal)
+    object Week : NotToDoCalendarDay(WEEK_COLUMN_COUNT, CalendarType.WEEK.ordinal)
 
     data class Day(
         val label: String,
         val prettyLabel: String,
         val date: Date,
         val state: DateType = DateType.WEEKDAY
-    ) : CalendarData(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal)
+    ) : NotToDoCalendarDay(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal)
 
-    object Empty : CalendarData(EMPTY_COLUMN_COUNT, CalendarType.EMPTY.ordinal)
+    object Empty : NotToDoCalendarDay(EMPTY_COLUMN_COUNT, CalendarType.EMPTY.ordinal)
 }

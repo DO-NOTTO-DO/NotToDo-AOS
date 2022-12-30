@@ -7,7 +7,7 @@
 
         <variable
             name="day_item"
-            type="kr.co.nottodo.view.monthcalendar.CalendarData.Day" />
+            type="kr.co.nottodo.view.monthcalendar.NotToDoCalendarDay.Day" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

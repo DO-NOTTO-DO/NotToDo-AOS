@@ -10,10 +10,10 @@ fun Calendar.toPrettyMonthString(
     val month = getDisplayName(MONTH, style, locale)
     val year = get(YEAR).toString()
     require(month != null) { throw IllegalStateException("Cannot get pretty name") }
-    if (locale.country.equals(Locale.KOREA.country)) {
-        return "${year}년 $month"
+    return if (locale.country.equals(Locale.KOREA.country)) {
+        "${year}년 $month"
     } else {
-        return "$year $month"
+        "$year $month"
     }
 }
 
