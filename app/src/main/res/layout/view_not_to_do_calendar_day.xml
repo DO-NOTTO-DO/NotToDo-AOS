@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="kr.co.nottodo.view.monthcalendar.DateType" />
+
         <variable
             name="day_item"
             type="kr.co.nottodo.view.monthcalendar.NotToDoCalendarDay.Day" />
@@ -13,34 +15,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="18dp"
-        android:background="@color/white">
-
-        <ImageView
-            android:id="@+id/iv_day_select"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/circle_calendar_select"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"/>
+        android:background="@color/white"
+        android:padding="18dp">
 
         <!-- TODO font 및 텍스트 스타일 만들어서 적용해야 합니다 -->
         <TextView
             android:id="@+id/tv_day_name"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:includeFontPadding="false"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:includeFontPadding="false"
             android:text="@{day_item.label}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:setCalendarDayTextColor="@{day_item.state}"
             tools:text="31" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
