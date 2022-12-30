@@ -4,13 +4,18 @@ import androidx.annotation.IntDef
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 
-
-class SnapPagerScrollListener(// Properties
+class SnapPagerScrollListener(
     private val snapHelper: PagerSnapHelper,
     @Type private val type: Int,
     private val notifyOnInit: Boolean,
     private val listener: OnChangeListener
 ) : RecyclerView.OnScrollListener() {
+
+    companion object {
+        const val ON_SCROLL = 0
+        const val ON_SETTLED = 1
+    }
+
     @IntDef(ON_SCROLL, ON_SETTLED)
     @Target(
         AnnotationTarget.CLASS,
@@ -25,12 +30,10 @@ class SnapPagerScrollListener(// Properties
 
     private var snapPosition: Int
 
-    // Constructor
     init {
         snapPosition = RecyclerView.NO_POSITION
     }
 
-    // Methods
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         if (type == ON_SCROLL || !hasItemPosition()) {
@@ -64,11 +67,5 @@ class SnapPagerScrollListener(// Properties
 
     private fun hasItemPosition(): Boolean {
         return snapPosition != RecyclerView.NO_POSITION
-    }
-
-    companion object {
-        // Constants
-        const val ON_SCROLL = 0
-        const val ON_SETTLED = 1
     }
 }

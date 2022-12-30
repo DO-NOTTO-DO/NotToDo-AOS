@@ -7,12 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
-import kr.co.nottodo.view.monthcalendar.Month
+import kr.co.nottodo.view.monthcalendar.NotToDoCalendarMonth
 import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoMonthViewHolder
 
 class NotToDoMonthlyCalendarAdapter : RecyclerView.Adapter<NotToDoMonthViewHolder>() {
 
-    private val monthList = mutableListOf<Month>()
+    private val notToDoCalendarMonthList = mutableListOf<NotToDoCalendarMonth>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotToDoMonthViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -23,15 +23,15 @@ class NotToDoMonthlyCalendarAdapter : RecyclerView.Adapter<NotToDoMonthViewHolde
     }
 
     override fun onBindViewHolder(holder: NotToDoMonthViewHolder, position: Int) {
-        holder.onBind(monthList[position])
+        holder.onBind(notToDoCalendarMonthList[position])
     }
 
-    override fun getItemCount(): Int = monthList.size
+    override fun getItemCount(): Int = notToDoCalendarMonthList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<Month>) {
-        monthList.clear()
-        monthList.addAll(list)
+    fun submitList(list: List<NotToDoCalendarMonth>) {
+        notToDoCalendarMonthList.clear()
+        notToDoCalendarMonthList.addAll(list)
         notifyDataSetChanged()
     }
 }
