@@ -15,39 +15,60 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="calendar month back button"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_arrow_left"
+            app:layout_constraintBottom_toTopOf="@id/view_calendar_week"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <!-- TODO fontFamily 적용해야합니다 -->
         <TextView
             android:id="@+id/tv_month_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:text="@{month_item.label}"
             android:includeFontPadding="false"
+            android:text="@{month_item.label}"
             android:textColor="@color/gray2_8E8E93"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="8dp"
-            tools:text="7"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/view_calendar_week" />
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_back"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="@id/iv_back"
+            tools:text="7" />
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@id/tv_month_name"
+            app:layout_constraintStart_toEndOf="@id/tv_month_name"
+            app:layout_constraintTop_toTopOf="@id/tv_month_name" />
 
         <include
-            layout="@layout/view_not_to_do_calendar_week"
             android:id="@+id/view_calendar_week"
+            layout="@layout/view_not_to_do_calendar_week_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_month_name" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_month"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_calendar_week" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

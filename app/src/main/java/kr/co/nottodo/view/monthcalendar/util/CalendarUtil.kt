@@ -28,19 +28,19 @@ fun Calendar.toPrettyDateString(): String {
 fun Calendar.isBefore(otherCalendar: Calendar): Boolean {
     return get(YEAR) == otherCalendar.get(YEAR)
             && get(MONTH) == otherCalendar.get(MONTH)
-            && get(DAY_OF_MONTH) == otherCalendar.get(DAY_OF_MONTH)
+            && get(DAY_OF_MONTH) < otherCalendar.get(DAY_OF_MONTH)
 }
 
 // 현재 날짜로 부터 이후의 날인지 체크하는 함수
 fun Calendar.isAfter(otherCalendar: Calendar): Boolean {
     return get(YEAR) == otherCalendar.get(YEAR)
             && get(MONTH) == otherCalendar.get(MONTH)
-            && get(DAY_OF_MONTH) < otherCalendar.get(DAY_OF_MONTH)
+            && get(DAY_OF_MONTH) > otherCalendar.get(DAY_OF_MONTH)
 }
 
 // 주말을 알려주는 함수
 fun Calendar.isWeekend(): Boolean {
-    return get(DAY_OF_WEEK) == SATURDAY || get(DAY_OF_WEEK) == SUNDAY
+    return get(DAY_OF_WEEK) == SUNDAY
 }
 
 // 총 달수의 차이

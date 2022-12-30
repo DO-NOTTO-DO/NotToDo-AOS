@@ -9,7 +9,9 @@ import kr.co.nottodo.view.monthcalendar.TOTAL_COLUMN_COUNT
 import kr.co.nottodo.view.monthcalendar.adapter.NotToDoDayAdapter
 
 class NotToDoMonthViewHolder(
-    private val binding: ViewNotToDoCalendarMonthBinding
+    private val binding: ViewNotToDoCalendarMonthBinding,
+    private val onClickPrevMonth: () -> Unit,
+    private val onClickNextMonth: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var notToDoCalendarMonthData: NotToDoCalendarMonth
@@ -17,6 +19,7 @@ class NotToDoMonthViewHolder(
     private val dayAdapter: NotToDoDayAdapter = NotToDoDayAdapter()
 
     init {
+        initClickListener()
         initRecyclerView()
     }
 
@@ -29,12 +32,22 @@ class NotToDoMonthViewHolder(
         }
     }
 
+    private fun initClickListener() {
+        binding.apply {
+            ivBack.setOnClickListener {
+                onClickPrevMonth.invoke()
+            }
+            ivNext.setOnClickListener {
+                onClickNextMonth.invoke()
+            }
+        }
+    }
+
     private fun initRecyclerView() {
         binding.rvMonth.apply {
             layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
-                        // TODO 여기 어떻게 해야할 지 생각좀?
                         return DAY_COLUMN_COUNT
                     }
                 }

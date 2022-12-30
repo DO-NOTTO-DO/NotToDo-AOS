@@ -10,7 +10,10 @@ import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
 import kr.co.nottodo.view.monthcalendar.NotToDoCalendarMonth
 import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoMonthViewHolder
 
-class NotToDoMonthlyCalendarAdapter : RecyclerView.Adapter<NotToDoMonthViewHolder>() {
+class NotToDoMonthlyCalendarAdapter(
+    private val onClickPrevMonth: () -> Unit,
+    private val onClickNextMonth: () -> Unit
+) : RecyclerView.Adapter<NotToDoMonthViewHolder>() {
 
     private val notToDoCalendarMonthList = mutableListOf<NotToDoCalendarMonth>()
 
@@ -19,7 +22,11 @@ class NotToDoMonthlyCalendarAdapter : RecyclerView.Adapter<NotToDoMonthViewHolde
         val binding: ViewNotToDoCalendarMonthBinding = DataBindingUtil.inflate(
             layoutInflater, R.layout.view_not_to_do_calendar_month, parent, false
         )
-        return NotToDoMonthViewHolder(binding)
+        return NotToDoMonthViewHolder(
+            binding,
+            onClickPrevMonth,
+            onClickNextMonth
+        )
     }
 
     override fun onBindViewHolder(holder: NotToDoMonthViewHolder, position: Int) {

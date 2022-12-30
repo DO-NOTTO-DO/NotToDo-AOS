@@ -8,7 +8,6 @@ const val WEEK_COLUMN_COUNT = 7
 const val DAY_COLUMN_COUNT = 1
 const val EMPTY_COLUMN_COUNT = 1
 
-// TODO renaming
 data class NotToDoCalendarMonth(
     val label: String,
     val year: String,

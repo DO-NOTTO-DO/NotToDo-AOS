@@ -3,13 +3,13 @@ package kr.co.nottodo.view.monthcalendar
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.view.monthcalendar.adapter.NotToDoMonthlyCalendarAdapter
 import kr.co.nottodo.view.monthcalendar.snaphelper.SnapPagerScrollListener
 import kr.co.nottodo.view.monthcalendar.util.*
+import timber.log.Timber
 import java.util.*
 import java.util.Calendar.*
 
@@ -24,11 +24,30 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
 
+    companion object {
+        private const val DEFAULT_YEAR_AMOUNT = 1
+    }
+
     private val timeZone = TimeZone.getDefault()
 
     private val locale = Locale.KOREA
 
-    private val notToDoMonthlyCalendarAdapter = NotToDoMonthlyCalendarAdapter()
+    private var currentPosition = 0
+
+    private val notToDoMonthlyCalendarAdapter = NotToDoMonthlyCalendarAdapter(
+        onClickPrevMonth = {
+            if (currentPosition > 0) {
+                scrollToPosition(currentPosition - 1)
+            }
+        },
+        onClickNextMonth = {
+            adapter?.itemCount?.let { itemSize ->
+                if (currentPosition <= itemSize) {
+                    scrollToPosition(currentPosition + 1)
+                }
+            }
+        }
+    )
 
     private val startCalendar = Calendar.getInstance(timeZone, locale)
 
@@ -44,8 +63,8 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         true,
         object : SnapPagerScrollListener.OnChangeListener {
             override fun onSnapped(position: Int) {
-                // TODO position 이동이 swipe로 이루어졌을 때에 대한 listener로직
-                Log.d("ssong-develop","$position")
+                currentPosition = position
+                Timber.d("ssong-develop", "$position")
             }
         }
     )
@@ -68,14 +87,29 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         initCalendarData()
     }
 
+    private fun initStartCalendar() {
+        startCalendar.apply {
+            set(HOUR_OF_DAY, 0)
+            set(MINUTE, 0)
+            set(SECOND, 0)
+            set(MILLISECOND, 0)
+        }
+    }
+
+    private fun initEndCalendar() {
+        endCalendar.apply {
+            time = startCalendar.time
+            endCalendar.add(YEAR,100)
+        }
+    }
+
     private fun initCalendarData() {
         calendarDataList = buildCalendarData()
         notToDoMonthlyCalendarAdapter.submitList(calendarDataList)
     }
 
     private fun buildCalendarData(): List<NotToDoCalendarMonth> {
-        // TODO renaming
-        val list = mutableListOf<NotToDoCalendarMonth>()
+        val calendarMonthList = mutableListOf<NotToDoCalendarMonth>()
         val dateCalendar = Calendar.getInstance(timeZone, locale)
         val monthCalendar = Calendar.getInstance(timeZone, locale)
 
@@ -88,7 +122,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         monthCalendar.set(DAY_OF_MONTH, 1)
         (0..monthDifference).forEach { _ ->
             val totalDayInMonth = dateCalendar.getActualMaximum(DAY_OF_MONTH)
-            val subList = mutableListOf<NotToDoCalendarDay>()
+            val calendarDayList = mutableListOf<NotToDoCalendarDay>()
             var dayOfYear = -1
             (1..totalDayInMonth).forEach { _ ->
                 val day = dateCalendar.get(DAY_OF_MONTH)
@@ -102,11 +136,11 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                     } else {
                         DateType.WEEKDAY
                     }
-                // TODO renaming
+
                 when (day) {
                     1 -> {
-                        subList.addAll(createStartEmptyView(dayOfWeek))
-                        subList.add(
+                        calendarDayList.addAll(createStartEmptyView(dayOfWeek))
+                        calendarDayList.add(
                             NotToDoCalendarDay.Day(
                                 day.toString(),
                                 dateCalendar.toPrettyDateString(),
@@ -116,7 +150,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                         )
                     }
                     totalDayInMonth -> {
-                        subList.add(
+                        calendarDayList.add(
                             NotToDoCalendarDay.Day(
                                 day.toString(),
                                 dateCalendar.toPrettyDateString(),
@@ -124,10 +158,10 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                                 state = dateType
                             )
                         )
-                        subList.addAll(createEndEmptyView(dayOfWeek))
+                        calendarDayList.addAll(createEndEmptyView(dayOfWeek))
                     }
                     else -> {
-                        subList.add(
+                        calendarDayList.add(
                             NotToDoCalendarDay.Day(
                                 day.toString(),
                                 dateCalendar.toPrettyDateString(),
@@ -139,37 +173,18 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
                 }
                 dateCalendar.add(DATE, 1)
             }
-            list.add(
+            calendarMonthList.add(
                 NotToDoCalendarMonth(
                     monthCalendar.toPrettyMonthString(
                         locale = locale
                     ),
                     dayOfYear.toString(),
-                    subList
+                    calendarDayList
                 )
             )
-            monthCalendar.add(MONTH,1)
+            monthCalendar.add(MONTH, 1)
         }
-        return list
-    }
-
-    // no touch zone
-
-    private fun initStartCalendar() {
-        startCalendar.apply {
-            set(HOUR_OF_DAY, 0)
-            set(MINUTE, 0)
-            set(SECOND, 0)
-            set(MILLISECOND, 0)
-        }
-    }
-
-    private fun initEndCalendar() {
-        endCalendar.apply {
-            time = startCalendar.time
-            // TODO 일단 DEFAULT 1년짜리로 만들었는데, xml 상에서 더 받아내도록 할 수도 있다!
-            endCalendar.add(YEAR, 1)
-        }
+        return calendarMonthList
     }
 
     private fun createEndEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
