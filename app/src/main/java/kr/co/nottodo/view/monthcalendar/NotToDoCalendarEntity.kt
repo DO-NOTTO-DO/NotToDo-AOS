@@ -27,5 +27,7 @@ sealed class NotToDoCalendarDay(
         val state: DateType = DateType.WEEKDAY
     ) : NotToDoCalendarDay(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal)
 
-    object Empty : NotToDoCalendarDay(EMPTY_COLUMN_COUNT, CalendarType.EMPTY.ordinal)
+    data class Empty(
+        val label: String
+    ) : NotToDoCalendarDay(EMPTY_COLUMN_COUNT, CalendarType.EMPTY.ordinal)
 }

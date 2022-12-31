@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="@{month_item.label}"
-            android:textColor="@color/gray2_8E8E93"
             android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_back"
