@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthcalendar.adapter
+package kr.co.nottodo.view.monthcalendar.common.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
-import kr.co.nottodo.view.monthcalendar.NotToDoCalendarMonth
-import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoMonthViewHolder
+import kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarMonth
+import kr.co.nottodo.view.monthcalendar.common.viewholder.NotToDoMonthViewHolder
 
 class NotToDoMonthlyCalendarAdapter(
     private val onClickPrevMonth: () -> Unit,
