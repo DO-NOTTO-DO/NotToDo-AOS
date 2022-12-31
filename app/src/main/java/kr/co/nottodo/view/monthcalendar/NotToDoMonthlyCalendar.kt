@@ -3,194 +3,191 @@ package kr.co.nottodo.view.monthcalendar
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.view.monthcalendar.adapter.NotToDoMonthlyCalendarAdapter
-import kr.co.nottodo.view.monthcalendar.snaphelper.SnapPagerScrollListener
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import kr.co.nottodo.R
+import kr.co.nottodo.databinding.ViewNotToDoCalendarWeekDescriptionBinding
+import kr.co.nottodo.view.monthcalendar.adapter.NotToDoDayAdapter
 import kr.co.nottodo.view.monthcalendar.util.*
 import java.util.*
-import java.util.Calendar.*
 
 /**
- * created by ssong-develop on 2022.12.28
+ * created by ssong-develop on 2022.12.31
+ *
+ * No Swipe Effection MonthlyCalendar
  */
 class NotToDoMonthlyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : RecyclerView(context, attrs, defStyle) {
-
-    companion object {
-        private const val DEFAULT_YEAR_AMOUNT = 1
-    }
+) : LinearLayout(context, attrs, defStyle) {
 
     private val timeZone = TimeZone.getDefault()
-
     private val locale = Locale.KOREA
+    private val notToDoDayAdapter = NotToDoDayAdapter()
+    private val calendar = Calendar.getInstance(timeZone, locale)
+    private var calendarDataList: List<NotToDoCalendarDay> = listOf()
+    private var currentDate = calendar.toPrettyMonthString(locale = locale)
+        set(value) {
+            field = value
+            updateCurrentDateTextView()
+        }
 
-    private var currentPosition = 0
+    private val currentDateTextView = TextView(context).apply {
+        id = ViewCompat.generateViewId()
+        text = currentDate
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
 
-    private val notToDoMonthlyCalendarAdapter = NotToDoMonthlyCalendarAdapter(
-        onClickPrevMonth = {
-            if (currentPosition > 0) {
-                scrollToPosition(currentPosition - 1)
+    private val calendarHeaderLinearLayout = LinearLayout(context).apply {
+        orientation = HORIZONTAL
+        gravity = Gravity.CENTER_VERTICAL
+        addView(
+            ImageView(this.context).apply {
+                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_arrow_left))
+                setOnClickListener {
+                    calendar.add(Calendar.MONTH, -1)
+                    currentDate = calendar.toPrettyMonthString(locale = locale)
+                    initCalendarData()
+                }
             }
-        },
-        onClickNextMonth = {
-            adapter?.itemCount?.let { itemSize ->
-                if (currentPosition <= itemSize) {
-                    scrollToPosition(currentPosition + 1)
+        )
+
+        addView(currentDateTextView)
+
+        addView(
+            ImageView(this.context).apply {
+                setImageDrawable(ContextCompat.getDrawable(this.context, R.drawable.ic_arrow_right))
+                setOnClickListener {
+                    calendar.add(Calendar.MONTH, 1)
+                    currentDate = calendar.toPrettyMonthString(locale = locale)
+                    initCalendarData()
+                }
+            }
+        )
+    }
+
+    private val calendarWeekDescriptionView = ViewNotToDoCalendarWeekDescriptionBinding.inflate(
+        LayoutInflater.from(context),this,false
+    )
+
+    private val monthRecyclerView = NoRippleRecyclerView(context).apply {
+        id = ViewCompat.generateViewId()
+        adapter = notToDoDayAdapter
+        layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return DAY_COLUMN_COUNT
                 }
             }
         }
-    )
-
-    private val startCalendar = Calendar.getInstance(timeZone, locale)
-
-    private val endCalendar = Calendar.getInstance(timeZone, locale)
-
-    private var calendarDataList: List<NotToDoCalendarMonth> = listOf()
-
-    private val snapHelper = PagerSnapHelper()
-
-    private val snapPagerScrollListener = SnapPagerScrollListener(
-        snapHelper,
-        SnapPagerScrollListener.ON_SCROLL,
-        true,
-        object : SnapPagerScrollListener.OnChangeListener {
-            override fun onSnapped(position: Int) {
-                currentPosition = position
-            }
-        }
-    )
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
 
     init {
         if (attrs != null) {
             getStyleableAttrs(attrs)
         }
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        orientation = LinearLayout.VERTICAL
+
+        addView(calendarHeaderLinearLayout)
+        addView(calendarWeekDescriptionView.root)
+        addView(monthRecyclerView)
         initBackgroundColor()
         initializeNotToDoMonthCalendar()
     }
 
+    private fun updateCurrentDateTextView() {
+        currentDateTextView.text = currentDate
+    }
+
     private fun initializeNotToDoMonthCalendar() {
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        adapter = notToDoMonthlyCalendarAdapter
-        snapHelper.attachToRecyclerView(this)
-        addOnScrollListener(snapPagerScrollListener)
-        initStartCalendar()
-        initEndCalendar()
         initCalendarData()
-    }
-
-    private fun initStartCalendar() {
-        startCalendar.apply {
-            set(HOUR_OF_DAY, 0)
-            set(MINUTE, 0)
-            set(SECOND, 0)
-            set(MILLISECOND, 0)
-        }
-    }
-
-    private fun initEndCalendar() {
-        endCalendar.apply {
-            time = startCalendar.time
-            endCalendar.add(YEAR, DEFAULT_YEAR_AMOUNT)
-        }
     }
 
     private fun initCalendarData() {
         calendarDataList = buildCalendarData()
-        notToDoMonthlyCalendarAdapter.submitList(calendarDataList)
+        notToDoDayAdapter.submitList(calendarDataList)
     }
 
-    private fun buildCalendarData(): List<NotToDoCalendarMonth> {
-        val calendarMonthList = mutableListOf<NotToDoCalendarMonth>()
-        val dateCalendar = Calendar.getInstance(timeZone, locale)
-        val monthCalendar = Calendar.getInstance(timeZone, locale)
+    private fun buildCalendarData(): List<NotToDoCalendarDay> {
+        // 현재의 Calendar
+        val currentCalendar = Calendar.getInstance()
 
-        dateCalendar.withTime(startCalendar.time)
-        monthCalendar.withTime(startCalendar.time)
-
-        val monthDifference = endCalendar.totalMonthDifference(startCalendar)
-
-        dateCalendar.set(DAY_OF_MONTH, 1)
-        monthCalendar.set(DAY_OF_MONTH, 1)
-        (0..monthDifference).forEach { _ ->
-            val totalDayInMonth = dateCalendar.getActualMaximum(DAY_OF_MONTH)
-            val calendarDayList = mutableListOf<NotToDoCalendarDay>()
-            var dayOfYear = -1
-            (1..totalDayInMonth).forEach { _ ->
-                val day = dateCalendar.get(DAY_OF_MONTH)
-                val dayOfWeek = dateCalendar.get(DAY_OF_WEEK)
-                dayOfYear = dateCalendar.get(DAY_OF_YEAR)
-                val dateType =
-                    if (dateCalendar.isBefore(startCalendar) || dateCalendar.isAfter(endCalendar)) {
-                        DateType.DISABLED
-                    } else if (dateCalendar.isWeekend()) {
-                        DateType.WEEKEND
-                    } else {
-                        DateType.WEEKDAY
-                    }
-
-                when (day) {
-                    1 -> {
-                        calendarDayList.addAll(createStartEmptyView(dayOfWeek))
-                        calendarDayList.add(
-                            NotToDoCalendarDay.Day(
-                                day.toString(),
-                                dateCalendar.toPrettyDateString(),
-                                dateCalendar.time,
-                                state = dateType
-                            )
-                        )
-                    }
-                    totalDayInMonth -> {
-                        calendarDayList.add(
-                            NotToDoCalendarDay.Day(
-                                day.toString(),
-                                dateCalendar.toPrettyDateString(),
-                                dateCalendar.time,
-                                state = dateType
-                            )
-                        )
-                        calendarDayList.addAll(createEndEmptyView(dayOfWeek))
-                    }
-                    else -> {
-                        calendarDayList.add(
-                            NotToDoCalendarDay.Day(
-                                day.toString(),
-                                dateCalendar.toPrettyDateString(),
-                                dateCalendar.time,
-                                state = dateType
-                            )
-                        )
-                    }
-                }
-                dateCalendar.add(DATE, 1)
-            }
-            calendarMonthList.add(
-                NotToDoCalendarMonth(
-                    monthCalendar.toPrettyMonthString(
-                        locale = locale
-                    ),
-                    dayOfYear.toString(),
-                    calendarDayList
-                )
-            )
-            monthCalendar.add(MONTH, 1)
+        // 현재 달력이 보여주고 있는 Calendar instance의 복사본
+        val proxyCalendar = Calendar.getInstance().apply {
+            set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
+            set(Calendar.YEAR, calendar.get(Calendar.YEAR))
         }
-        return calendarMonthList
+
+        val totalDayInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val calendarDayList = mutableListOf<NotToDoCalendarDay>()
+        (1..totalDayInMonth).forEach { day ->
+            proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
+            val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
+            val dateType = if (!currentCalendar.isBeforeCalendar(proxyCalendar)) {
+                DateType.DISABLED
+            } else if (proxyCalendar.isWeekend()) {
+                DateType.WEEKEND
+            } else {
+                DateType.WEEKDAY
+            }
+
+            when (day) {
+                1 -> {
+                    calendarDayList.addAll(createStartEmptyView(dayOfWeek))
+                    calendarDayList.add(
+                        NotToDoCalendarDay.Day(
+                            day.toString(),
+                            proxyCalendar.toPrettyDateString(),
+                            proxyCalendar.time,
+                            state = dateType
+                        )
+                    )
+                }
+                totalDayInMonth -> {
+                    calendarDayList.add(
+                        NotToDoCalendarDay.Day(
+                            day.toString(),
+                            proxyCalendar.toPrettyDateString(),
+                            proxyCalendar.time,
+                            state = dateType
+                        )
+                    )
+                    calendarDayList.addAll(createEndEmptyView(dayOfWeek))
+                }
+                else -> {
+                    calendarDayList.add(
+                        NotToDoCalendarDay.Day(
+                            day.toString(),
+                            proxyCalendar.toPrettyDateString(),
+                            proxyCalendar.time,
+                            state = dateType
+                        )
+                    )
+                }
+            }
+        }
+        return calendarDayList
     }
 
     private fun createEndEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
         val numberOfEmptyView = when (dayOfWeek) {
-            SUNDAY -> 6
-            MONDAY -> 5
-            TUESDAY -> 4
-            WEDNESDAY -> 3
-            THURSDAY -> 2
-            FRIDAY -> 1
+            Calendar.SUNDAY -> 6
+            Calendar.MONDAY -> 5
+            Calendar.TUESDAY -> 4
+            Calendar.WEDNESDAY -> 3
+            Calendar.THURSDAY -> 2
+            Calendar.FRIDAY -> 1
             else -> 6
         }
 
@@ -201,12 +198,12 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
 
     private fun createStartEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
         val numberOfEmptyView = when (dayOfWeek) {
-            MONDAY -> 1
-            TUESDAY -> 2
-            WEDNESDAY -> 3
-            THURSDAY -> 4
-            FRIDAY -> 5
-            SATURDAY -> 6
+            Calendar.MONDAY -> 1
+            Calendar.TUESDAY -> 2
+            Calendar.WEDNESDAY -> 3
+            Calendar.THURSDAY -> 4
+            Calendar.FRIDAY -> 5
+            Calendar.SATURDAY -> 6
             else -> 0
         }
 
