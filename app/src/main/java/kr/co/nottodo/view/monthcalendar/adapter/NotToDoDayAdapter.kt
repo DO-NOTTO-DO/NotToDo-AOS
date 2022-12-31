@@ -14,7 +14,7 @@ import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoCalendarViewHolder
 import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoDayViewHolder
 import kr.co.nottodo.view.monthcalendar.viewholder.NotToDoEmptyViewHolder
 
-class NotToDoDayAdapter : RecyclerView.Adapter<NotToDoCalendarViewHolder>() {
+class NotToDoDayAdapter: RecyclerView.Adapter<NotToDoCalendarViewHolder>() {
 
     private val calendarItems = mutableListOf<NotToDoCalendarDay>()
 
