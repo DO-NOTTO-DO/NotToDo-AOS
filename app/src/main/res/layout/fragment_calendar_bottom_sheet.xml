@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="44dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="28dp"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="캘린더 뷰가\n들어갈 자리입니다.\n우선 캘린더 크기가 얼마나 나올지 정확하게 판닿나기가 어려워 이런식으로만 만들어놨습니다. PR에서 피드백 해주시면 수정하겠습니다 !!"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/btn_schedule_bottom_sheet_choice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btn_schedule_bottom_sheet_choice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="19dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                style="@style/B18"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingVertical="13dp"
+                android:text="선택 완료"
+                android:textColor="@color/white" />
+        </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
