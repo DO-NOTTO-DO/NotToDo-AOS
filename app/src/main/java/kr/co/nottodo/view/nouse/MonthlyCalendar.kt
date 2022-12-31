@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthcalendar.nouse
+package kr.co.nottodo.view.nouse
 
 import android.content.Context
 import android.graphics.Color
@@ -6,12 +6,13 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.view.monthcalendar.DateType
-import kr.co.nottodo.view.monthcalendar.NotToDoCalendarDay
-import kr.co.nottodo.view.monthcalendar.NotToDoCalendarMonth
-import kr.co.nottodo.view.monthcalendar.adapter.NotToDoMonthlyCalendarAdapter
-import kr.co.nottodo.view.monthcalendar.snaphelper.SnapPagerScrollListener
-import kr.co.nottodo.view.monthcalendar.util.*
+import kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarDay
+import kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarMonth
+import kr.co.nottodo.view.monthcalendar.common.adapter.NotToDoMonthlyCalendarAdapter
+import kr.co.nottodo.view.monthcalendar.common.util.toPrettyMonthString
+import kr.co.nottodo.view.monthcalendar.common.util.totalMonthDifference
+import kr.co.nottodo.view.monthcalendar.common.util.withTime
+import kr.co.nottodo.view.nouse.snaphelper.SnapPagerScrollListener
 import java.util.*
 import java.util.Calendar.*
 

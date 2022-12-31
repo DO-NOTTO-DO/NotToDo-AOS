@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthcalendar.snaphelper
+package kr.co.nottodo.view.nouse.snaphelper
 
 import androidx.annotation.IntDef
 import androidx.recyclerview.widget.PagerSnapHelper

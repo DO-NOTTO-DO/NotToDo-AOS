@@ -1,8 +1,7 @@
-package kr.co.nottodo.view.monthcalendar.viewholder
+package kr.co.nottodo.view.monthcalendar.common.viewholder
 
-import android.util.Log
 import kr.co.nottodo.databinding.ViewNotToDoCalendarDayBinding
-import kr.co.nottodo.view.monthcalendar.NotToDoCalendarDay
+import kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarDay
 
 class NotToDoDayViewHolder(
     private val binding: ViewNotToDoCalendarDayBinding
