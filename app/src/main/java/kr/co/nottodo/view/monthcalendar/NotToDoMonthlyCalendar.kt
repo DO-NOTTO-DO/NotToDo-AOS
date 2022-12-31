@@ -134,6 +134,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
+            // TODO 이거 Type은 용도 따라서 달라질 거 같아요
             val dateType = if (!currentCalendar.isBeforeCalendar(proxyCalendar)) {
                 DateType.DISABLED
             } else if (proxyCalendar.isWeekend()) {

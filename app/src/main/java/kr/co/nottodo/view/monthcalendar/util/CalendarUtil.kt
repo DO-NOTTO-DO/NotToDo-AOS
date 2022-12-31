@@ -34,7 +34,7 @@ fun Calendar.isBefore(otherCalendar: Calendar): Boolean {
 fun Calendar.isBeforeCalendar(otherCalendar: Calendar): Boolean {
     if (get(YEAR) < otherCalendar.get(YEAR)) return true
     if (get(MONTH) < otherCalendar.get(MONTH)) return true
-    if (get(DAY_OF_MONTH) <= otherCalendar.get(DAY_OF_MONTH)) return true
+    if (get(DAY_OF_MONTH) < otherCalendar.get(DAY_OF_MONTH)) return true
     return false
 }
 
