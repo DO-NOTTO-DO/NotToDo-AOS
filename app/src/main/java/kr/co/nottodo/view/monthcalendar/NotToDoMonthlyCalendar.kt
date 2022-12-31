@@ -9,14 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.view.monthcalendar.adapter.NotToDoMonthlyCalendarAdapter
 import kr.co.nottodo.view.monthcalendar.snaphelper.SnapPagerScrollListener
 import kr.co.nottodo.view.monthcalendar.util.*
-import timber.log.Timber
 import java.util.*
 import java.util.Calendar.*
 
 /**
  * created by ssong-develop on 2022.12.28
- *
- * Click이 없는 성취 뷰 캘린더 입니다.
  */
 class NotToDoMonthlyCalendar @JvmOverloads constructor(
     context: Context,
@@ -64,7 +61,6 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
         object : SnapPagerScrollListener.OnChangeListener {
             override fun onSnapped(position: Int) {
                 currentPosition = position
-                Timber.d("ssong-develop", "$position")
             }
         }
     )
@@ -99,7 +95,7 @@ class NotToDoMonthlyCalendar @JvmOverloads constructor(
     private fun initEndCalendar() {
         endCalendar.apply {
             time = startCalendar.time
-            endCalendar.add(YEAR,100)
+            endCalendar.add(YEAR, DEFAULT_YEAR_AMOUNT)
         }
     }
 

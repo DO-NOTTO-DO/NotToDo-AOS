@@ -27,9 +27,9 @@ class NotToDoMonthViewHolder(
         notToDoCalendarMonthData = data
         binding.apply {
             monthItem = notToDoCalendarMonthData
-            dayAdapter.submitList(data.dayList)
             executePendingBindings()
         }
+        dayAdapter.submitList(data.dayList)
     }
 
     private fun initClickListener() {
