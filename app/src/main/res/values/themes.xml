@@ -15,5 +15,23 @@
 
         <item name="fontFamily">@font/pretendard</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Cut.BottomSheetDialog</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.Cut" parent="">
+        <item name="cornerSize">0dp</item>
+        <item name="cornerFamilyTopLeft">cut</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerSizeTopRight">16dp</item>
+    </style>
+
+    <style
+        name="ThemeOverlay.Cut.BottomSheetDialog"
+        parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Cut.BottomSheet</item>
+    </style>
+
+    <style name="Widget.Cut.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Cut</item>
     </style>
 </resources>
