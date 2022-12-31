@@ -1,5 +1,6 @@
 package kr.co.nottodo.view.monthcalendar.viewholder
 
+import android.util.Log
 import kr.co.nottodo.databinding.ViewNotToDoCalendarDayBinding
 import kr.co.nottodo.view.monthcalendar.NotToDoCalendarDay
 

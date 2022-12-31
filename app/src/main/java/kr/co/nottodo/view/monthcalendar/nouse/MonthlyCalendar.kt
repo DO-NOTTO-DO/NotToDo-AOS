@@ -125,55 +125,55 @@ class MonthlyCalendar @JvmOverloads constructor(
             val totalDayInMonth = dateCalendar.getActualMaximum(DAY_OF_MONTH)
             val calendarDayList = mutableListOf<NotToDoCalendarDay>()
             var dayOfYear = -1
-            (1..totalDayInMonth).forEach { _ ->
-                val day = dateCalendar.get(DAY_OF_MONTH)
-                val dayOfWeek = dateCalendar.get(DAY_OF_WEEK)
-                dayOfYear = dateCalendar.get(DAY_OF_YEAR)
-                val dateType =
-                    if (dateCalendar.isBefore(startCalendar) || dateCalendar.isAfter(endCalendar)) {
-                        DateType.DISABLED
-                    } else if (dateCalendar.isWeekend()) {
-                        DateType.WEEKEND
-                    } else {
-                        DateType.WEEKDAY
-                    }
-
-                when (day) {
-                    1 -> {
-                        calendarDayList.addAll(createStartEmptyView(dayOfWeek))
-                        calendarDayList.add(
-                            NotToDoCalendarDay.Day(
-                                day.toString(),
-                                dateCalendar.toPrettyDateString(),
-                                dateCalendar.time,
-                                state = dateType
-                            )
-                        )
-                    }
-                    totalDayInMonth -> {
-                        calendarDayList.add(
-                            NotToDoCalendarDay.Day(
-                                day.toString(),
-                                dateCalendar.toPrettyDateString(),
-                                dateCalendar.time,
-                                state = dateType
-                            )
-                        )
-                        calendarDayList.addAll(createEndEmptyView(dayOfWeek))
-                    }
-                    else -> {
-                        calendarDayList.add(
-                            NotToDoCalendarDay.Day(
-                                day.toString(),
-                                dateCalendar.toPrettyDateString(),
-                                dateCalendar.time,
-                                state = dateType
-                            )
-                        )
-                    }
-                }
-                dateCalendar.add(DATE, 1)
-            }
+//            (1..totalDayInMonth).forEach { _ ->
+//                val day = dateCalendar.get(DAY_OF_MONTH)
+//                val dayOfWeek = dateCalendar.get(DAY_OF_WEEK)
+//                dayOfYear = dateCalendar.get(DAY_OF_YEAR)
+//                val dateType =
+//                    if (dateCalendar.isBefore(startCalendar) || dateCalendar.isAfter(endCalendar)) {
+//                        DateType.DISABLED
+//                    } else if (dateCalendar.isWeekend()) {
+//                        DateType.WEEKEND
+//                    } else {
+//                        DateType.WEEKDAY
+//                    }
+//
+//                when (day) {
+//                    1 -> {
+//                        calendarDayList.addAll(createStartEmptyView(dayOfWeek))
+//                        calendarDayList.add(
+//                            NotToDoCalendarDay.Day(
+//                                day.toString(),
+//                                dateCalendar.toPrettyDateString(),
+//                                dateCalendar.time,
+//                                state = dateType
+//                            )
+//                        )
+//                    }
+//                    totalDayInMonth -> {
+//                        calendarDayList.add(
+//                            NotToDoCalendarDay.Day(
+//                                day.toString(),
+//                                dateCalendar.toPrettyDateString(),
+//                                dateCalendar.time,
+//                                state = dateType
+//                            )
+//                        )
+//                        calendarDayList.addAll(createEndEmptyView(dayOfWeek))
+//                    }
+//                    else -> {
+//                        calendarDayList.add(
+//                            NotToDoCalendarDay.Day(
+//                                day.toString(),
+//                                dateCalendar.toPrettyDateString(),
+//                                dateCalendar.time,
+//                                state = dateType
+//                            )
+//                        )
+//                    }
+//                }
+//                dateCalendar.add(DATE, 1)
+//            }
             calendarMonthList.add(
                 NotToDoCalendarMonth(
                     monthCalendar.toPrettyMonthString(
@@ -188,37 +188,37 @@ class MonthlyCalendar @JvmOverloads constructor(
         return calendarMonthList
     }
 
-    private fun createEndEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
-        val numberOfEmptyView = when (dayOfWeek) {
-            SUNDAY -> 6
-            MONDAY -> 5
-            TUESDAY -> 4
-            WEDNESDAY -> 3
-            THURSDAY -> 2
-            FRIDAY -> 1
-            else -> 6
-        }
-
-        val listEmpty = mutableListOf<NotToDoCalendarDay.Empty>()
-        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(NotToDoCalendarDay.Empty) }
-        return listEmpty
-    }
-
-    private fun createStartEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
-        val numberOfEmptyView = when (dayOfWeek) {
-            MONDAY -> 1
-            TUESDAY -> 2
-            WEDNESDAY -> 3
-            THURSDAY -> 4
-            FRIDAY -> 5
-            SATURDAY -> 6
-            else -> 0
-        }
-
-        val listEmpty = mutableListOf<NotToDoCalendarDay.Empty>()
-        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(NotToDoCalendarDay.Empty) }
-        return listEmpty
-    }
+//    private fun createEndEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
+//        val numberOfEmptyView = when (dayOfWeek) {
+//            SUNDAY -> 6
+//            MONDAY -> 5
+//            TUESDAY -> 4
+//            WEDNESDAY -> 3
+//            THURSDAY -> 2
+//            FRIDAY -> 1
+//            else -> 6
+//        }
+//
+//        val listEmpty = mutableListOf<NotToDoCalendarDay.Empty>()
+//        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(NotToDoCalendarDay.Empty) }
+//        return listEmpty
+//    }
+//
+//    private fun createStartEmptyView(dayOfWeek: Int): List<NotToDoCalendarDay.Empty> {
+//        val numberOfEmptyView = when (dayOfWeek) {
+//            MONDAY -> 1
+//            TUESDAY -> 2
+//            WEDNESDAY -> 3
+//            THURSDAY -> 4
+//            FRIDAY -> 5
+//            SATURDAY -> 6
+//            else -> 0
+//        }
+//
+//        val listEmpty = mutableListOf<NotToDoCalendarDay.Empty>()
+//        repeat((0 until numberOfEmptyView).count()) { listEmpty.add(NotToDoCalendarDay.Empty) }
+//        return listEmpty
+//    }
 
     private fun initBackgroundColor() {
         setBackgroundColor(Color.parseColor("#ffffff"))

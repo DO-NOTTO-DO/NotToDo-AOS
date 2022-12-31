@@ -18,9 +18,9 @@
         android:background="@color/white"
         android:padding="18dp">
 
-        <!-- TODO font 및 텍스트 스타일 만들어서 적용해야 합니다 -->
         <TextView
             android:id="@+id/tv_day_name"
+            style="@style/M12"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:gravity="center"
