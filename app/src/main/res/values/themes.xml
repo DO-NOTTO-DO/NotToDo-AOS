@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.NotToDo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.NotToDo" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -15,6 +15,7 @@
 
         <item name="fontFamily">@font/pretendard</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/black_2a292d</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Cut.BottomSheetDialog</item>
     </style>
     <!--    바텀 시트 자르기-->
