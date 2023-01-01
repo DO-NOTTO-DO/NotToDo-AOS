@@ -15,5 +15,6 @@
 
         <item name="fontFamily">@font/pretendard</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/black_2a292d</item>
     </style>
 </resources>
