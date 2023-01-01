@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/tv_calendar_bottom_sheet"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="44dp"
@@ -20,26 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_calendar_bottom_sheet_choice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="19dp"
-        app:cardBackgroundColor="@color/black"
-        app:cardCornerRadius="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/B18"
+        android:background="@drawable/background_round_black_btn"
+        android:text="선택 완료"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            style="@style/B18"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingVertical="13dp"
-            android:text="선택 완료"
-            android:textColor="@color/white" />
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintStart_toStartOf ="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
