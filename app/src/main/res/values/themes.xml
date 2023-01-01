@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.NotToDo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -17,6 +17,7 @@
         <item name="android:includeFontPadding">false</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Cut.BottomSheetDialog</item>
     </style>
+    <!--    바텀 시트 자르기-->
     <style name="ShapeAppearanceOverlay.Cut" parent="">
         <item name="cornerSize">0dp</item>
         <item name="cornerFamilyTopLeft">cut</item>
@@ -25,9 +26,7 @@
         <item name="cornerSizeTopRight">16dp</item>
     </style>
 
-    <style
-        name="ThemeOverlay.Cut.BottomSheetDialog"
-        parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+    <style name="ThemeOverlay.Cut.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Widget.Cut.BottomSheet</item>
     </style>
 
