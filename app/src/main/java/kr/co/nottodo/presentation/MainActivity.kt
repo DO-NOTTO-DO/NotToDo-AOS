@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 R.color.white
             ) // change color
         }
-        binding.customBottom.background = backgroundDrawable
-        binding.customBottom.itemIconTintList = null
+        binding.homeCustomBottom.background = backgroundDrawable
+        binding.homeCustomBottom.itemIconTintList = null
     }
 }
