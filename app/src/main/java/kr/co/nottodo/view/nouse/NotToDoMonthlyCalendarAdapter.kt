@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthlycalendar.adapter
+package kr.co.nottodo.view.nouse
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,21 +6,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
-import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
-import kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarMonth
-import kr.co.nottodo.view.monthlycalendar.viewholder.NotToDoMonthViewHolder
+import kr.co.nottodo.databinding.ViewNoUseCalendarMonthBinding
+import kr.co.nottodo.view.monthlycalendar.model.CalendarMonth
 
 class NotToDoMonthlyCalendarAdapter(
     private val onClickPrevMonth: () -> Unit,
     private val onClickNextMonth: () -> Unit
 ) : RecyclerView.Adapter<NotToDoMonthViewHolder>() {
 
-    private val notToDoCalendarMonthList = mutableListOf<NotToDoCalendarMonth>()
+    private val calendarMonthList = mutableListOf<CalendarMonth>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotToDoMonthViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val binding: ViewNotToDoCalendarMonthBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.view_not_to_do_calendar_month, parent, false
+        val binding: ViewNoUseCalendarMonthBinding = DataBindingUtil.inflate(
+            layoutInflater, R.layout.view_no_use_calendar_month, parent, false
         )
         return NotToDoMonthViewHolder(
             binding,
@@ -30,15 +29,15 @@ class NotToDoMonthlyCalendarAdapter(
     }
 
     override fun onBindViewHolder(holder: NotToDoMonthViewHolder, position: Int) {
-        holder.onBind(notToDoCalendarMonthList[position])
+        holder.onBind(calendarMonthList[position])
     }
 
-    override fun getItemCount(): Int = notToDoCalendarMonthList.size
+    override fun getItemCount(): Int = calendarMonthList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<NotToDoCalendarMonth>) {
-        notToDoCalendarMonthList.clear()
-        notToDoCalendarMonthList.addAll(list)
+    fun submitList(list: List<CalendarMonth>) {
+        calendarMonthList.clear()
+        calendarMonthList.addAll(list)
         notifyDataSetChanged()
     }
 }

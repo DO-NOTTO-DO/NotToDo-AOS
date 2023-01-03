@@ -6,9 +6,8 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarDay
-import kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarMonth
-import kr.co.nottodo.view.monthlycalendar.adapter.NotToDoMonthlyCalendarAdapter
+import kr.co.nottodo.view.monthlycalendar.model.CalendarDay
+import kr.co.nottodo.view.monthlycalendar.model.CalendarMonth
 import kr.co.nottodo.view.monthlycalendar.util.toPrettyMonthString
 import kr.co.nottodo.view.monthlycalendar.util.totalMonthDifference
 import kr.co.nottodo.view.monthlycalendar.util.withTime
@@ -56,7 +55,7 @@ class MonthlyCalendar @JvmOverloads constructor(
 
     private val endCalendar = Calendar.getInstance(timeZone, locale)
 
-    private var calendarDataList: List<NotToDoCalendarMonth> = listOf()
+    private var calendarDataList: List<CalendarMonth> = listOf()
 
     private val snapHelper = PagerSnapHelper()
 
@@ -110,8 +109,8 @@ class MonthlyCalendar @JvmOverloads constructor(
         notToDoMonthlyCalendarAdapter.submitList(calendarDataList)
     }
 
-    private fun buildCalendarData(): List<NotToDoCalendarMonth> {
-        val calendarMonthList = mutableListOf<NotToDoCalendarMonth>()
+    private fun buildCalendarData(): List<CalendarMonth> {
+        val calendarMonthList = mutableListOf<CalendarMonth>()
         val dateCalendar = Calendar.getInstance(timeZone, locale)
         val monthCalendar = Calendar.getInstance(timeZone, locale)
 
@@ -124,7 +123,7 @@ class MonthlyCalendar @JvmOverloads constructor(
         monthCalendar.set(DAY_OF_MONTH, 1)
         (0..monthDifference).forEach { _ ->
             val totalDayInMonth = dateCalendar.getActualMaximum(DAY_OF_MONTH)
-            val calendarDayList = mutableListOf<NotToDoCalendarDay>()
+            val calendarDayList = mutableListOf<CalendarDay>()
             var dayOfYear = -1
 //            (1..totalDayInMonth).forEach { _ ->
 //                val day = dateCalendar.get(DAY_OF_MONTH)
@@ -176,7 +175,7 @@ class MonthlyCalendar @JvmOverloads constructor(
 //                dateCalendar.add(DATE, 1)
 //            }
             calendarMonthList.add(
-                NotToDoCalendarMonth(
+                CalendarMonth(
                     monthCalendar.toPrettyMonthString(
                         locale = locale
                     ),

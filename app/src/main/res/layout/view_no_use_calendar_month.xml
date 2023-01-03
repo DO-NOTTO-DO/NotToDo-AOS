@@ -7,7 +7,7 @@
 
         <variable
             name="month_item"
-            type="kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarMonth" />
+            type="kr.co.nottodo.view.monthlycalendar.model.CalendarMonth" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +54,7 @@
 
         <include
             android:id="@+id/view_calendar_week"
-            layout="@layout/view_not_to_do_calendar_week_description"
+            layout="@layout/view_calendar_week_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

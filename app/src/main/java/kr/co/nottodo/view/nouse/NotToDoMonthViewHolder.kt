@@ -1,32 +1,32 @@
-package kr.co.nottodo.view.monthlycalendar.viewholder
+package kr.co.nottodo.view.nouse
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
+import kr.co.nottodo.databinding.ViewNoUseCalendarMonthBinding
+import kr.co.nottodo.view.monthlycalendar.adapter.MonthlyCalendarDayAdapter
+import kr.co.nottodo.view.monthlycalendar.model.CalendarMonth
 import kr.co.nottodo.view.monthlycalendar.model.DAY_COLUMN_COUNT
-import kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarMonth
 import kr.co.nottodo.view.monthlycalendar.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.monthlycalendar.adapter.NotToDoDayAdapter
 
 class NotToDoMonthViewHolder(
-    private val binding: ViewNotToDoCalendarMonthBinding,
+    private val binding: ViewNoUseCalendarMonthBinding,
     private val onClickPrevMonth: () -> Unit,
     private val onClickNextMonth: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var notToDoCalendarMonthData: NotToDoCalendarMonth
+    private lateinit var calendarMonthData: CalendarMonth
 
-    private val dayAdapter: NotToDoDayAdapter = NotToDoDayAdapter()
+    private val dayAdapter: MonthlyCalendarDayAdapter = MonthlyCalendarDayAdapter()
 
     init {
         initClickListener()
         initRecyclerView()
     }
 
-    fun onBind(data: NotToDoCalendarMonth) {
-        notToDoCalendarMonthData = data
+    fun onBind(data: CalendarMonth) {
+        calendarMonthData = data
         binding.apply {
-            monthItem = notToDoCalendarMonthData
+            monthItem = calendarMonthData
             executePendingBindings()
         }
         dayAdapter.submitList(data.dayList)

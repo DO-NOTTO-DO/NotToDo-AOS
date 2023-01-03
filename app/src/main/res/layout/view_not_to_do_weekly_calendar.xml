@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/view_calendar_week_description"
-        layout="@layout/view_not_to_do_calendar_week_description"
+        layout="@layout/view_calendar_week_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
