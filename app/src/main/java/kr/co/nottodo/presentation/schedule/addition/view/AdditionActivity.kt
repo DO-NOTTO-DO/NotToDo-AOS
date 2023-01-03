@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityAdditionBinding
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
+import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 
 class AdditionActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdditionBinding
@@ -19,6 +20,7 @@ class AdditionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addition)
         initBinding()
+        initBottomSheet()
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
         }
@@ -37,6 +39,12 @@ class AdditionActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_addition)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+    }
+
+    private fun initBottomSheet() {
+        binding.layoutAdditionCalendar.setOnClickListener {
+            CalendarBottomSheet().show(supportFragmentManager, CalendarBottomSheet().tag)
+        }
     }
 
 
