@@ -1,7 +1,7 @@
-package kr.co.nottodo.view.monthcalendar.common.viewholder
+package kr.co.nottodo.view.monthlycalendar.viewholder
 
 import kr.co.nottodo.databinding.ViewNotToDoCalendarEmptyBinding
-import kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarDay
+import kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarDay
 
 class NotToDoEmptyViewHolder(
     private val binding: ViewNotToDoCalendarEmptyBinding

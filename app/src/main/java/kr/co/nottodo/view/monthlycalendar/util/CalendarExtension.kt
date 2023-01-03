@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthcalendar.common.util
+package kr.co.nottodo.view.monthlycalendar.util
 
 import java.util.*
 

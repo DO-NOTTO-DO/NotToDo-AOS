@@ -1,10 +1,10 @@
-package kr.co.nottodo.view.monthcalendar.common.binding
+package kr.co.nottodo.view.monthlycalendar.binding
 
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import kr.co.nottodo.R
-import kr.co.nottodo.view.monthcalendar.common.DateType
+import kr.co.nottodo.view.monthlycalendar.model.DateType
 
 object NotToDoMonthlyCalendarBindingAdapter {
 

@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.monthcalendar.common
+package kr.co.nottodo.view.monthlycalendar.model
 
 enum class CalendarType {
     WEEK,

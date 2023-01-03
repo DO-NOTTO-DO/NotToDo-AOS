@@ -1,12 +1,12 @@
-package kr.co.nottodo.view.monthcalendar.common.viewholder
+package kr.co.nottodo.view.monthlycalendar.viewholder
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.databinding.ViewNotToDoCalendarMonthBinding
-import kr.co.nottodo.view.monthcalendar.common.DAY_COLUMN_COUNT
-import kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarMonth
-import kr.co.nottodo.view.monthcalendar.common.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.monthcalendar.common.adapter.NotToDoDayAdapter
+import kr.co.nottodo.view.monthlycalendar.model.DAY_COLUMN_COUNT
+import kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarMonth
+import kr.co.nottodo.view.monthlycalendar.model.TOTAL_COLUMN_COUNT
+import kr.co.nottodo.view.monthlycalendar.adapter.NotToDoDayAdapter
 
 class NotToDoMonthViewHolder(
     private val binding: ViewNotToDoCalendarMonthBinding,
