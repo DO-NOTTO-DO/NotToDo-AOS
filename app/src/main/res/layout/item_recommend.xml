@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_recommend"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_sns_active" />
+
+        <TextView
+            android:id="@+id/tv_recommend_title"
+            style="@style/B12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="12dp"
+            android:textColor="@color/gray_1_626068"
+            android:text="민영 테스트"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/iv_recommend"
+            app:layout_constraintStart_toStartOf="@id/iv_recommend"
+            app:layout_constraintTop_toBottomOf="@id/iv_recommend"
+            tools:text="민영 테스트" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
