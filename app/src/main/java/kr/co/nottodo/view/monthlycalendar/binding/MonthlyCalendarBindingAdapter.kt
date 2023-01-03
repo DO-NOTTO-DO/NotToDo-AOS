@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter
 import kr.co.nottodo.R
 import kr.co.nottodo.view.monthlycalendar.model.DateType
 
-object NotToDoMonthlyCalendarBindingAdapter {
+object MonthlyCalendarBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("app:setCalendarDayTextColor")
