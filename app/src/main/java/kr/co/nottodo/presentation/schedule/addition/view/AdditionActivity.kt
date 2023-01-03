@@ -21,32 +21,31 @@ class AdditionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_addition)
         initBinding()
         initBottomSheet()
+        btnActionPlusOnClickListener()
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
         }
         binding.layoutAdditionMoveSituationPage.setOnClickListener {
-            // 상황 추가 창으로 이동
+            // 상황 추가 화면으로 이동
         }
         binding.ivAdditionMoveSituationPage.setOnClickListener {
             viewModel.additionSituationName.value = "출근 시간"
+        } // 추후 상황 추가 화면 구현시 개발
+        binding.layoutAdditionMoveRecommendPage.setOnClickListener {
+            // 추후 행동 추천 화면 구현시 개발
         }
-        btnActionPlusOnClickListener()
+        observeEditText()
         btnDeleteActionOnClickListener()
+        ivDeletePageOnClickListener()
 
+        observeToActivateAddBtn()
     }
 
-    private fun initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_addition)
-        binding.vm = viewModel
-        binding.lifecycleOwner = this
-    }
-
-    private fun initBottomSheet() {
-        binding.layoutAdditionCalendar.setOnClickListener {
-            CalendarBottomSheet().show(supportFragmentManager, CalendarBottomSheet().tag)
+    private fun ivDeletePageOnClickListener() {
+        binding.ivAdditionDeletePage.setOnClickListener {
+            finish()
         }
     }
-
 
     private fun btnDeleteActionOnClickListener() {
         with(binding) {
@@ -93,6 +92,60 @@ class AdditionActivity : AppCompatActivity() {
                 }
             }
 
+        }
+    }
+
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_addition)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+    }
+
+    private fun initBottomSheet() {
+        binding.layoutAdditionCalendar.setOnClickListener {
+            CalendarBottomSheet().show(supportFragmentManager, CalendarBottomSheet().tag)
+        }
+    }
+
+    private fun observeEditText() {
+        viewModel.isAdditionMissionNameFilled.observe(this) {
+            if (it) {
+                binding.etAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
+            } else {
+                binding.etAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
+            }
+        }
+        viewModel.isAdditionGoalNameFilled.observe(this) {
+            if (it) {
+                binding.etAdditionGoalTitle.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
+            } else {
+                binding.etAdditionGoalTitle.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
+            }
+        }
+        viewModel.isAdditionActionNameFilled.observe(this) {
+            if (it) {
+                binding.etAdditionActionName.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
+            } else {
+                binding.etAdditionActionName.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
+            }
+        }
+    }
+
+    private fun observeToActivateAddBtn() {
+        viewModel.isBtnSuitConditions.observe(this) {
+            if (it) {
+                binding.btnAdditionAdd.setBackgroundColor(getColor(R.color.black_2a292d))
+                binding.btnAdditionAdd.isEnabled = true
+            } else {
+                binding.btnAdditionAdd.setBackgroundColor(getColor(R.color.gray_2_8e8e93))
+                binding.btnAdditionAdd.isEnabled = false
+            }
+        }
+    }
+
+    private fun setDropdownMenu() {
+        binding.etAdditionMissionName.setOnClickListener {
+            AdditionDropdownFragment().show(supportFragmentManager, AdditionDropdownFragment().tag)
         }
     }
 
