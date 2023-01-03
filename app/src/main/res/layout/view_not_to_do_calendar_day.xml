@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="kr.co.nottodo.view.monthcalendar.common.DateType" />
+        <import type="kr.co.nottodo.view.monthlycalendar.model.DateType" />
 
         <variable
             name="day_item"
-            type="kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarDay.Day" />
+            type="kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarDay.Day" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

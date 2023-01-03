@@ -7,7 +7,7 @@
 
         <variable
             name="month_item"
-            type="kr.co.nottodo.view.monthcalendar.common.NotToDoCalendarMonth" />
+            type="kr.co.nottodo.view.monthlycalendar.model.NotToDoCalendarMonth" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
