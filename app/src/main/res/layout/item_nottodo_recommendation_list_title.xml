@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/v_item_nottodo_recommendation_list_title"
+        android:layout_width="132dp"
+        android:layout_height="34dp"
+        android:background="@color/gray_5_cfcfcf" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

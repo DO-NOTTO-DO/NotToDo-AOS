@@ -10,11 +10,10 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemRecommendBinding
 import kr.co.nottodo.presentation.toplevel.recommendation.data.Recommendationdata
 
-class RecommendationAdapter(private val tools: List<Recommendationdata>) :
-    RecyclerView.Adapter<RecommendationViewHolder>() {
+class RecommendationAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {
 
-    private val sampleItems = mutableListOf<Recommendationdata>()
-    private val items: List<Recommendationdata> = tools
+    private val sampleItems = mutableListOf<Recommendationdata>(Recommendationdata("",""), Recommendationdata("",""),Recommendationdata("",""),
+        Recommendationdata("",""),Recommendationdata("",""),Recommendationdata("",""))
     private var selectedPosition = -1
     private var lastItemSelectedPosition = -1
 
@@ -36,6 +35,7 @@ class RecommendationAdapter(private val tools: List<Recommendationdata>) :
             normalBackground(holder, sampleItems[position])
         }
         bind(holder, position)
+        holder.onBind(sampleItems[position])
     }
 
     override fun getItemCount(): Int = sampleItems.size
