@@ -3,7 +3,6 @@ package kr.co.nottodo.view.monthlycalendarpicker
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.view.NoRippleRecyclerView
-import kr.co.nottodo.view.monthlycalendar.adapter.MonthlyCalendarDayAdapter
 import kr.co.nottodo.view.monthlycalendar.model.CalendarDay
 import kr.co.nottodo.view.monthlycalendar.model.DAY_COLUMN_COUNT
 import kr.co.nottodo.view.monthlycalendar.model.DateType
@@ -27,7 +25,7 @@ import kr.co.nottodo.view.monthlycalendar.util.isWeekend
 import kr.co.nottodo.view.monthlycalendar.util.toPrettyDateString
 import kr.co.nottodo.view.monthlycalendar.util.toPrettyMonthString
 import kr.co.nottodo.view.monthlycalendarpicker.adapter.MonthlyCalendarPickerDayAdapter
-import kr.co.nottodo.view.monthlycalendarpicker.listener.MonthlyCalendarPickerClickHandler
+import kr.co.nottodo.view.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
 import java.util.*
 
 /**
@@ -42,10 +40,11 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : LinearLayout(context, attrs, defStyle), MonthlyCalendarPickerClickHandler {
+) : LinearLayout(context, attrs, defStyle), MonthlyCalendarPickerClickListener {
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
     private var selectedDate: Date? = null
+    private var monthlyCalendarPickerClickListener : MonthlyCalendarPickerClickListener? = null
     private val monthlyCalendarPickerDayAdapter = MonthlyCalendarPickerDayAdapter(this)
     private val calendar = Calendar.getInstance(timeZone, locale)
     private var calendarDataList: List<CalendarDay> = listOf()
@@ -239,6 +238,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         }.also {
             it.add(Calendar.MONTH, 1)
         }
+
         var totalDayInNextMonth = nextCalendar.getActualMinimum(Calendar.DAY_OF_MONTH)
         val numberOfEmptyView = when (dayOfWeek) {
             Calendar.SUNDAY -> 6
@@ -272,7 +272,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         }.also {
             it.add(Calendar.MONTH, -1)
         }
-        var totalDayInPreviousMonth = previousCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
         val numberOfEmptyView = when (dayOfWeek) {
             Calendar.MONDAY -> 1
             Calendar.TUESDAY -> 2
@@ -283,11 +283,13 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             else -> 0
         }
 
+        var startDayInPreviousMonth = previousCalendar.getActualMaximum(Calendar.DAY_OF_MONTH) - numberOfEmptyView + 1
+
         val listEmpty = mutableListOf<CalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
             listEmpty.add(
                 CalendarDay.Empty(
-                    totalDayInPreviousMonth--.toString()
+                    startDayInPreviousMonth++.toString()
                 )
             )
         }
@@ -302,8 +304,17 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 
     }
 
+    fun setOnMonthlyCalendarPickerClickListener(monthlyCalendarPickerClickListener: MonthlyCalendarPickerClickListener) {
+        this.monthlyCalendarPickerClickListener = monthlyCalendarPickerClickListener
+    }
+
+    fun setOnMonthlyCalendarPickerClickListener(block: (view: View, date: Date) -> Unit) {
+        this.monthlyCalendarPickerClickListener = MonthlyCalendarPickerClickListener(block)
+    }
+
     override fun onDayClick(view: View, date: Date) {
         selectedDate = date
         monthlyCalendarPickerDayAdapter.selectedDate = date
+        monthlyCalendarPickerClickListener?.onDayClick(view, date)
     }
 }

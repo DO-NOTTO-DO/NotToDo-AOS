@@ -255,7 +255,6 @@ class MonthlyCalendar @JvmOverloads constructor(
         }.also {
             it.add(MONTH, -1)
         }
-        var totalDayInPreviousMonth = previousCalendar.getActualMaximum(DAY_OF_MONTH)
         val numberOfEmptyView = when (dayOfWeek) {
             Calendar.MONDAY -> 1
             Calendar.TUESDAY -> 2
@@ -265,12 +264,12 @@ class MonthlyCalendar @JvmOverloads constructor(
             Calendar.SATURDAY -> 6
             else -> 0
         }
-
+        var startDayInPreviousMonth = previousCalendar.getActualMaximum(DAY_OF_MONTH) - numberOfEmptyView + 1
         val listEmpty = mutableListOf<CalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
             listEmpty.add(
                 CalendarDay.Empty(
-                    totalDayInPreviousMonth--.toString()
+                    startDayInPreviousMonth++.toString()
                 )
             )
         }

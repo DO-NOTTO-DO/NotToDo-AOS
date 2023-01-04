@@ -1,7 +1,6 @@
 package kr.co.nottodo.view.monthlycalendarpicker.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -13,13 +12,13 @@ import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerEmptyBinding
 import kr.co.nottodo.view.monthlycalendar.model.CalendarDay
 import kr.co.nottodo.view.monthlycalendar.model.CalendarType
 import kr.co.nottodo.view.monthlycalendar.util.isTheSameDay
-import kr.co.nottodo.view.monthlycalendarpicker.listener.MonthlyCalendarPickerClickHandler
+import kr.co.nottodo.view.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
 import kr.co.nottodo.view.monthlycalendarpicker.viewholder.MonthlyCalendarPickerDayViewHolder
 import kr.co.nottodo.view.monthlycalendarpicker.viewholder.MonthlyCalendarPickerEmptyViewHolder
 import java.util.*
 
 class MonthlyCalendarPickerDayAdapter(
-    private val monthlyCalendarPickerClickHandler: MonthlyCalendarPickerClickHandler
+    private val monthlyCalendarPickerClickListener: MonthlyCalendarPickerClickListener
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     private val calendarItems = mutableListOf<CalendarDay>()
@@ -41,7 +40,7 @@ class MonthlyCalendarPickerDayAdapter(
                 val binding: ViewMonthlyCalendarPickerDayBinding = DataBindingUtil.inflate(
                     layoutInflater, R.layout.view_monthly_calendar_picker_day, parent, false
                 )
-                MonthlyCalendarPickerDayViewHolder(binding, monthlyCalendarPickerClickHandler)
+                MonthlyCalendarPickerDayViewHolder(binding, monthlyCalendarPickerClickListener)
             }
             CalendarType.EMPTY.ordinal -> {
                 val binding: ViewMonthlyCalendarPickerEmptyBinding = DataBindingUtil.inflate(
