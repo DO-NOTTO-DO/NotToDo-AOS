@@ -1,5 +1,6 @@
 package kr.co.nottodo.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -9,6 +10,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.shape.TriangleEdgeTreatment
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +36,13 @@ class MainActivity : AppCompatActivity() {
         binding.homeCustomBottom.background = backgroundDrawable
         binding.homeCustomBottom.itemIconTintList = null
         initFragment()
+        clickFbtn()
+    }
+
+    private fun clickFbtn() {
+        binding.fbtnHomeFloating.setOnClickListener {
+            startActivity(Intent(this, AdditionActivity::class.java))
+        }
     }
 
     private fun initFragment() {
