@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">NotToDo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--home-->
+    <string name="home_menu_home">홈</string>
+    <string name="home_menu_recommend">추천</string>
+    <string name="home_menu_result">성취</string>
+    <string name="home_menu_profile">내 정보</string>
+    <string name="home_add_nottodo">낫투두 추가</string>
+    <string name="home_nothing_nottodo">아직 아무것도 없네요,\n새로운 낫투두를 작성해보세요!</string>
 </resources>
