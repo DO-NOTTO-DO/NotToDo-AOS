@@ -9,7 +9,7 @@
 
         <variable
             name="day_item"
-            type="kr.co.nottodo.view.calendar.monthly.model.CalendarDay" />
+            type="kr.co.nottodo.view.calendar.monthly.model.CalendarDay.Day" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

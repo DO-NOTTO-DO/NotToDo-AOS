@@ -7,7 +7,7 @@
 
         <variable
             name="empty_day_item"
-            type="kr.co.nottodo.view.calendar.monthly.model.CalendarDay" />
+            type="kr.co.nottodo.view.calendar.monthly.model.CalendarDay.Empty" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
