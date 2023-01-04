@@ -9,7 +9,7 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.shape.TriangleEdgeTreatment
-import kr.co.nottodo.HomeFragment
+import kr.co.nottodo.presentation.home.HomeFragment
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
