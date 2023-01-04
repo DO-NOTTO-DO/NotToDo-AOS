@@ -6,12 +6,12 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.view.monthlycalendar.model.CalendarDay
-import kr.co.nottodo.view.monthlycalendar.model.CalendarMonth
-import kr.co.nottodo.view.monthlycalendar.util.toPrettyMonthString
-import kr.co.nottodo.view.monthlycalendar.util.totalMonthDifference
-import kr.co.nottodo.view.monthlycalendar.util.withTime
-import kr.co.nottodo.view.nouse.snaphelper.SnapPagerScrollListener
+import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.CalendarMonth
+import kr.co.nottodo.view.calendar.util.toPrettyMonthString
+import kr.co.nottodo.view.calendar.util.totalMonthDifference
+import kr.co.nottodo.view.calendar.util.withTime
+import kr.co.nottodo.view.calendar.weekly.snaphelper.SnapPagerScrollListener
 import java.util.*
 import java.util.Calendar.*
 

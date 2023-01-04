@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewNoUseCalendarMonthBinding
-import kr.co.nottodo.view.monthlycalendar.model.CalendarMonth
+import kr.co.nottodo.view.calendar.monthly.model.CalendarMonth
 
 class NotToDoMonthlyCalendarAdapter(
     private val onClickPrevMonth: () -> Unit,
