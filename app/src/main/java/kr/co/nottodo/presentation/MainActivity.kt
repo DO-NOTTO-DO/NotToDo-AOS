@@ -32,5 +32,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.homeCustomBottom.background = backgroundDrawable
         binding.homeCustomBottom.itemIconTintList = null
+        initFragment()
+    }
+
+    private fun initFragment() {
+
     }
 }
