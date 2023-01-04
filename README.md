@@ -1,9 +1,5 @@
 # NotToDo-AOS
->NotTodo<br/>
-해야되는게 아니라 하지 말아야 될 것들을 적음으로써
-목표 달성에 방해되는 것들을 실제로 하지 않게 도움으로써
-목표 달성을 위한 ‘환경’을 제공한다.
-
+![image](https://user-images.githubusercontent.com/66460447/210509652-4031019b-28ae-4af3-a99a-6f31b8503e7c.png)
 
 <br/><br/>
 
