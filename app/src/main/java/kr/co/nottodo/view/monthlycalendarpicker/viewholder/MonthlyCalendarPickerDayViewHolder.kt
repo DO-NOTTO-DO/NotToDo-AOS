@@ -1,15 +1,14 @@
 package kr.co.nottodo.view.monthlycalendarpicker.viewholder
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerDayBinding
 import kr.co.nottodo.view.monthlycalendar.model.CalendarDay
-import kr.co.nottodo.view.monthlycalendarpicker.listener.MonthlyCalendarPickerClickHandler
+import kr.co.nottodo.view.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
 
 class MonthlyCalendarPickerDayViewHolder(
     private val binding: ViewMonthlyCalendarPickerDayBinding,
-    private val clickHandler: MonthlyCalendarPickerClickHandler
+    private val clickHandler: MonthlyCalendarPickerClickListener
 ): ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var dayData: CalendarDay.Day
