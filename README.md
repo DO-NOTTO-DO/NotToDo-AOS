@@ -1,5 +1,5 @@
 # NotToDo-AOS
-![image](https://user-images.githubusercontent.com/66460447/210509652-4031019b-28ae-4af3-a99a-6f31b8503e7c.png)
+
 
 <br/><br/>
 
