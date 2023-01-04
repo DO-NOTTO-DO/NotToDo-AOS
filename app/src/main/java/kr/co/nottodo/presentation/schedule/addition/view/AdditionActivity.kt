@@ -143,11 +143,11 @@ class AdditionActivity : AppCompatActivity() {
         }
     }
 
-    private fun setDropdownMenu() {
-        binding.etAdditionMissionName.setOnClickListener {
-            AdditionDropdownFragment().show(supportFragmentManager, AdditionDropdownFragment().tag)
-        }
-    }
+//    private fun setDropdownMenu() {
+//        binding.etAdditionMissionName.setOnClickListener {
+//            AdditionDropdownFragment().show(supportFragmentManager, AdditionDropdownFragment().tag)
+//        }
+//    }
 
     companion object {
         const val additionRecentHeader = "낫투두 기록"

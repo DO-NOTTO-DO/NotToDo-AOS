@@ -1,15 +1,19 @@
 package kr.co.nottodo.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.shape.TriangleEdgeTreatment
+import kr.co.nottodo.HomeFragment
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
-import kr.co.nottodo.presentation.achievement.view.AchievementFragment
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -31,34 +35,38 @@ class MainActivity : AppCompatActivity() {
                 R.color.white
             ) // change color
         }
-        binding.customBottom.background = backgroundDrawable
-        binding.customBottom.itemIconTintList = null
+        binding.homeCustomBottom.background = backgroundDrawable
+        binding.homeCustomBottom.itemIconTintList = null
+        initTransaction()
+        clickFbtn()
+    }
 
-        binding.customBottom.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.menu_home -> {
-
-                    return@setOnItemSelectedListener true
-                }
-                R.id.menu_recommend -> {
-
-                    return@setOnItemSelectedListener true
-                }
-                R.id.menu_result -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_view_main, AchievementFragment())
-                        .commit()
-                    return@setOnItemSelectedListener true
-                }
-                R.id.menu_profile -> {
-
-                    return@setOnItemSelectedListener true
-                }
-                else -> {
-
-                    return@setOnItemSelectedListener false
-                }
-            }
+    private fun clickFbtn() {
+        binding.fbtnHomeFloating.setOnClickListener {
+            startActivity(Intent(this, AdditionActivity::class.java))
         }
+    }
+
+    private fun initTransaction() {
+        binding.homeCustomBottom.setOnItemSelectedListener { item ->
+            changeFragment(
+                //todo 이거 자기꺼에 맞게 바꿔주세요
+                when (item.itemId) {
+                    R.id.menu_home -> HomeFragment()
+                    R.id.menu_recommend -> HomeFragment()
+                    R.id.menu_result -> HomeFragment()
+                    else -> HomeFragment()
+                }
+            )
+            false
+        }
+        binding.homeCustomBottom.selectedItemId = R.id.menu_home
+    }
+
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container_view_home, fragment)
+            .commit()
     }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_home_Motivation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/cl_home_Motivation"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_home_notto_graphic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="@dimen/size_spacing_14"
+            android:ellipsize="none"
+            android:paddingStart="25dp"
+            android:singleLine="false"
+            android:src="@drawable/img_home_graphic1"
+            app:layout_constraintBottom_toBottomOf="@id/cl_home_Motivation"
+            app:layout_constraintEnd_toEndOf="@id/cl_home_Motivation"
+            app:layout_constraintStart_toEndOf="@id/tv_home_motive_description"
+            app:layout_constraintTop_toTopOf="@id/cl_home_Motivation" />
+
+        <TextView
+            android:id="@+id/tv_home_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="47dp"
+            android:background="@color/yellow_basic_fef652"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="1dp"
+            android:text="@string/home_date"
+            android:textColor="@color/black_2a292d"
+            android:theme="@style/B18"
+            app:layout_constraintStart_toStartOf="@id/cl_home_Motivation"
+            app:layout_constraintTop_toTopOf="@id/cl_home_Motivation"
+            tools:text="@string/home_date" />
+
+        <TextView
+            android:id="@+id/tv_home_motive_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="25dp"
+            android:ellipsize="none"
+            android:text="@string/home_motive_description"
+            android:theme="@style/Typography.B25"
+            app:layout_constraintBottom_toBottomOf="@id/cl_home_Motivation"
+            app:layout_constraintEnd_toStartOf="@id/iv_home_notto_graphic"
+            app:layout_constraintStart_toStartOf="@id/tv_home_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_date"
+            tools:text="@string/home_motive_description" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/cl_home_Motivation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
