@@ -8,7 +8,7 @@ import kr.co.nottodo.data.local.HomeDaily
 import kr.co.nottodo.databinding.ItemHomeOutBinding
 import kr.co.nottodo.util.DiffUtilItemCallback
 
-class HomeOutterAdapter :
+class HomeOutterAdapter() :
     ListAdapter<HomeDaily, HomeOutterAdapter.OutterViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutterViewHolder {
@@ -28,6 +28,7 @@ class HomeOutterAdapter :
             binding.tvHomeItemOutTitle.text = data.title
             binding.tvHomeItemOutTitleNotodo.text = data.situation
             binding.tvHomeOutterDesciption.text = data.situation
+            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter()
         }
     }
 

@@ -1,5 +1,6 @@
 package kr.co.nottodo.presentation.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,7 @@ import kr.co.nottodo.data.local.HomeDaily
 import kr.co.nottodo.databinding.ItemHomeInnerBinding
 import kr.co.nottodo.util.DiffUtilItemCallback
 
-class HomeInnerAdapter :
+class HomeInnerAdapter() :
     ListAdapter<HomeDaily.Action, HomeInnerAdapter.InnerViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerViewHolder {
