@@ -49,22 +49,22 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun btnDeleteActionOnClickListener() {
         with(binding) {
-            btnAdditionDeleteAction1.setOnClickListener {
-                if (viewModel.additionActionName2.value != blank) {
-                    viewModel.additionActionName1.value = viewModel.additionActionName2.value
-                    viewModel.additionActionName2.value = blank
-                    tvAdditionAction2.visibility = View.GONE
-                    btnAdditionDeleteAction2.visibility = View.GONE
+            btnAdditionDeleteActionFirst.setOnClickListener {
+                if (viewModel.additionActionNameSecond.value != blank) {
+                    viewModel.additionActionNameFirst.value = viewModel.additionActionNameSecond.value
+                    viewModel.additionActionNameSecond.value = blank
+                    tvAdditionActionSecond.visibility = View.GONE
+                    btnAdditionDeleteActionSecond.visibility = View.GONE
                 } else {
-                    viewModel.additionActionName1.value = blank
-                    tvAdditionAction1.visibility = View.GONE
-                    btnAdditionDeleteAction1.visibility = View.GONE
+                    viewModel.additionActionNameFirst.value = blank
+                    tvAdditionActionFirst.visibility = View.GONE
+                    btnAdditionDeleteActionFirst.visibility = View.GONE
                 }
             }
-            btnAdditionDeleteAction2.setOnClickListener {
-                viewModel.additionActionName2.value = blank
-                tvAdditionAction2.visibility = View.GONE
-                btnAdditionDeleteAction2.visibility = View.GONE
+            btnAdditionDeleteActionSecond.setOnClickListener {
+                viewModel.additionActionNameSecond.value = blank
+                tvAdditionActionSecond.visibility = View.GONE
+                btnAdditionDeleteActionSecond.visibility = View.GONE
             }
         }
     }
@@ -72,17 +72,17 @@ class AdditionActivity : AppCompatActivity() {
     private fun btnActionPlusOnClickListener() {
         binding.btnAdditionActionPlus.setOnClickListener {
             if (viewModel.additionActionName.value != blank) {
-                if (viewModel.additionActionName1.value == blank) {
-                    viewModel.additionActionName1.value =
+                if (viewModel.additionActionNameFirst.value == blank) {
+                    viewModel.additionActionNameFirst.value =
                         viewModel.additionActionName.value
-                    binding.tvAdditionAction1.visibility = View.VISIBLE
-                    binding.btnAdditionDeleteAction1.visibility = View.VISIBLE
+                    binding.tvAdditionActionFirst.visibility = View.VISIBLE
+                    binding.btnAdditionDeleteActionFirst.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
-                } else if (viewModel.additionActionName2.value == blank) {
-                    viewModel.additionActionName2.value =
+                } else if (viewModel.additionActionNameSecond.value == blank) {
+                    viewModel.additionActionNameSecond.value =
                         viewModel.additionActionName.value
-                    binding.tvAdditionAction2.visibility = View.VISIBLE
-                    binding.btnAdditionDeleteAction2.visibility = View.VISIBLE
+                    binding.tvAdditionActionSecond.visibility = View.VISIBLE
+                    binding.btnAdditionDeleteActionSecond.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else {
                     Toast.makeText(

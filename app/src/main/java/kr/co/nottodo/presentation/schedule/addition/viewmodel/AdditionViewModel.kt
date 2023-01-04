@@ -12,14 +12,14 @@ class AdditionViewModel : ViewModel() {
         it.isNotEmpty()
     }
 
-    val additionActionName1: MutableLiveData<String> = MutableLiveData("")
-    val isAdditionActionName1Filled: LiveData<Boolean> = Transformations.map(additionActionName1) {
+    val additionActionNameFirst: MutableLiveData<String> = MutableLiveData("")
+    private val isAdditionActionName1Filled: LiveData<Boolean> = Transformations.map(additionActionNameFirst) {
         it.isNotEmpty()
     }
-    val additionActionName2: MutableLiveData<String> = MutableLiveData("")
+    val additionActionNameSecond: MutableLiveData<String> = MutableLiveData("")
 
     val additionSituationName: MutableLiveData<String> = MutableLiveData("입력하기")
-    val isAdditionSituationNameSuit: LiveData<Boolean> =
+    private val isAdditionSituationNameSuit: LiveData<Boolean> =
         Transformations.map(additionSituationName) {
             it != "입력하기"
         }

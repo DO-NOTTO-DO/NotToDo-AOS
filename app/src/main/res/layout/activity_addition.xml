@@ -212,7 +212,7 @@
                         app:layout_constraintTop_toTopOf="@id/et_addition_action_name" />
 
                     <TextView
-                        android:id="@+id/tv_addition_action_1"
+                        android:id="@+id/tv_addition_action_first"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="0dp"
@@ -226,20 +226,20 @@
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/et_addition_action_name"
-                        android:text="@={vm.additionActionName1}" />
+                        android:text="@={vm.additionActionNameFirst}" />
 
                     <ImageView
-                        android:id="@+id/btn_addition_delete_action_1"
+                        android:id="@+id/btn_addition_delete_action_first"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_btn_delete_create"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_1"
-                        app:layout_constraintStart_toEndOf="@id/tv_addition_action_1"
-                        app:layout_constraintTop_toTopOf="@id/tv_addition_action_1" />
+                        app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_first"
+                        app:layout_constraintStart_toEndOf="@id/tv_addition_action_first"
+                        app:layout_constraintTop_toTopOf="@id/tv_addition_action_first" />
 
                     <TextView
-                        android:id="@+id/tv_addition_action_2"
+                        android:id="@+id/tv_addition_action_second"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -251,18 +251,18 @@
                         android:theme="@style/M14"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_addition_action_1"
-                        android:text="@={vm.additionActionName2}" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_addition_action_first"
+                        android:text="@={vm.additionActionNameSecond}" />
 
                     <ImageView
-                        android:id="@+id/btn_addition_delete_action_2"
+                        android:id="@+id/btn_addition_delete_action_second"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_btn_delete_create"
                         android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_2"
-                        app:layout_constraintStart_toEndOf="@id/tv_addition_action_2"
-                        app:layout_constraintTop_toTopOf="@id/tv_addition_action_2" />
+                        app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_second"
+                        app:layout_constraintStart_toEndOf="@id/tv_addition_action_second"
+                        app:layout_constraintTop_toTopOf="@id/tv_addition_action_second" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
