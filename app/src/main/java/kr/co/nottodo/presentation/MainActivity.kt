@@ -9,6 +9,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.shape.TriangleEdgeTreatment
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
+import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,5 +33,32 @@ class MainActivity : AppCompatActivity() {
         }
         binding.customBottom.background = backgroundDrawable
         binding.customBottom.itemIconTintList = null
+
+        binding.customBottom.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.menu_home -> {
+
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_recommend -> {
+
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_result -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_view_main, AchievementFragment())
+                        .commit()
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_profile -> {
+
+                    return@setOnItemSelectedListener true
+                }
+                else -> {
+
+                    return@setOnItemSelectedListener false
+                }
+            }
+        }
     }
 }
