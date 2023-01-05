@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.databinding.ItemAdditionDropdownRecentSearchBinding
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.additionRecentSearch
 
 class AdditionDropdownRecentSearchAdapter(context: Context) :

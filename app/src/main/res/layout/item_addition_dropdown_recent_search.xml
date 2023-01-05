@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -9,14 +9,14 @@
         android:id="@+id/tv_addition_dropdown_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Sample"
-        android:theme="@style/R16"
-        android:textColor="@color/gray_1_626068"
-        android:padding="16dp"
         android:background="@drawable/line_bottom_gray6_0point5"
-        app:layout_constraintStart_toStartOf="parent"
+        android:padding="16dp"
+        android:textColor="@color/gray_1_626068"
+        android:theme="@style/R16"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        tools:text="Sample" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

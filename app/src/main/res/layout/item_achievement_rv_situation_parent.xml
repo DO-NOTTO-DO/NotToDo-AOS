@@ -10,8 +10,8 @@
         android:id="@+id/layout_achievement_rv_situation_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/ic_rank_toggleoff_first">
 
@@ -43,35 +43,36 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="14dp"
             android:layout_marginEnd="7dp"
+            android:textColor="@color/gray_1_626068"
+            android:theme="@style/M14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_achievement_rv_situation_parent_arrow"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="n회"
-            android:textColor="@color/gray_1_626068"
-            android:theme="@style/M14" />
+            tools:text="n회" />
 
         <ImageView
             android:id="@+id/iv_achievement_rv_situation_parent_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="22dp"
             android:src="@drawable/ic_arrow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="22dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_achievement_pager_situation_child"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/line_bottom_gray4_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_achievement_rv_situation_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="2dp"
-        tools:listitem="@layout/item_achievement_rv_situation_child"/>
+        android:background="@drawable/line_bottom_gray4_1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_achievement_rv_situation_parent"
+        tools:listitem="@layout/item_achievement_rv_situation_child" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

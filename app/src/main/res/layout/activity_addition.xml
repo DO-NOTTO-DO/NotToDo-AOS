@@ -221,12 +221,12 @@
                         android:paddingHorizontal="15dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="11dp"
+                        android:text="@={vm.additionActionNameFirst}"
                         android:textColor="@color/gray_2_8e8e93"
                         android:theme="@style/M14"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/et_addition_action_name"
-                        android:text="@={vm.additionActionNameFirst}" />
+                        app:layout_constraintTop_toBottomOf="@id/et_addition_action_name" />
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_first"
@@ -247,12 +247,12 @@
                         android:paddingHorizontal="15dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="11dp"
+                        android:text="@={vm.additionActionNameSecond}"
                         android:textColor="@color/gray_2_8e8e93"
                         android:theme="@style/M14"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_addition_action_first"
-                        android:text="@={vm.additionActionNameSecond}" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_addition_action_first" />
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_second"
@@ -421,13 +421,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/gray_2_8e8e93"
+            android:enabled="false"
             android:paddingVertical="18dp"
             android:text="추가하기"
             android:textColor="@color/white"
             android:theme="@style/B18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:enabled="false"/>
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

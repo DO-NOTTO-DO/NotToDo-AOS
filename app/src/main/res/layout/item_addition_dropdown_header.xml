@@ -9,23 +9,23 @@
         android:id="@+id/iv_addition_dropdown_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:src="@drawable/ic_recentsearch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="12dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_addition_dropdown_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Sample"
-        android:theme="@style/M16"
+        android:layout_marginStart="4dp"
+        android:paddingVertical="16dp"
         android:textColor="@color/gray_2_8e8e93"
+        android:theme="@style/M16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_addition_dropdown_header"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="4dp"
-        android:paddingVertical="16dp"/>
+        tools:text="Sample" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

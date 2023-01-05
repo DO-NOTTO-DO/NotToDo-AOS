@@ -50,9 +50,9 @@
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorGravity="center"
             app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/black_2a292d"
             app:tabTextAppearance="@style/TabTextStyle"
-            app:tabTextColor="@color/gray_2_8e8e93"
-            app:tabSelectedTextColor="@color/black_2a292d">
+            app:tabTextColor="@color/gray_2_8e8e93">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

@@ -51,7 +51,8 @@ class AdditionActivity : AppCompatActivity() {
         with(binding) {
             btnAdditionDeleteActionFirst.setOnClickListener {
                 if (viewModel.additionActionNameSecond.value != blank) {
-                    viewModel.additionActionNameFirst.value = viewModel.additionActionNameSecond.value
+                    viewModel.additionActionNameFirst.value =
+                        viewModel.additionActionNameSecond.value
                     viewModel.additionActionNameSecond.value = blank
                     tvAdditionActionSecond.visibility = View.GONE
                     btnAdditionDeleteActionSecond.visibility = View.GONE
