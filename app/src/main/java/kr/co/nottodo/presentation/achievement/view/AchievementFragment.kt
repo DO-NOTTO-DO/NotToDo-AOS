@@ -26,6 +26,15 @@ class AchievementFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //TODO by 김준서 : 데이터 유무에 따른 분기처리
+
+        // 데이터가 없는 경우
+        // val emptyDataAdapter = AchievementViewPagerEmptyDataAdapter(requireContext())
+        // binding.viewpagerAchievement.adapter = emptyDataAdapter
+        // binding.tvAchievementStatistics.visibility = View.GONE
+
+        // 데이터 있는 경우
         val adapter = AchievementViewPagerAdapter(requireContext())
         binding.viewpagerAchievement.adapter = adapter
         binding.viewpagerAchievement.registerOnPageChangeCallback(object :
