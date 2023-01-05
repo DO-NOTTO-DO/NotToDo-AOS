@@ -15,6 +15,10 @@
     <string name="home_outter_item_title_second"> 유튜브 보지 않기</string>
     <string name="home_inner_item_description">캡스톤 PPT 만들기</string>
     <string name="home_outter_goals">목표</string>
+    <string name="home_bottom_trash">삭제하기</string>
+    <string name="home_bottom_edit">수정하기</string>
+    <string name="home_bottom_another_day">다른 날도 할래요</string>
+    <string name="home_bottom_another_day_description">이 낫투두를 원하는 날짜에 추가할 수 있어요</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
