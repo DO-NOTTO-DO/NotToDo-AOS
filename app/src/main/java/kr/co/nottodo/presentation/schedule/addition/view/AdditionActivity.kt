@@ -1,5 +1,6 @@
 package kr.co.nottodo.presentation.schedule.addition.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityAdditionBinding
+import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 
@@ -22,6 +24,10 @@ class AdditionActivity : AppCompatActivity() {
         initBinding()
         initBottomSheet()
         btnActionPlusOnClickListener()
+
+        binding.tvAdditionMissionName.setOnClickListener {
+            startActivity(Intent(this, SearchActivity::class.java))
+        }
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
         }
@@ -39,6 +45,17 @@ class AdditionActivity : AppCompatActivity() {
         ivDeletePageOnClickListener()
 
         observeToActivateAddBtn()
+        observePlusBtn()
+    }
+
+    private fun observePlusBtn() {
+        viewModel.isAdditionActionNameSecondFilled.observe(this){
+            if(it){
+                binding.btnAdditionActionPlus.setImageResource(R.drawable.ic_btn_plus_disabled)
+            }else{
+                binding.btnAdditionActionPlus.setImageResource(R.drawable.ic_btn_plus_enabled)
+            }
+        }
     }
 
     private fun ivDeletePageOnClickListener() {
@@ -111,9 +128,9 @@ class AdditionActivity : AppCompatActivity() {
     private fun observeEditText() {
         viewModel.isAdditionMissionNameFilled.observe(this) {
             if (it) {
-                binding.etAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
+                binding.tvAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
             } else {
-                binding.etAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
+                binding.tvAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
             }
         }
         viewModel.isAdditionGoalNameFilled.observe(this) {
