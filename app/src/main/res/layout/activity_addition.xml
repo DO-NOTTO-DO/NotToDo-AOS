@@ -379,7 +379,7 @@
                         android:id="@+id/layout_addition_calendar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/rectangle_border_gray_0point5_radius_5"
+                        android:background="@drawable/rectangle_border_gray5_0point5_radius_5"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
