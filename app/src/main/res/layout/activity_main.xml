@@ -15,22 +15,6 @@
         app:layout_constraintBottom_toTopOf="@+id/home_custom_bottom"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fbtn_home_floating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="27dp"
-        android:backgroundTint="@color/black_2a292d"
-        android:contentDescription="@string/home_add_nottodo"
-        android:gravity="bottom|right"
-        android:text="@string/home_add_nottodo"
-        android:textColor="@color/white"
-        android:theme="@style/R16"
-        app:icon="@drawable/ic_add_notodo_plus"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/fragment_container_view_home"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/home_custom_bottom"

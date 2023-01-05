@@ -87,8 +87,8 @@
                 android:id="@+id/rv_home_show_todo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginHorizontal="15dp"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="@id/cl_home_recyclerview_scroll"
                 app:layout_constraintTop_toBottomOf="@id/weekely_calendar"
@@ -97,4 +97,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fbtn_home_floating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="27dp"
+        android:backgroundTint="@color/black_2a292d"
+        android:contentDescription="@string/home_add_nottodo"
+        android:gravity="bottom|right"
+        android:text="@string/home_add_nottodo"
+        android:textColor="@color/white"
+        android:theme="@style/R16"
+        app:icon="@drawable/ic_add_notodo_plus"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
