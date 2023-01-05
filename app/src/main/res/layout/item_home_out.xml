@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="18dp"
-        android:background="@drawable/rectangle_border_gray2_05"
         android:textColor="@color/gray_1_626068"
         android:theme="@style/B14"
         app:layout_constraintStart_toEndOf="@+id/iv_home_out_checkbox"
