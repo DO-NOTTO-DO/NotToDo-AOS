@@ -33,6 +33,16 @@
             android:backgroundTint="@color/gray_1_626068"
             app:layout_constraintTop_toBottomOf="@id/et_recommend" />
 
+        <TextView
+            android:id="@+id/tv_warning_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="62dp"
+            android:layout_marginTop="17.8dp"
+            android:text="* 박스 터치 시, 낫투두가 아닌 환경만 입력됩니다."
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_recommendation" />
+
         <ImageButton
             android:id="@+id/btn_recommendation_back"
             android:layout_width="wrap_content"
@@ -46,12 +56,24 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recommendation"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider"
-            app:spanCount="5"
             tools:listitem="@layout/item_recommend" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_nottodo_recommend_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_recommendation"
+            tools:listitem="@layout/item_nottodo_recommendation_list_title" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
