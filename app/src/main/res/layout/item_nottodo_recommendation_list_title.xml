@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/v_item_nottodo_recommendation_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:background="@color/gray_5_cfcfcf"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_nottodo_recommedation_list_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/v_item_nottodo_recommendation_list_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/v_item_nottodo_recommendation_list_title"
+            app:layout_goneMarginStart="47dp"
+            tools:text="유튜브 보지 않기" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_nottodo_recommend_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/v_item_nottodo_recommendation_list_title"
+            app:spanCount="5"
+            tools:listitem="@layout/item_nottodo_recommendation_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
