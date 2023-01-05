@@ -12,6 +12,7 @@ import com.google.android.material.shape.TriangleEdgeTreatment
 import kr.co.nottodo.HomeFragment
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
+import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.menu_home -> HomeFragment()
                     R.id.menu_recommend -> HomeFragment()
-                    R.id.menu_result -> HomeFragment()
+                    R.id.menu_result -> AchievementFragment()
                     else -> HomeFragment()
                 }
             )
