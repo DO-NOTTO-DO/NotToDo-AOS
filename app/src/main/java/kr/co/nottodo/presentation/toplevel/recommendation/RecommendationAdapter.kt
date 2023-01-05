@@ -1,6 +1,5 @@
 package kr.co.nottodo.presentation.toplevel.recommendation
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,13 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemRecommendBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.Recommendationdata
+import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationData
 
-class RecommendationAdapter(private val tools: List<Recommendationdata>) :
-    RecyclerView.Adapter<RecommendationViewHolder>() {
+class RecommendationAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {
 
-    private val sampleItems = mutableListOf<Recommendationdata>()
-    private val items: List<Recommendationdata> = tools
+    private val sampleItems = mutableListOf<RecommendationData>(RecommendationData("",""), RecommendationData("",""),RecommendationData("",""),
+        RecommendationData("",""),RecommendationData("",""),RecommendationData("",""))
     private var selectedPosition = -1
     private var lastItemSelectedPosition = -1
 
@@ -36,11 +34,12 @@ class RecommendationAdapter(private val tools: List<Recommendationdata>) :
             normalBackground(holder, sampleItems[position])
         }
         bind(holder, position)
+        holder.onBind(sampleItems[position])
     }
 
     override fun getItemCount(): Int = sampleItems.size
 
-    fun submitList(list: List<Recommendationdata>) {
+    fun submitList(list: List<RecommendationData>) {
         sampleItems.clear()
         sampleItems.addAll(list)
         notifyDataSetChanged()
@@ -66,7 +65,7 @@ class RecommendationAdapter(private val tools: List<Recommendationdata>) :
 
     private fun normalBackground(
         holder: RecommendationViewHolder,
-        data: Recommendationdata
+        data: RecommendationData
     ) {
         holder.binding.apply {
             this.root.setBackgroundColor(Color.parseColor("#334455"))
@@ -76,7 +75,7 @@ class RecommendationAdapter(private val tools: List<Recommendationdata>) :
 
     private fun selectBackground(
         holder: RecommendationViewHolder,
-        data: Recommendationdata
+        data: RecommendationData
     ) {
         holder.binding.apply {
             this.root.setBackgroundColor(Color.parseColor("#112233"))
