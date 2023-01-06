@@ -4,29 +4,41 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityAdditionBinding
-import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
+import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
 
 class AdditionActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdditionBinding
     private val viewModel by lazy {
         AdditionViewModel()
     }
+    lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    binding.tvAdditionMissionName.text = result.data?.getStringExtra(missionName)
+                }
+            }
         setContentView(R.layout.activity_addition)
         initBinding()
         initBottomSheet()
         btnActionPlusOnClickListener()
 
         binding.tvAdditionMissionName.setOnClickListener {
-            startActivity(Intent(this, SearchActivity::class.java))
+            val intent = Intent(Intent(this, SearchActivity::class.java))
+            intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
+            resultLauncher.launch(intent)
         }
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
@@ -49,10 +61,10 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun observePlusBtn() {
-        viewModel.isAdditionActionNameSecondFilled.observe(this){
-            if(it){
+        viewModel.isAdditionActionNameSecondFilled.observe(this) {
+            if (it) {
                 binding.btnAdditionActionPlus.setImageResource(R.drawable.ic_btn_plus_disabled)
-            }else{
+            } else {
                 binding.btnAdditionActionPlus.setImageResource(R.drawable.ic_btn_plus_enabled)
             }
         }
@@ -175,5 +187,7 @@ class AdditionActivity : AppCompatActivity() {
         )
         const val blank = ""
         const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
+        const val missionName = "missionName"
+        const val currentMissionName = "currentMissionName"
     }
 }
