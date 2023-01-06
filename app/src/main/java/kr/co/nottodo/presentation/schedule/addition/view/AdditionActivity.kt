@@ -29,6 +29,9 @@ class AdditionActivity : AppCompatActivity() {
         initBinding()
         initBottomSheet()
         btnActionPlusOnClickListener()
+        binding.tvAdditionMissionName.setOnClickListener {
+            moveToSearchActivity()
+        }
         moveToSearchActivity()
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
@@ -60,11 +63,9 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun moveToSearchActivity() {
-        binding.tvAdditionMissionName.setOnClickListener {
-            val intent = Intent(Intent(this, SearchActivity::class.java))
-            intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
-            resultLauncher.launch(intent)
-        }
+        val intent = Intent(Intent(this, SearchActivity::class.java))
+        intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
+        resultLauncher.launch(intent)
     }
 
     private fun observePlusBtn() {
