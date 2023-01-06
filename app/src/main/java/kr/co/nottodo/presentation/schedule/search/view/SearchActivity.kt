@@ -67,17 +67,12 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        if (intent.getStringExtra(currentMissionName) != blank) {
-            viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
-        }
-
+        viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
         binding.tvSearchComplete.setOnClickListener {
-            if (viewModel.isSearchBarTextFilled.value == true) {
-                val intent = Intent(this, AdditionActivity::class.java)
-                intent.putExtra(missionName, viewModel.searchBarText.value)
-                setResult(RESULT_OK, intent)
-                finish()
-            }
+            val intent = Intent(this, AdditionActivity::class.java)
+            intent.putExtra(missionName, viewModel.searchBarText.value)
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 }
