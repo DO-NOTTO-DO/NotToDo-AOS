@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="97dp"
+            android:layout_marginBottom="46dp"
             android:text="* 8월 1달간의 낫투두를 바탕으로 만들어진 자료에요!"
             android:textColor="@color/gray_2_8e8e93"
             android:theme="@style/M12"
