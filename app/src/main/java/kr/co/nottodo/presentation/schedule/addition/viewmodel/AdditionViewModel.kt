@@ -28,6 +28,7 @@ class AdditionViewModel : ViewModel() {
         Transformations.map(additionSituationName) {
             it != "입력하기"
         }
+    val isAdditionSituationNameFilled: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val additionGoalName: MutableLiveData<String> = MutableLiveData("")
     val isAdditionGoalNameFilled: LiveData<Boolean> = Transformations.map(additionGoalName) {
@@ -43,7 +44,7 @@ class AdditionViewModel : ViewModel() {
         isBtnSuitConditions.addSource(isAdditionActionNameFirstFilled) {
             isBtnSuitConditions.value = _isBtnSuitConditions()
         }
-        isBtnSuitConditions.addSource(isAdditionSituationNameSuit) {
+        isBtnSuitConditions.addSource(isAdditionSituationNameFilled) {
             isBtnSuitConditions.value = _isBtnSuitConditions()
         }
         isBtnSuitConditions.addSource(isAdditionGoalNameFilled) {
@@ -54,7 +55,7 @@ class AdditionViewModel : ViewModel() {
     private fun _isBtnSuitConditions(): Boolean {
         return (isAdditionMissionNameFilled.value == true
                 && isAdditionActionNameFirstFilled.value == true
-                && isAdditionSituationNameSuit.value == true
+                && isAdditionSituationNameFilled.value == true
                 && isAdditionGoalNameFilled.value == true)
     }
 }

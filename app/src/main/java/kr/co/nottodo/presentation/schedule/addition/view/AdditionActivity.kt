@@ -2,6 +2,7 @@ package kr.co.nottodo.presentation.schedule.addition.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -32,18 +33,18 @@ class AdditionActivity : AppCompatActivity() {
         binding.tvAdditionMissionName.setOnClickListener {
             moveToSearchActivity()
         }
-        moveToSearchActivity()
         binding.btnAdditionAdd.setOnClickListener {
-            // 서버 통신을 통해 낫투두 추가하는 기능
+            // TODO by 김준서 : 서버 통신을 통해 낫투두 추가하는 기능
         }
         binding.layoutAdditionMoveSituationPage.setOnClickListener {
-            // 상황 추가 화면으로 이동
+            // TODO by 김준서 : 상황 추가 화면으로 이동 - 상황 추가 화면 구현시 개발
         }
         binding.ivAdditionMoveSituationPage.setOnClickListener {
-            viewModel.additionSituationName.value = "출근 시간"
-        } // 추후 상황 추가 화면 구현시 개발
+            viewModel.additionSituationName.value = "입력하기"
+            viewModel.isAdditionSituationNameFilled.value = true
+        } // TODO by 김준서 : 추후 상황 추가 화면 구현시 개발
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
-            // 추후 행동 추천 화면 구현시 개발
+            // TODO by 김준서 : 추후 행동 추천 화면 구현시 개발
         }
         observeEditText()
         btnDeleteActionOnClickListener()
