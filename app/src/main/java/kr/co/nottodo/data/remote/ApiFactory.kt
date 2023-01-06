@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 object ApiFactory {
     private val client by lazy {
         OkHttpClient.Builder()
+            .addInterceptor(TokenInterceptor())
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
@@ -17,7 +18,7 @@ object ApiFactory {
             )
             .build()
     }
-    val retrofit by lazy {
+    val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("http://43.201.125.166:3000/api/")
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
