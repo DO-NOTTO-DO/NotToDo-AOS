@@ -39,8 +39,12 @@ class AchievementFragment : Fragment() {
         binding.viewpagerAchievement.adapter = adapter
         binding.viewpagerAchievement.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                 adapter.notifyDataSetChanged()
             }
         })
