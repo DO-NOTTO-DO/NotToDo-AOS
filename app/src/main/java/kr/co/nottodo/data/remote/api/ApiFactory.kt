@@ -1,4 +1,4 @@
-package kr.co.nottodo.data.remote
+package kr.co.nottodo.data.remote.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
