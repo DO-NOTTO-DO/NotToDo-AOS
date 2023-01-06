@@ -24,22 +24,12 @@ class AdditionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    binding.tvAdditionMissionName.text = result.data?.getStringExtra(missionName)
-                }
-            }
+        initResultLauncher()
         setContentView(R.layout.activity_addition)
         initBinding()
         initBottomSheet()
         btnActionPlusOnClickListener()
-
-        binding.tvAdditionMissionName.setOnClickListener {
-            val intent = Intent(Intent(this, SearchActivity::class.java))
-            intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
-            resultLauncher.launch(intent)
-        }
+        moveToSearchActivity()
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
         }
@@ -58,6 +48,23 @@ class AdditionActivity : AppCompatActivity() {
 
         observeToActivateAddBtn()
         observePlusBtn()
+    }
+
+    private fun initResultLauncher() {
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    binding.tvAdditionMissionName.text = result.data?.getStringExtra(missionName)
+                }
+            }
+    }
+
+    private fun moveToSearchActivity() {
+        binding.tvAdditionMissionName.setOnClickListener {
+            val intent = Intent(Intent(this, SearchActivity::class.java))
+            intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
+            resultLauncher.launch(intent)
+        }
     }
 
     private fun observePlusBtn() {
@@ -103,21 +110,18 @@ class AdditionActivity : AppCompatActivity() {
         binding.btnAdditionActionPlus.setOnClickListener {
             if (viewModel.additionActionName.value != blank) {
                 if (viewModel.additionActionNameFirst.value == blank) {
-                    viewModel.additionActionNameFirst.value =
-                        viewModel.additionActionName.value
+                    viewModel.additionActionNameFirst.value = viewModel.additionActionName.value
                     binding.tvAdditionActionFirst.visibility = View.VISIBLE
                     binding.btnAdditionDeleteActionFirst.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else if (viewModel.additionActionNameSecond.value == blank) {
-                    viewModel.additionActionNameSecond.value =
-                        viewModel.additionActionName.value
+                    viewModel.additionActionNameSecond.value = viewModel.additionActionName.value
                     binding.tvAdditionActionSecond.visibility = View.VISIBLE
                     binding.btnAdditionDeleteActionSecond.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else {
                     Toast.makeText(
-                        this@AdditionActivity,
-                        additionToastText, Toast.LENGTH_SHORT
+                        this@AdditionActivity, additionToastText, Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -182,8 +186,11 @@ class AdditionActivity : AppCompatActivity() {
     companion object {
         const val additionRecentHeader = "낫투두 기록"
         val additionRecentSearch: List<String> = listOf(
-            "침대에 다시 눕지 않기", "알람 끄고 다시 자지 않기",
-            "10시 이후에 일어나지 않기", "일어났으면 다시 침대에 눕지 않기", "모바일 게임 하지 않기"
+            "침대에 다시 눕지 않기",
+            "알람 끄고 다시 자지 않기",
+            "10시 이후에 일어나지 않기",
+            "일어났으면 다시 침대에 눕지 않기",
+            "모바일 게임 하지 않기"
         )
         const val blank = ""
         const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
