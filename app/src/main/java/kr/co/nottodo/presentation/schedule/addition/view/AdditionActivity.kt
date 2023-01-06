@@ -1,27 +1,38 @@
 package kr.co.nottodo.presentation.schedule.addition.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityAdditionBinding
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
+import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
 
 class AdditionActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdditionBinding
     private val viewModel by lazy {
         AdditionViewModel()
     }
+    lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initResultLauncher()
         setContentView(R.layout.activity_addition)
         initBinding()
         initBottomSheet()
         btnActionPlusOnClickListener()
+        binding.tvAdditionMissionName.setOnClickListener {
+            moveToSearchActivity()
+        }
+        moveToSearchActivity()
         binding.btnAdditionAdd.setOnClickListener {
             // 서버 통신을 통해 낫투두 추가하는 기능
         }
@@ -39,6 +50,32 @@ class AdditionActivity : AppCompatActivity() {
         ivDeletePageOnClickListener()
 
         observeToActivateAddBtn()
+        observePlusBtn()
+    }
+
+    private fun initResultLauncher() {
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    binding.tvAdditionMissionName.text = result.data?.getStringExtra(missionName)
+                }
+            }
+    }
+
+    private fun moveToSearchActivity() {
+        val intent = Intent(Intent(this, SearchActivity::class.java))
+        intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
+        resultLauncher.launch(intent)
+    }
+
+    private fun observePlusBtn() {
+        viewModel.isAdditionActionNameSecondFilled.observe(this) {
+            if (it) {
+                binding.btnAdditionActionPlus.setImageResource(R.drawable.ic_btn_plus_disabled)
+            } else {
+                binding.btnAdditionActionPlus.setImageResource(R.drawable.ic_btn_plus_enabled)
+            }
+        }
     }
 
     private fun ivDeletePageOnClickListener() {
@@ -74,21 +111,18 @@ class AdditionActivity : AppCompatActivity() {
         binding.btnAdditionActionPlus.setOnClickListener {
             if (viewModel.additionActionName.value != blank) {
                 if (viewModel.additionActionNameFirst.value == blank) {
-                    viewModel.additionActionNameFirst.value =
-                        viewModel.additionActionName.value
+                    viewModel.additionActionNameFirst.value = viewModel.additionActionName.value
                     binding.tvAdditionActionFirst.visibility = View.VISIBLE
                     binding.btnAdditionDeleteActionFirst.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else if (viewModel.additionActionNameSecond.value == blank) {
-                    viewModel.additionActionNameSecond.value =
-                        viewModel.additionActionName.value
+                    viewModel.additionActionNameSecond.value = viewModel.additionActionName.value
                     binding.tvAdditionActionSecond.visibility = View.VISIBLE
                     binding.btnAdditionDeleteActionSecond.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else {
                     Toast.makeText(
-                        this@AdditionActivity,
-                        additionToastText, Toast.LENGTH_SHORT
+                        this@AdditionActivity, additionToastText, Toast.LENGTH_SHORT
                     ).show()
                 }
             }
@@ -111,9 +145,9 @@ class AdditionActivity : AppCompatActivity() {
     private fun observeEditText() {
         viewModel.isAdditionMissionNameFilled.observe(this) {
             if (it) {
-                binding.etAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
+                binding.tvAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
             } else {
-                binding.etAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
+                binding.tvAdditionMissionName.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
             }
         }
         viewModel.isAdditionGoalNameFilled.observe(this) {
@@ -153,10 +187,15 @@ class AdditionActivity : AppCompatActivity() {
     companion object {
         const val additionRecentHeader = "낫투두 기록"
         val additionRecentSearch: List<String> = listOf(
-            "침대에 다시 눕지 않기", "알람 끄고 다시 자지 않기",
-            "10시 이후에 일어나지 않기", "일어났으면 다시 침대에 눕지 않기", "모바일 게임 하지 않기"
+            "침대에 다시 눕지 않기",
+            "알람 끄고 다시 자지 않기",
+            "10시 이후에 일어나지 않기",
+            "일어났으면 다시 침대에 눕지 않기",
+            "모바일 게임 하지 않기"
         )
         const val blank = ""
         const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
+        const val missionName = "missionName"
+        const val currentMissionName = "currentMissionName"
     }
 }

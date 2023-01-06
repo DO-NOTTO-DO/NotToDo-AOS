@@ -46,8 +46,7 @@
                         android:layout_height="wrap_content"
                         android:text="낫투두 추가하기"
                         android:textColor="@color/gray_1_626068"
-                        android:textStyle="bold"
-                        android:theme="@style/Sb22"
+                        android:theme="@style/B18"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -64,50 +63,42 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <TextView
+                    android:id="@+id/tv_addition_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/bg_f5f5f5"
+                    android:gravity="center"
+                    android:paddingVertical="12dp"
+                    android:text="* 하루 최대 3개까지 낫투두를 작성할 수 있어요!"
+                    android:textColor="@color/gray_2_8e8e93"
+                    android:theme="@style/R12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_addition_title" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_addition_mission"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_addition_title">
+                    app:layout_constraintTop_toBottomOf="@id/tv_addition_notice">
 
                     <TextView
-                        android:id="@+id/tv_addition_mission_name"
+                        android:id="@+id/tv_addition_mission_name_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="하지 않을 일을 적어주세요"
-                        android:theme="@style/M16"
+                        android:theme="@style/M14"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <!--                    <com.google.android.material.textfield.TextInputLayout-->
-                    <!--                        android:id="@+id/layout_addition_mission_name"-->
-                    <!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-                    <!--                        android:layout_width="0dp"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginTop="15dp"-->
-                    <!--                        android:maxLength="20"-->
-                    <!--                        android:textColor="@color/gray_1_626068"-->
-                    <!--                        android:textColorHint="@color/gray_3_c4c4c4"-->
-                    <!--                        android:theme="@style/M16"-->
-                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                        app:layout_constraintTop_toBottomOf="@id/tv_addition_mission_name">-->
-
-                    <!--                        <AutoCompleteTextView-->
-                    <!--                            android:id="@+id/et_addition_mission_name"-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="match_parent"-->
-                    <!--                            android:background="@drawable/rectangle_border_gray4_1"-->
-                    <!--                            android:hint="ex) 유튜브 2시간 이상 보지 않기"-->
-                    <!--                            android:maxLength="20"-->
-                    <!--                            android:text="@={vm.additionMissionName}" />-->
-                    <!--                    </com.google.android.material.textfield.TextInputLayout>-->
-                    <EditText
-                        android:id="@+id/et_addition_mission_name"
+                    <TextView
+                        android:id="@+id/tv_addition_mission_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -118,10 +109,10 @@
                         android:text="@={vm.additionMissionName}"
                         android:textColor="@color/gray_1_626068"
                         android:textColorHint="@color/gray_3_c4c4c4"
-                        android:theme="@style/M16"
+                        android:theme="@style/M14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_addition_mission_name" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_addition_mission_name_title" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,7 +135,7 @@
 
                         <TextView
                             android:id="@+id/tv_addition_action_name"
-                            style="@style/M16"
+                            style="@style/M14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="구체적인 실천 행동은 무엇인가요?"
@@ -162,7 +153,7 @@
 
                             <TextView
                                 android:id="@+id/tv_addition_move_recommend_page"
-                                style="@style/M16"
+                                style="@style/M14"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="추천 받기"
@@ -195,7 +186,7 @@
                         android:text="@={vm.additionActionName}"
                         android:textColor="@color/gray_1_626068"
                         android:textColorHint="@color/gray_3_c4c4c4"
-                        android:theme="@style/M16"
+                        android:theme="@style/M14"
                         app:layout_constraintEnd_toStartOf="@id/btn_addition_action_plus"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/layout_addition_action_recommend" />
@@ -205,18 +196,31 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginEnd="19dp"
-                        android:src="@drawable/ic_btn_plus"
+                        android:src="@drawable/ic_btn_plus_enabled"
                         app:layout_constraintBottom_toBottomOf="@id/et_addition_action_name"
                         app:layout_constraintDimensionRatio="1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/et_addition_action_name" />
 
                     <TextView
+                        android:id="@+id/tv_addition_action_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="9dp"
+                        android:background="@null"
+                        android:text="* 상황 추가는 낫투두 당 2개까지 가능합니다."
+                        android:textColor="@color/gray_2_8e8e93"
+                        android:theme="@style/R12"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_addition_action_name" />
+
+
+                    <TextView
                         android:id="@+id/tv_addition_action_first"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="7dp"
+                        android:layout_marginTop="9dp"
                         android:background="@drawable/rectangle_border_gray4_0point5"
                         android:paddingHorizontal="15dp"
                         android:paddingTop="12dp"
@@ -226,7 +230,7 @@
                         android:theme="@style/M14"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/et_addition_action_name" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_addition_action_desc" />
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_first"
@@ -242,7 +246,7 @@
                         android:id="@+id/tv_addition_action_second"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="9dp"
                         android:background="@drawable/rectangle_border_gray4_0point5"
                         android:paddingHorizontal="15dp"
                         android:paddingTop="12dp"
@@ -277,7 +281,7 @@
 
                     <TextView
                         android:id="@+id/tv_addition_situation_title"
-                        style="@style/M16"
+                        style="@style/M14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어떤 상황인가요?"
@@ -295,14 +299,15 @@
 
                         <TextView
                             android:id="@+id/tv_addition_situation_name"
-                            style="@style/M16"
+                            style="@style/M14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@={vm.additionSituationName}"
                             android:textColor="@color/gray_2_8e8e93"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/iv_addition_move_situation_page"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="입력하기" />
 
                         <ImageView
                             android:id="@+id/iv_addition_move_situation_page"
@@ -330,7 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="이루고자 하는 목표는 무엇인가요?"
-                        android:theme="@style/M16"
+                        android:theme="@style/M14"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -346,7 +351,7 @@
                         android:text="@={vm.additionGoalName}"
                         android:textColor="@color/gray_1_626068"
                         android:textColorHint="@color/gray_3_c4c4c4"
-                        android:theme="@style/M16"
+                        android:theme="@style/M14"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_addition_goal_title" />
@@ -359,8 +364,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="30dp"
-                    android:paddingBottom="30dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingBottom="55dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layout_addition_goal">
@@ -370,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="실천 날짜"
-                        android:theme="@style/M16"
+                        android:theme="@style/M14"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -393,7 +397,7 @@
                             android:layout_marginEnd="10dp"
                             android:text="2022.12.16"
                             android:textColor="@color/gray_1_626068"
-                            android:theme="@style/M16"
+                            android:theme="@style/M14"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/iv_addition_calendar"
                             app:layout_constraintStart_toStartOf="parent"
@@ -411,8 +415,8 @@
                             app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
