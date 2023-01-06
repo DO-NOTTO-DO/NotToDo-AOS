@@ -1,14 +1,18 @@
 package kr.co.nottodo.presentation.toplevel.recommendation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentRecommendationBinding
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationChildAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 
@@ -16,8 +20,8 @@ import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.Rec
 class RecommendationFragment : Fragment() {
 
     private var _binding: FragmentRecommendationBinding? = null
-    private val binding : FragmentRecommendationBinding
-        get() = requireNotNull(_binding) {"_binding is Null ..."}
+    private val binding: FragmentRecommendationBinding
+        get() = requireNotNull(_binding) { "_binding is Null ..." }
     private lateinit var recommendationAdapter: RecommendationAdapter
     private lateinit var parentAdapter: RecommendationParentAdapter
     private lateinit var childAdapter: RecommendationChildAdapter
@@ -47,9 +51,11 @@ class RecommendationFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = parentAdapter
         }
+            binding.tvWriteDirect.setOnClickListener {
+                startActivity(Intent(context, AdditionActivity::class.java))
+            }
+        }
 
-
-    }
 
     override fun onDestroyView() {
         _binding = null
