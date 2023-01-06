@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="3dp"
                 android:text="완료"
-                android:textColor="@color/gray_3_c4c4c4"
+                android:textColor="@color/gray_1_626068"
                 android:theme="@style/M16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -63,20 +63,8 @@ class SearchActivity : AppCompatActivity() {
         viewModel.isSearchBarTextFilled.observe(this) {
             if (it) {
                 binding.etSearchSearchBar.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
-                binding.tvSearchComplete.setTextColor(
-                    ContextCompat.getColor(
-                        binding.root.context,
-                        R.color.gray_1_626068
-                    )
-                )
             } else {
                 binding.etSearchSearchBar.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
-                binding.tvSearchComplete.setTextColor(
-                    ContextCompat.getColor(
-                        binding.root.context,
-                        R.color.gray_3_c4c4c4
-                    )
-                )
             }
         }
     }
