@@ -3,20 +3,22 @@ package kr.co.nottodo.presentation.schedule.search.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.nottodo.R
+import kr.co.nottodo.data.remote.model.ResponseHistoryDto
 import kr.co.nottodo.databinding.ActivitySearchBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.currentMissionName
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.missionName
 import kr.co.nottodo.presentation.schedule.search.adapter.SearchRecyclerViewAdapter
 import kr.co.nottodo.presentation.schedule.search.viewmodel.SearchViewModel
+import timber.log.Timber
 
 class SearchActivity : AppCompatActivity() {
     lateinit var binding: ActivitySearchBinding
     private val viewModel by lazy { SearchViewModel() }
+    lateinit var itemList: List<ResponseHistoryDto.History>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +39,28 @@ class SearchActivity : AppCompatActivity() {
         )
 
         initBinding()
-        initRecyclerView(sampleList)
+        viewModel.getHistory()
+        viewModel.getHistoryResult.observe(this) {
+            itemList = it.data
+            initRecyclerView(itemList)
+        }
+        viewModel.errorMessage.observe(this) {
+            Timber.d(it)
+        }
 
         observeSearchBar()
 
         getSearchBarText()
 
         onCompleteBtnClick()
+
+        viewModel.getHistory()
+        viewModel.getHistoryResult.observe(this) {
+            itemList = it.data
+        }
+        viewModel.errorMessage.observe(this) {
+            Timber.d(it)
+        }
     }
 
     private fun onCompleteBtnClick() {
@@ -69,10 +86,10 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRecyclerView(sampleList: List<String>) {
+    private fun initRecyclerView(itemList: List<ResponseHistoryDto.History>) {
         binding.rvSearchHistory.adapter = SearchRecyclerViewAdapter(
             binding.root.context,
-            sampleList, viewModel::setSearchBarText
+            itemList, viewModel::setSearchBarText
         )
         binding.rvSearchHistory.layoutManager = LinearLayoutManager(binding.root.context)
     }

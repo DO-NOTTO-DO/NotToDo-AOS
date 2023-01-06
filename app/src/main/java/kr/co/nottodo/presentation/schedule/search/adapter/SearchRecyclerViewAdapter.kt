@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
+import kr.co.nottodo.data.remote.model.ResponseHistoryDto
 import kr.co.nottodo.databinding.ItemSearchRvBinding
 
 
 class SearchRecyclerViewAdapter(
-    context: Context, private val sampleList: List<String>,
+    context: Context, private val sampleList: List<ResponseHistoryDto.History>,
     private val onHistoryClick: (String) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -40,7 +41,7 @@ class SearchRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as SearchRecyclerViewHolder).onBind(sampleList[position])
+        (holder as SearchRecyclerViewHolder).onBind(sampleList[position].title)
         if (position != sampleList.size - 1) {
             holder.setBottomLine()
         }
