@@ -13,10 +13,10 @@ import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationPar
 
 
 class RecommendationParentAdapter : RecyclerView.Adapter<RecommendationParentViewHolder>() {
-    private val parentItem = mutableListOf<RecommendationParentData>(RecommendationParentData(0,"폰 끄기", listOf(
-        RecommendationChildData(0,"유튜브 프리미엄 해지"), RecommendationChildData(1,"테스트1")
+    private val parentItem = mutableListOf<RecommendationParentData>(RecommendationParentData(0,"유튜브 보지 않기", listOf(
+        RecommendationChildData(0,"스마트폰 전원 꺼두기"), RecommendationChildData(1,"유튜브 프리미엄 해지")
     )),
-            RecommendationParentData(1,"폰 끄기2", listOf(RecommendationChildData(0,"프리미엄 해지2"), RecommendationChildData(1,"테스트2"))))
+            RecommendationParentData(1,"인스타그램 보지 않기", listOf(RecommendationChildData(0,"계정 비활성화 하기"), RecommendationChildData(1,"인스타 어플리케이션 삭제"))))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendationParentViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
