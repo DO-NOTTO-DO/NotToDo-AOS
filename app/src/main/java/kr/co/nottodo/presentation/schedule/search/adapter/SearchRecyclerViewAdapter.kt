@@ -8,8 +8,10 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemSearchRvBinding
 
 
-class SearchRecyclerViewAdapter(context: Context, private val sampleList: List<String>,
-                                private val onHistoryClick: (String)->Unit) :
+class SearchRecyclerViewAdapter(
+    context: Context, private val sampleList: List<String>,
+    private val onHistoryClick: (String) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var binding: ItemSearchRvBinding
@@ -20,7 +22,10 @@ class SearchRecyclerViewAdapter(context: Context, private val sampleList: List<S
         return SearchRecyclerViewHolder(binding, onHistoryClick)
     }
 
-    class SearchRecyclerViewHolder(private val binding: ItemSearchRvBinding, private val onHistoryClick: (String)->Unit) :
+    class SearchRecyclerViewHolder(
+        private val binding: ItemSearchRvBinding,
+        private val onHistoryClick: (String) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(history: String) {
             binding.tvSearchRv.text = history

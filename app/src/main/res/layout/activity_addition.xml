@@ -67,16 +67,16 @@
                     android:id="@+id/tv_addition_notice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_addition_title"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:text="* 하루 최대 3개까지 낫투두를 작성할 수 있어요!"
-                    android:theme="@style/R12"
-                    android:textColor="@color/gray_2_8e8e93"
-                    android:gravity="center"
+                    android:layout_marginTop="22dp"
                     android:background="@color/bg_f5f5f5"
+                    android:gravity="center"
                     android:paddingVertical="12dp"
-                    android:layout_marginTop="22dp"/>
+                    android:text="* 하루 최대 3개까지 낫투두를 작성할 수 있어요!"
+                    android:textColor="@color/gray_2_8e8e93"
+                    android:theme="@style/R12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_addition_title" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_addition_mission"
@@ -207,12 +207,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
+                        android:background="@null"
                         android:text="* 상황 추가는 낫투두 당 2개까지 가능합니다."
                         android:textColor="@color/gray_2_8e8e93"
                         android:theme="@style/R12"
-                        android:background="@null"
-                        app:layout_constraintTop_toBottomOf="@id/et_addition_action_name"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/et_addition_action_name" />
 
 
                     <TextView
@@ -364,10 +364,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="30dp"
+                    android:paddingBottom="55dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/layout_addition_goal"
-                    android:paddingBottom="55dp">
+                    app:layout_constraintTop_toBottomOf="@id/layout_addition_goal">
 
                     <TextView
                         android:id="@+id/tv_addition_date_title"

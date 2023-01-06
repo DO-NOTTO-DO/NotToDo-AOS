@@ -23,7 +23,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-
         val sampleList = listOf(
             "침대에 다시 눕지 않기",
             "10시 이후에 일어나지 않기",
@@ -68,7 +67,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        if(intent.getStringExtra(currentMissionName) != blank){
+        if (intent.getStringExtra(currentMissionName) != blank) {
             viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
         }
 
