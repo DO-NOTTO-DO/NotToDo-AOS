@@ -34,8 +34,8 @@ class SearchActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        binding.rvSearchHistory.adapter =
-            SearchRecyclerViewAdapter(binding.root.context, sampleList)
+        binding.rvSearchHistory.adapter = SearchRecyclerViewAdapter(binding.root.context,
+            sampleList, viewModel::setSearchBarText)
         binding.rvSearchHistory.layoutManager = LinearLayoutManager(binding.root.context)
 
         viewModel.isSearchBarTextFilled.observe(this) {

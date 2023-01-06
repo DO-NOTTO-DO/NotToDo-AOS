@@ -10,4 +10,8 @@ class SearchViewModel: ViewModel() {
     val isSearchBarTextFilled: LiveData<Boolean> = Transformations.map(searchBarText) {
         it != ""
     }
+
+    fun setSearchBarText(text:String){
+        searchBarText.value = text
+    }
 }

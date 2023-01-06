@@ -1,31 +1,32 @@
 package kr.co.nottodo.presentation.schedule.search.adapter
 
 import android.content.Context
-import android.graphics.Rect
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemSearchRvBinding
 
 
-class SearchRecyclerViewAdapter(context: Context, private val sampleList: List<String>) :
+class SearchRecyclerViewAdapter(context: Context, private val sampleList: List<String>,
+                                private val onHistoryClick: (String)->Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    lateinit var binding: ItemSearchRvBinding
+    private lateinit var binding: ItemSearchRvBinding
     private val inflater by lazy { LayoutInflater.from(context) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         binding = ItemSearchRvBinding.inflate(inflater, parent, false)
-        return SearchRecyclerViewHolder(binding)
+        return SearchRecyclerViewHolder(binding, onHistoryClick)
     }
 
-    class SearchRecyclerViewHolder(private val binding: ItemSearchRvBinding) :
+    class SearchRecyclerViewHolder(private val binding: ItemSearchRvBinding, private val onHistoryClick: (String)->Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(history: String) {
             binding.tvSearchRv.text = history
+            binding.root.setOnClickListener {
+                onHistoryClick(history)
+            }
         }
 
         fun setBottomLine() {
@@ -38,22 +39,8 @@ class SearchRecyclerViewAdapter(context: Context, private val sampleList: List<S
         if (position != sampleList.size - 1) {
             holder.setBottomLine()
         }
+
     }
 
     override fun getItemCount(): Int = sampleList.size
-
-    class SearchRecyclerViewItemDecoration() : ItemDecoration() {
-
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-            if (parent.getChildAdapterPosition(view) != state.itemCount) {
-            }
-        }
-    }
-
 }
