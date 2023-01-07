@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="19dp"
+    android:paddingBottom="18dp"
+    android:background="@drawable/rectangle_border_gray2_05_bg_white">
 
     <ImageView
         android:id="@+id/iv_home_out_checkbox"
@@ -78,9 +81,9 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="7dp"
         android:orientation="vertical"
-        tools:itemCount="2"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_home_outter_desciption" />
+        app:layout_constraintTop_toBottomOf="@id/tv_home_outter_desciption"
+        tools:itemCount="2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
