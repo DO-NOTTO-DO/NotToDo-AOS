@@ -27,7 +27,7 @@ data class ResponseSituationStatisticDto(
     data class SituationStatistic(
         val id: Int,
         val count: Int,
-        val name: Int,
+        val name: String,
         val missions: List<ResponseMissionStatisticDto.MissionStatistic>
     )
 }
