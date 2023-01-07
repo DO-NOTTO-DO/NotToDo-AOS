@@ -6,7 +6,11 @@
     <data>
 
         <variable
-            name="test_data"
+            name="day"
+            type="String" />
+
+        <variable
+            name="day_string"
             type="String" />
     </data>
 
@@ -15,16 +19,26 @@
         android:layout_height="60dp">
 
         <TextView
+            android:id="@+id/tv_weekly_calendar_day_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{day_string}"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
             android:id="@+id/tv_weekly_calendar_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="2"
+            android:layout_marginTop="2dp"
+            android:text="@{day}"
             android:textSize="12sp"
-            android:text="@{test_data}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_weekly_calendar_day_text"
             tools:text="31" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

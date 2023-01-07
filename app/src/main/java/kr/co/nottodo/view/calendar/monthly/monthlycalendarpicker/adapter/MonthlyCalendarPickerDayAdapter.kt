@@ -11,7 +11,7 @@ import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerDayBinding
 import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerEmptyBinding
 import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.CalendarType
-import kr.co.nottodo.view.calendar.util.isTheSameDay
+import kr.co.nottodo.view.calendar.monthly.util.isTheSameDay
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.viewholder.MonthlyCalendarPickerDayViewHolder
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.viewholder.MonthlyCalendarPickerEmptyViewHolder

@@ -1,4 +1,4 @@
-package kr.co.nottodo.view.calendar.util
+package kr.co.nottodo.view.calendar.monthly.util
 
 import java.util.*
 import java.util.Calendar.*
@@ -56,4 +56,15 @@ fun Calendar.totalMonthDifference(startCalendar: Calendar): Int {
     val monthDiff = get(MONTH) - startCalendar.get(MONTH)
 
     return monthDiff + (yearDiff * 12)
+}
+
+fun String.dayNameParseToKorea(): String = when(this) {
+    "SUNDAY" -> "일"
+    "MONDAY" -> "월"
+    "TUESDAY" -> "화"
+    "WEDNESDAY" -> "수"
+    "THURSDAY" -> "목"
+    "FRIDAY" -> "금"
+    "SATURDAY" -> "토"
+    else -> throw IllegalStateException("This is not day String")
 }

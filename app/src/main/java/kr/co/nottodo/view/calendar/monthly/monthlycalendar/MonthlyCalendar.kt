@@ -21,9 +21,9 @@ import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.monthly.model.DateType
 import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.util.isWeekend
-import kr.co.nottodo.view.calendar.util.toPrettyDateString
-import kr.co.nottodo.view.calendar.util.toPrettyMonthString
+import kr.co.nottodo.view.calendar.monthly.util.isWeekend
+import kr.co.nottodo.view.calendar.monthly.util.toPrettyDateString
+import kr.co.nottodo.view.calendar.monthly.util.toPrettyMonthString
 import java.util.*
 import java.util.Calendar.*
 
