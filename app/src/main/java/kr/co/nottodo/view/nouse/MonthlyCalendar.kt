@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.CalendarMonth
 import kr.co.nottodo.view.calendar.util.toPrettyMonthString
 import kr.co.nottodo.view.calendar.util.totalMonthDifference
@@ -123,7 +123,7 @@ class MonthlyCalendar @JvmOverloads constructor(
         monthCalendar.set(DAY_OF_MONTH, 1)
         (0..monthDifference).forEach { _ ->
             val totalDayInMonth = dateCalendar.getActualMaximum(DAY_OF_MONTH)
-            val calendarDayList = mutableListOf<CalendarDay>()
+            val monthlyCalendarDayList = mutableListOf<MonthlyCalendarDay>()
             var dayOfYear = -1
 //            (1..totalDayInMonth).forEach { _ ->
 //                val day = dateCalendar.get(DAY_OF_MONTH)
@@ -180,7 +180,7 @@ class MonthlyCalendar @JvmOverloads constructor(
                         locale = locale
                     ),
                     dayOfYear.toString(),
-                    calendarDayList
+                    monthlyCalendarDayList
                 )
             )
             monthCalendar.add(MONTH, 1)

@@ -4,6 +4,9 @@ import androidx.annotation.IntDef
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * 이건 안쓸거 같아요
+ */
 class SnapPagerScrollListener(
     private val snapHelper: PagerSnapHelper,
     @Type private val type: Int,

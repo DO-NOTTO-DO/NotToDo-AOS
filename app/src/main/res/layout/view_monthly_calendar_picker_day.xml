@@ -9,14 +9,15 @@
 
         <variable
             name="day_item"
-            type="kr.co.nottodo.view.calendar.monthly.model.CalendarDay.Day" />
+            type="kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay.DayMonthly" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="18dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/iv_monthly_calendar_picker_select"

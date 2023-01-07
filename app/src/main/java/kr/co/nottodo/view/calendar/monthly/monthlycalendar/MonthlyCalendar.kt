@@ -19,7 +19,7 @@ import kr.co.nottodo.view.NoRippleRecyclerView
 import kr.co.nottodo.view.calendar.monthly.monthlycalendar.adapter.MonthlyCalendarDayAdapter
 import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.monthly.model.DateType
-import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.util.isWeekend
 import kr.co.nottodo.view.calendar.util.toPrettyDateString
@@ -44,7 +44,7 @@ class MonthlyCalendar @JvmOverloads constructor(
     private val locale = Locale.KOREA
     private val monthlyCalendarDayAdapter = MonthlyCalendarDayAdapter()
     private val calendar = Calendar.getInstance(timeZone, locale)
-    private var calendarDataList: List<CalendarDay> = listOf()
+    private var calendarDataList: List<MonthlyCalendarDay> = listOf()
     private var currentDate = calendar.toPrettyMonthString(locale = locale)
         set(value) {
             field = value
@@ -144,7 +144,7 @@ class MonthlyCalendar @JvmOverloads constructor(
         monthlyCalendarDayAdapter.submitList(calendarDataList)
     }
 
-    private fun buildCalendarData(): List<CalendarDay> {
+    private fun buildCalendarData(): List<MonthlyCalendarDay> {
         // 현재 달력이 보여주고 있는 Calendar instance의 복사본
         val proxyCalendar = Calendar.getInstance().apply {
             set(MONTH, calendar.get(MONTH))
@@ -153,7 +153,7 @@ class MonthlyCalendar @JvmOverloads constructor(
         }
 
         val totalDayInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val calendarDayList = mutableListOf<CalendarDay>()
+        val monthlyCalendarDayList = mutableListOf<MonthlyCalendarDay>()
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
@@ -165,14 +165,14 @@ class MonthlyCalendar @JvmOverloads constructor(
 
             when (day) {
                 1 -> {
-                    calendarDayList.addAll(
+                    monthlyCalendarDayList.addAll(
                         createStartEmptyView(
                             dayOfWeek,
                             proxyCalendar
                         )
                     )
-                    calendarDayList.add(
-                        CalendarDay.Day(
+                    monthlyCalendarDayList.add(
+                        MonthlyCalendarDay.DayMonthly(
                             day.toString(),
                             proxyCalendar.toPrettyDateString(),
                             proxyCalendar.time,
@@ -181,15 +181,15 @@ class MonthlyCalendar @JvmOverloads constructor(
                     )
                 }
                 totalDayInMonth -> {
-                    calendarDayList.add(
-                        CalendarDay.Day(
+                    monthlyCalendarDayList.add(
+                        MonthlyCalendarDay.DayMonthly(
                             day.toString(),
                             proxyCalendar.toPrettyDateString(),
                             proxyCalendar.time,
                             state = dateType
                         )
                     )
-                    calendarDayList.addAll(
+                    monthlyCalendarDayList.addAll(
                         createEndEmptyView(
                             dayOfWeek,
                             proxyCalendar
@@ -197,8 +197,8 @@ class MonthlyCalendar @JvmOverloads constructor(
                     )
                 }
                 else -> {
-                    calendarDayList.add(
-                        CalendarDay.Day(
+                    monthlyCalendarDayList.add(
+                        MonthlyCalendarDay.DayMonthly(
                             day.toString(),
                             proxyCalendar.toPrettyDateString(),
                             proxyCalendar.time,
@@ -208,13 +208,13 @@ class MonthlyCalendar @JvmOverloads constructor(
                 }
             }
         }
-        return calendarDayList
+        return monthlyCalendarDayList
     }
 
     private fun createEndEmptyView(
         dayOfWeek: Int,
         proxyCalendar: Calendar
-    ): List<CalendarDay.Empty> {
+    ): List<MonthlyCalendarDay.Empty> {
         val nextCalendar = Calendar.getInstance().apply {
             set(MONTH, proxyCalendar.get(MONTH))
             set(DAY_OF_MONTH, proxyCalendar.get(DAY_OF_MONTH))
@@ -233,10 +233,10 @@ class MonthlyCalendar @JvmOverloads constructor(
             else -> 0
         }
 
-        val listEmpty = mutableListOf<CalendarDay.Empty>()
+        val listEmpty = mutableListOf<MonthlyCalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
             listEmpty.add(
-                CalendarDay.Empty(
+                MonthlyCalendarDay.Empty(
                     totalDayInNextMonth++.toString()
                 )
             )
@@ -247,7 +247,7 @@ class MonthlyCalendar @JvmOverloads constructor(
     private fun createStartEmptyView(
         dayOfWeek: Int,
         proxyCalendar: Calendar
-    ): List<CalendarDay.Empty> {
+    ): List<MonthlyCalendarDay.Empty> {
         val previousCalendar = Calendar.getInstance().apply {
             set(MONTH, proxyCalendar.get(MONTH))
             set(DAY_OF_MONTH, proxyCalendar.get(DAY_OF_MONTH))
@@ -265,10 +265,10 @@ class MonthlyCalendar @JvmOverloads constructor(
             else -> 0
         }
         var startDayInPreviousMonth = previousCalendar.getActualMaximum(DAY_OF_MONTH) - numberOfEmptyView + 1
-        val listEmpty = mutableListOf<CalendarDay.Empty>()
+        val listEmpty = mutableListOf<MonthlyCalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
             listEmpty.add(
-                CalendarDay.Empty(
+                MonthlyCalendarDay.Empty(
                     startDayInPreviousMonth++.toString()
                 )
             )

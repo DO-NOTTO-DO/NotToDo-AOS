@@ -1,39 +1,37 @@
 package kr.co.nottodo.view.calendar.weekly
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewWeeklyCalendarDayBinding
+import java.time.LocalDate
 
-// notice : weeklyCalendarDataList의 size는 항상 7개입니다.
-// 일,월,화,수,목,금,토
-class WeeklyAdapter(
+class WeeklyAdapter : RecyclerView.Adapter<WeeklyViewHolder>() {
 
-) : RecyclerView.Adapter<WeeklyDayViewHolder>() {
+    private val weeklyDays = mutableListOf<LocalDate>()
 
-    private val weeklyCalendarDataList = mutableListOf<String>()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyDayViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ViewWeeklyCalendarDayBinding = DataBindingUtil.inflate(
             layoutInflater, R.layout.view_weekly_calendar_day, parent, false
         )
-        return WeeklyDayViewHolder(binding)
+        return WeeklyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: WeeklyDayViewHolder, position: Int) {
-        holder.onBind(weeklyCalendarDataList[position])
+    override fun onBindViewHolder(holder: WeeklyViewHolder, position: Int) {
+        holder.onBind(weeklyDays[position])
     }
 
-    override fun getItemCount(): Int = weeklyCalendarDataList.size
+    override fun getItemCount(): Int = weeklyDays.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<String>) {
-        weeklyCalendarDataList.clear()
-        weeklyCalendarDataList.addAll(list)
+    fun submitList(list: List<LocalDate>) {
+        weeklyDays.clear()
+        weeklyDays.addAll(list)
         notifyDataSetChanged()
     }
 }

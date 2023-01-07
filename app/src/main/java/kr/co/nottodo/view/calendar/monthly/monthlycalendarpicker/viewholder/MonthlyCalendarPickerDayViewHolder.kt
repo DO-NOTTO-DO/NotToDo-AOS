@@ -3,7 +3,7 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerDayBinding
-import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
 
 class MonthlyCalendarPickerDayViewHolder(
@@ -11,15 +11,15 @@ class MonthlyCalendarPickerDayViewHolder(
     private val clickHandler: MonthlyCalendarPickerClickListener
 ): ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    private lateinit var dayData: CalendarDay.Day
+    private lateinit var dayData: MonthlyCalendarDay.DayMonthly
 
     init {
         itemView.setOnClickListener(this)
         itemView.setOnLongClickListener(this)
     }
 
-    fun onBind(data: CalendarDay) {
-        if (data is CalendarDay.Day) {
+    fun onBind(data: MonthlyCalendarDay) {
+        if (data is MonthlyCalendarDay.DayMonthly) {
             dayData = data
             binding.apply {
                 dayItem = data
@@ -29,8 +29,8 @@ class MonthlyCalendarPickerDayViewHolder(
         }
     }
 
-    fun onBindSelectedState(data: CalendarDay) {
-        if (data is CalendarDay.Day) {
+    fun onBindSelectedState(data: MonthlyCalendarDay) {
+        if (data is MonthlyCalendarDay.DayMonthly) {
             dayData = data
             binding.apply {
                 dayItem = data

@@ -7,14 +7,15 @@
 
         <variable
             name="empty_day_item"
-            type="kr.co.nottodo.view.calendar.monthly.model.CalendarDay.Empty" />
+            type="kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay.Empty" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="18dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/tv_empty_day_name"

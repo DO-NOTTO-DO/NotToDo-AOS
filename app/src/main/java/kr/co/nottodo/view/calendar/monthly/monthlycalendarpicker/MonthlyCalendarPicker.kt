@@ -17,7 +17,7 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.view.NoRippleRecyclerView
-import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.monthly.model.DateType
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
@@ -47,7 +47,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     private var monthlyCalendarPickerClickListener : MonthlyCalendarPickerClickListener? = null
     private val monthlyCalendarPickerDayAdapter = MonthlyCalendarPickerDayAdapter(this)
     private val calendar = Calendar.getInstance(timeZone, locale)
-    private var calendarDataList: List<CalendarDay> = listOf()
+    private var calendarDataList: List<MonthlyCalendarDay> = listOf()
     private var currentDate = calendar.toPrettyMonthString(locale = locale)
         set(value) {
             field = value
@@ -160,7 +160,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         monthlyCalendarPickerDayAdapter.submitList(calendarDataList)
     }
 
-    private fun buildCalendarData(): List<CalendarDay> {
+    private fun buildCalendarData(): List<MonthlyCalendarDay> {
         // 현재 달력이 보여주고 있는 Calendar instance의 복사본
         val proxyCalendar = Calendar.getInstance().apply {
             set(Calendar.MONTH, calendar.get(Calendar.MONTH))
@@ -169,7 +169,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         }
 
         val totalDayInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val calendarDayList = mutableListOf<CalendarDay>()
+        val monthlyCalendarDayList = mutableListOf<MonthlyCalendarDay>()
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
@@ -181,14 +181,14 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 
             when (day) {
                 1 -> {
-                    calendarDayList.addAll(
+                    monthlyCalendarDayList.addAll(
                         createStartEmptyView(
                             dayOfWeek,
                             proxyCalendar
                         )
                     )
-                    calendarDayList.add(
-                        CalendarDay.Day(
+                    monthlyCalendarDayList.add(
+                        MonthlyCalendarDay.DayMonthly(
                             day.toString(),
                             proxyCalendar.toPrettyDateString(),
                             proxyCalendar.time,
@@ -197,15 +197,15 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     )
                 }
                 totalDayInMonth -> {
-                    calendarDayList.add(
-                        CalendarDay.Day(
+                    monthlyCalendarDayList.add(
+                        MonthlyCalendarDay.DayMonthly(
                             day.toString(),
                             proxyCalendar.toPrettyDateString(),
                             proxyCalendar.time,
                             state = dateType
                         )
                     )
-                    calendarDayList.addAll(
+                    monthlyCalendarDayList.addAll(
                         createEndEmptyView(
                             dayOfWeek,
                             proxyCalendar
@@ -213,8 +213,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     )
                 }
                 else -> {
-                    calendarDayList.add(
-                        CalendarDay.Day(
+                    monthlyCalendarDayList.add(
+                        MonthlyCalendarDay.DayMonthly(
                             day.toString(),
                             proxyCalendar.toPrettyDateString(),
                             proxyCalendar.time,
@@ -224,13 +224,13 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                 }
             }
         }
-        return calendarDayList
+        return monthlyCalendarDayList
     }
 
     private fun createEndEmptyView(
         dayOfWeek: Int,
         proxyCalendar: Calendar
-    ): List<CalendarDay.Empty> {
+    ): List<MonthlyCalendarDay.Empty> {
         val nextCalendar = Calendar.getInstance().apply {
             set(Calendar.MONTH, proxyCalendar.get(Calendar.MONTH))
             set(Calendar.DAY_OF_MONTH, proxyCalendar.get(Calendar.DAY_OF_MONTH))
@@ -250,10 +250,10 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             else -> 0
         }
 
-        val listEmpty = mutableListOf<CalendarDay.Empty>()
+        val listEmpty = mutableListOf<MonthlyCalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
             listEmpty.add(
-                CalendarDay.Empty(
+                MonthlyCalendarDay.Empty(
                     totalDayInNextMonth++.toString()
                 )
             )
@@ -264,7 +264,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     private fun createStartEmptyView(
         dayOfWeek: Int,
         proxyCalendar: Calendar
-    ): List<CalendarDay.Empty> {
+    ): List<MonthlyCalendarDay.Empty> {
         val previousCalendar = Calendar.getInstance().apply {
             set(Calendar.MONTH, proxyCalendar.get(Calendar.MONTH))
             set(Calendar.DAY_OF_MONTH, proxyCalendar.get(Calendar.DAY_OF_MONTH))
@@ -285,10 +285,10 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 
         var startDayInPreviousMonth = previousCalendar.getActualMaximum(Calendar.DAY_OF_MONTH) - numberOfEmptyView + 1
 
-        val listEmpty = mutableListOf<CalendarDay.Empty>()
+        val listEmpty = mutableListOf<MonthlyCalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
             listEmpty.add(
-                CalendarDay.Empty(
+                MonthlyCalendarDay.Empty(
                     startDayInPreviousMonth++.toString()
                 )
             )

@@ -11,23 +11,23 @@ const val EMPTY_COLUMN_COUNT = 1
 data class CalendarMonth(
     val label: String,
     val year: String,
-    val dayList: List<CalendarDay>
+    val dayList: List<MonthlyCalendarDay>
 )
 
-sealed class CalendarDay(
+sealed class MonthlyCalendarDay(
     val columnCount: Int,
     val calendarType: Int
 ) {
-    object Week : CalendarDay(WEEK_COLUMN_COUNT, CalendarType.WEEK.ordinal)
+    object Week : MonthlyCalendarDay(WEEK_COLUMN_COUNT, CalendarType.WEEK.ordinal)
 
-    data class Day(
+    data class DayMonthly(
         val label: String,
         val prettyLabel: String,
         val date: Date,
         val state: DateType = DateType.WEEKDAY
-    ) : CalendarDay(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal)
+    ) : MonthlyCalendarDay(DAY_COLUMN_COUNT, CalendarType.DAY.ordinal)
 
     data class Empty(
         val label: String
-    ) : CalendarDay(EMPTY_COLUMN_COUNT, CalendarType.EMPTY.ordinal)
+    ) : MonthlyCalendarDay(EMPTY_COLUMN_COUNT, CalendarType.EMPTY.ordinal)
 }

@@ -2,18 +2,19 @@ package kr.co.nottodo.view.calendar.weekly
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ViewWeeklyCalendarDayBinding
+import java.time.LocalDate
 
-class WeeklyDayViewHolder(
+class WeeklyViewHolder(
     private val binding: ViewWeeklyCalendarDayBinding
 ) : ViewHolder(binding.root) {
 
-    private lateinit var weeklyDayData: String
+    init {
+        // TODO : 리스너를 달아줘야 합니다
+    }
 
-    fun onBind(data : String) {
-        weeklyDayData = data
+    fun onBind(weeklyDate: LocalDate) {
         with(binding) {
-            testData = data
-            executePendingBindings()
+            testData = weeklyDate.dayOfMonth.toString()
         }
     }
 }

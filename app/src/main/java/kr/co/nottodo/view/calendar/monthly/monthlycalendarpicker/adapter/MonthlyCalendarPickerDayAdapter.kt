@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerDayBinding
 import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerEmptyBinding
-import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.CalendarType
 import kr.co.nottodo.view.calendar.util.isTheSameDay
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
@@ -21,7 +21,7 @@ class MonthlyCalendarPickerDayAdapter(
     private val monthlyCalendarPickerClickListener: MonthlyCalendarPickerClickListener
 ) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val calendarPickerItems = mutableListOf<CalendarDay>()
+    private val calendarPickerItems = mutableListOf<MonthlyCalendarDay>()
 
     var selectedDate: Date? = null
         @SuppressLint("NotifyDataSetChanged")
@@ -66,9 +66,9 @@ class MonthlyCalendarPickerDayAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
             is MonthlyCalendarPickerDayViewHolder -> {
-                if (calendarPickerItems[position] is CalendarDay.Day) {
+                if (calendarPickerItems[position] is MonthlyCalendarDay.DayMonthly) {
                     selectedDate?.let {
-                        if ((calendarPickerItems[position] as CalendarDay.Day).date.isTheSameDay(it)) {
+                        if ((calendarPickerItems[position] as MonthlyCalendarDay.DayMonthly).date.isTheSameDay(it)) {
                             holder.onBindSelectedState(calendarPickerItems[position])
                         } else {
                             holder.onBind(calendarPickerItems[position])
@@ -94,7 +94,7 @@ class MonthlyCalendarPickerDayAdapter(
     override fun getItemViewType(position: Int): Int = calendarPickerItems[position].calendarType
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<CalendarDay>) {
+    fun submitList(list: List<MonthlyCalendarDay>) {
         calendarPickerItems.clear()
         calendarPickerItems.addAll(list)
         notifyDataSetChanged()

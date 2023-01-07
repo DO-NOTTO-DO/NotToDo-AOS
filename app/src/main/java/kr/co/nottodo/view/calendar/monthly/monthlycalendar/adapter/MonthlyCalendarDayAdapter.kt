@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewMonthlyCalendarDayBinding
 import kr.co.nottodo.databinding.ViewMonthlyCalendarEmptyBinding
-import kr.co.nottodo.view.calendar.monthly.model.CalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.CalendarType
 import kr.co.nottodo.view.calendar.monthly.monthlycalendar.viewholder.MonthlyCalendarDayViewHolder
 import kr.co.nottodo.view.calendar.monthly.monthlycalendar.viewholder.MonthlyCalendarEmptyViewHolder
@@ -16,7 +16,7 @@ import kr.co.nottodo.view.calendar.monthly.monthlycalendar.viewholder.MonthlyCal
 
 class MonthlyCalendarDayAdapter : RecyclerView.Adapter<MonthlyCalendarViewHolder>() {
 
-    private val calendarItems = mutableListOf<CalendarDay>()
+    private val calendarItems = mutableListOf<MonthlyCalendarDay>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonthlyCalendarViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -57,7 +57,7 @@ class MonthlyCalendarDayAdapter : RecyclerView.Adapter<MonthlyCalendarViewHolder
     override fun getItemViewType(position: Int): Int = calendarItems[position].calendarType
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<CalendarDay>) {
+    fun submitList(list: List<MonthlyCalendarDay>) {
         calendarItems.clear()
         calendarItems.addAll(list)
         notifyDataSetChanged()
