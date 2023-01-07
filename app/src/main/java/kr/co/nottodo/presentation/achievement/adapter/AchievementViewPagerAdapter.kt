@@ -5,9 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
+import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementPagerMissionBinding
 
-class AchievementViewPagerAdapter(context: Context) :
+class AchievementViewPagerAdapter(
+    context: Context,
+    private val missionStatisticList: List<ResponseMissionStatisticDto.MissionStatistic>,
+    private val situationStatisticList: List<ResponseSituationStatisticDto.SituationStatistic>
+) :
     RecyclerView.Adapter<AchievementViewPagerAdapter.AchievePagerViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
     lateinit var binding: ItemAchievementPagerMissionBinding
@@ -16,7 +22,7 @@ class AchievementViewPagerAdapter(context: Context) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchievePagerViewHolder {
         binding = ItemAchievementPagerMissionBinding.inflate(inflater, parent, false)
-        return AchievePagerViewHolder(binding)
+        return AchievePagerViewHolder(binding, missionStatisticList, situationStatisticList)
     }
 
     override fun onBindViewHolder(holder: AchievePagerViewHolder, position: Int) {
@@ -27,18 +33,22 @@ class AchievementViewPagerAdapter(context: Context) :
         return titleList.size
     }
 
-    class AchievePagerViewHolder(private val binding: ItemAchievementPagerMissionBinding) :
+    class AchievePagerViewHolder(
+        private val binding: ItemAchievementPagerMissionBinding,
+        private val missionStatisticList: List<ResponseMissionStatisticDto.MissionStatistic>,
+        private val situationStatisticList: List<ResponseSituationStatisticDto.SituationStatistic>
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(title: String) {
             binding.tvAchievementPagerMissionTitle.text = title
             if (title == "내가 달성한 낫투두의 순위는?") {
                 binding.rvAchievementPagerMission.adapter =
-                    AchievementMissionAdapter(binding.root.context)
+                    AchievementMissionAdapter(binding.root.context, missionStatisticList)
                 binding.rvAchievementPagerMission.layoutManager =
                     LinearLayoutManager(binding.root.context)
             } else {
                 binding.rvAchievementPagerMission.adapter =
-                    AchievementSituationParentAdapter(binding.root.context)
+                    AchievementSituationParentAdapter(binding.root.context, situationStatisticList)
                 binding.rvAchievementPagerMission.layoutManager =
                     LinearLayoutManager(binding.root.context)
             }
