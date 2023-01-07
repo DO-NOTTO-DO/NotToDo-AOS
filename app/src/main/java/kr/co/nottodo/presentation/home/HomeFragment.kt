@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.skydoves.balloon.Balloon
 import kr.co.nottodo.data.local.HomeDaily
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
@@ -67,24 +68,7 @@ class HomeFragment : Fragment() {
             startActivity(Intent(context, AdditionActivity::class.java))
         }
     }
-//    class chekcIcon : Balloon.Factory() {
-//        override fun create(context: Context, lifecycle: LifecycleOwner?): Balloon {
-//            return Balloon.Builder(context)
-//                .setWidthRatio(0.8f)
-//                .setHeight(50)
-//                .setWidth(400)
-//                .setIsVisibleArrow(false)
-//                .setArrowOrientation(BalloonRotateDirection.LEFT)
-//                .setCornerRadius(8f)
-//                .setAlpha(0.9f)
-//                .setTextIsHtml(true)
-//                .setLayout(R.layout.item_icon_list)
-//                .setBackgroundColorResource(R.color.white)
-//                .setBalloonAnimation(BalloonAnimation.CIRCULAR)
-//                .setLifecycleOwner(lifecycle)
-//                .build()
-//        }
-//    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

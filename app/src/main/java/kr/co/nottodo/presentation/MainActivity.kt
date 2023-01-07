@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.google.android.material.shape.TriangleEdgeTreatment
-import kr.co.nottodo.presentation.home.HomeFragment
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
+import kr.co.nottodo.presentation.home.HomeFragment
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 
 
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         val shapePathModel = ShapeAppearanceModel.builder()
             .setTopLeftCorner(CornerFamily.CUT, radius)
             .setTopRightCorner(CornerFamily.CUT, radius)
-            .setTopEdge(TriangleEdgeTreatment(30.toFloat(), false))
             .build()
 
         val backgroundDrawable = MaterialShapeDrawable(shapePathModel).apply {
@@ -38,13 +36,6 @@ class MainActivity : AppCompatActivity() {
         binding.homeCustomBottom.background = backgroundDrawable
         binding.homeCustomBottom.itemIconTintList = null
         initTransaction()
-        clickFbtn()
-    }
-
-    private fun clickFbtn() {
-        binding.fbtnHomeFloating.setOnClickListener {
-            startActivity(Intent(this, AdditionActivity::class.java))
-        }
     }
 
     private fun initTransaction() {
@@ -58,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     else -> HomeFragment()
                 }
             )
-            false
+            true
         }
         binding.homeCustomBottom.selectedItemId = R.id.menu_home
     }

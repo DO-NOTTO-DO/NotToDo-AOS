@@ -32,12 +32,27 @@ class HomeOutterAdapter(
             binding.root.setOnClickListener {
                 itemClick(absoluteAdapterPosition)
             }
+            binding.ivHomeOutCheckbox.setOnClickListener { }
             binding.tvHomeItemOutTitle.text = data.title
 //            binding.tvHomeItemOutTitleNotodo.text = data.situation
 //            binding.tvHomeOutterDesciption.text = data.situation
             binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter()
         }
     }
+
+//    private fun ballonIconClickEvent() {
+//        binding.iv.setOnClickListener {
+//            iconBalloon.showAlignBottom(it)
+//        }
+//        val button: ImageView =
+//            iconBalloon.getContentView().findViewById(R.id.iv_first)
+//        button.setOnClickListener {
+//            binding.ivIcon.setImageResource(R.drawable.ic_what_mint)
+//            iconBalloon.dismiss()
+//        }
+//
+//    }
+
 
     companion object {
         val diffUtil = DiffUtilItemCallback<HomeDaily>(
