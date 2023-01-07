@@ -23,8 +23,13 @@ data class ResponseMissionDto(
         val id: Int,
         val title: String,
         val goal: String,
-        val situation: String,
+        val situation: Situation,
         val actions: List<String>,
         val actionDate: String
-    )
+    ){
+        @Serializable
+        data class Situation(
+            val name: String
+        )
+    }
 }
