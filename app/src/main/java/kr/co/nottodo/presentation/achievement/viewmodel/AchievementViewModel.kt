@@ -1,9 +1,6 @@
 package kr.co.nottodo.presentation.achievement.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
@@ -29,6 +26,22 @@ class AchievementViewModel : ViewModel() {
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
     val errorMessageSituation: LiveData<String>
         get() = _errorMessageSituation
+
+    val isDataCome: MediatorLiveData<Boolean> = MediatorLiveData()
+
+    init {
+        isDataCome.addSource(responseMission) {
+            isDataCome.value = _isDataCome()
+        }
+        isDataCome.addSource(responseSituation) {
+            isDataCome.value = _isDataCome()
+        }
+    }
+
+    private fun _isDataCome(): Boolean {
+        return (responseMission.value?.data?.isNotEmpty() == true
+                && responseSituation.value?.data?.isNotEmpty() == true)
+    }
 
     fun getMissionStatistic() {
         viewModelScope.launch {
