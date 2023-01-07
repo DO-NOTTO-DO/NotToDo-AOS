@@ -15,13 +15,13 @@ object ApiFactory {
                 HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
-            )
-            .build()
+            ).build()
     }
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("http://43.201.125.166:3000/api/")
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .client(client)
             .build()
     }
 
@@ -30,4 +30,5 @@ object ApiFactory {
 
 object ServicePool {
     //TODO: 각자 서비스 만드시고 해당 페이지에 서비스 객체 생성해주시면 됩니다 !!
+    val searchService = ApiFactory.create<SearchService>()
 }
