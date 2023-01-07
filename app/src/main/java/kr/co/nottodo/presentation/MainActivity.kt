@@ -11,6 +11,9 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.achievement.view.AchievementFragment
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.toplevel.recommendation.RecommendationFragment
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
