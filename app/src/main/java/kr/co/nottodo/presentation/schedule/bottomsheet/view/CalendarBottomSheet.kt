@@ -21,7 +21,7 @@ class CalendarBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
-    override fun onDestroyView(){
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }

@@ -1,6 +1,5 @@
 package kr.co.nottodo.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -10,8 +9,8 @@ import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
+import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 import kr.co.nottodo.presentation.home.HomeFragment
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +35,14 @@ class MainActivity : AppCompatActivity() {
         binding.homeCustomBottom.background = backgroundDrawable
         binding.homeCustomBottom.itemIconTintList = null
         initTransaction()
+
     }
+
+//    private fun clickFbtn() {
+//        binding.fbtnHomeFloating.setOnClickListener {
+//            startActivity(Intent(this, AdditionActivity::class.java))
+//        }
+//    }
 
     private fun initTransaction() {
         binding.homeCustomBottom.setOnItemSelectedListener { item ->
@@ -45,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.menu_home -> HomeFragment()
                     R.id.menu_recommend -> HomeFragment()
-                    R.id.menu_result -> HomeFragment()
+                    R.id.menu_result -> AchievementFragment()
                     else -> HomeFragment()
                 }
             )

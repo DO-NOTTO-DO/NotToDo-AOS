@@ -13,16 +13,22 @@ class AdditionViewModel : ViewModel() {
     }
 
     val additionActionNameFirst: MutableLiveData<String> = MutableLiveData("")
-    private val isAdditionActionName1Filled: LiveData<Boolean> = Transformations.map(additionActionNameFirst) {
-        it.isNotEmpty()
-    }
+    private val isAdditionActionNameFirstFilled: LiveData<Boolean> =
+        Transformations.map(additionActionNameFirst) {
+            it.isNotEmpty()
+        }
     val additionActionNameSecond: MutableLiveData<String> = MutableLiveData("")
+    val isAdditionActionNameSecondFilled: LiveData<Boolean> =
+        Transformations.map(additionActionNameSecond) {
+            it.isNotEmpty()
+        }
 
     val additionSituationName: MutableLiveData<String> = MutableLiveData("입력하기")
     private val isAdditionSituationNameSuit: LiveData<Boolean> =
         Transformations.map(additionSituationName) {
             it != "입력하기"
         }
+    val isAdditionSituationNameFilled: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val additionGoalName: MutableLiveData<String> = MutableLiveData("")
     val isAdditionGoalNameFilled: LiveData<Boolean> = Transformations.map(additionGoalName) {
@@ -35,10 +41,10 @@ class AdditionViewModel : ViewModel() {
         isBtnSuitConditions.addSource(isAdditionMissionNameFilled) {
             isBtnSuitConditions.value = _isBtnSuitConditions()
         }
-        isBtnSuitConditions.addSource(isAdditionActionName1Filled) {
+        isBtnSuitConditions.addSource(isAdditionActionNameFirstFilled) {
             isBtnSuitConditions.value = _isBtnSuitConditions()
         }
-        isBtnSuitConditions.addSource(isAdditionSituationNameSuit) {
+        isBtnSuitConditions.addSource(isAdditionSituationNameFilled) {
             isBtnSuitConditions.value = _isBtnSuitConditions()
         }
         isBtnSuitConditions.addSource(isAdditionGoalNameFilled) {
@@ -48,8 +54,8 @@ class AdditionViewModel : ViewModel() {
 
     private fun _isBtnSuitConditions(): Boolean {
         return (isAdditionMissionNameFilled.value == true
-                && isAdditionActionName1Filled.value == true
-                && isAdditionSituationNameSuit.value == true
+                && isAdditionActionNameFirstFilled.value == true
+                && isAdditionSituationNameFilled.value == true
                 && isAdditionGoalNameFilled.value == true)
     }
 }

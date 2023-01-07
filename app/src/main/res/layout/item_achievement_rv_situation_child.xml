@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="-1dp"
+    android:background="@drawable/rectangle_border_gray4_1_solid_bg">
+
+    <TextView
+        android:id="@+id/tv_achievement_rv_situation_child_rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="17dp"
+        android:layout_marginStart="14dp"
+        android:textColor="@color/gray_2_8e8e93"
+        android:theme="@style/B14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tv_achievement_rv_situation_child_mission_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:layout_marginStart="7dp"
+        android:theme="@style/B14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_achievement_rv_situation_child_rank"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginStart="13dp"
+        tools:text="낫투두명" />
+
+    <TextView
+        android:id="@+id/tv_achievement_rv_situation_child_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:layout_marginEnd="12dp"
+        android:textColor="@color/gray_2_8e8e93"
+        android:theme="@style/R14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="n회" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
