@@ -3,6 +3,7 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import kr.co.nottodo.R
@@ -26,6 +28,7 @@ import kr.co.nottodo.view.calendar.monthly.util.toPrettyDateString
 import kr.co.nottodo.view.calendar.monthly.util.toPrettyMonthString
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.adapter.MonthlyCalendarPickerDayAdapter
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
+import kr.co.nottodo.view.calendar.monthly.util.addCircleRipple
 import java.util.*
 
 /**
@@ -59,14 +62,17 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         text = currentDate
         layoutParams =
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        setTextColor(ContextCompat.getColor(context, R.color.gray_1_626068))
+
+        setTextColor(ContextCompat.getColor(context, R.color.black_2a292d))
+        typeface = ResourcesCompat.getFont(context,R.font.pretendard_bold)
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP,18f)
     }
 
     private val calendarPickerHeaderLinearLayout = LinearLayout(context).apply {
         id = ViewCompat.generateViewId()
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
-        setPadding(context.dpToPx(40), context.dpToPx(36), context.dpToPx(50), context.dpToPx(32))
+        setPadding(context.dpToPx(6), context.dpToPx(4), context.dpToPx(6), context.dpToPx(32))
 
         addView(currentDateTextView)
 
@@ -81,7 +87,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                 setImageDrawable(
                     ContextCompat.getDrawable(
                         this.context,
-                        R.drawable.ic_calendar_picker_arrow_left
+                        R.drawable.ic_left_arrow_monthly_calendar
                     )
                 )
                 setOnClickListener {
@@ -89,12 +95,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
                 }
-            }
-        )
-
-        addView(
-            View(context).apply {
-                layoutParams = LinearLayout.LayoutParams(context.dpToPx(12), 0)
+                setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
+                addCircleRipple()
             }
         )
 
@@ -103,7 +105,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                 setImageDrawable(
                     ContextCompat.getDrawable(
                         this.context,
-                        R.drawable.ic_calendar_picker_arrow_right
+                        R.drawable.ic_right_arrow_monthly_calendar
                     )
                 )
                 setOnClickListener {
@@ -111,6 +113,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
                 }
+                setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
+                addCircleRipple()
             }
         )
     }

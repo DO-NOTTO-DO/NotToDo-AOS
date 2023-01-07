@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".presentation.TestActivity">
 
-    <kr.co.nottodo.view.calendar.monthly.monthlycalendar.MonthlyCalendar
+    <kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.MonthlyCalendarPicker
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
