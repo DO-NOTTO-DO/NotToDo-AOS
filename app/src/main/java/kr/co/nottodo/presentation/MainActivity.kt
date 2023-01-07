@@ -11,8 +11,6 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.achievement.view.AchievementFragment
-import kr.co.nottodo.presentation.home.HomeFragment
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -51,12 +49,12 @@ class MainActivity : AppCompatActivity() {
                 //todo 이거 자기꺼에 맞게 바꿔주세요
                 when (item.itemId) {
                     R.id.menu_home -> HomeFragment()
-                    R.id.menu_recommend -> HomeFragment()
+                    R.id.menu_recommend -> RecommendationFragment()
                     R.id.menu_result -> AchievementFragment()
                     else -> HomeFragment()
                 }
             )
-            true
+            false
         }
         binding.homeCustomBottom.selectedItemId = R.id.menu_home
     }
