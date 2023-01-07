@@ -54,6 +54,7 @@ class AchievementFragment : Fragment() {
 
                 val adapter = AchievementViewPagerAdapter(requireContext(), missionStatistic, situationStatistic)
                 binding.viewpagerAchievement.adapter = adapter
+                binding.tvAchievementStatistics.visibility = View.VISIBLE
                 binding.viewpagerAchievement.registerOnPageChangeCallback(object :
                     ViewPager2.OnPageChangeCallback() {
                     override fun onPageScrolled(
