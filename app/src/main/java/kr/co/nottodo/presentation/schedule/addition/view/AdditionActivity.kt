@@ -26,8 +26,8 @@ class AdditionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initResultLauncher()
         setContentView(R.layout.activity_addition)
+        initResultLauncher()
         initBinding()
         initBottomSheet()
         btnActionPlusOnClickListener()
@@ -35,15 +35,7 @@ class AdditionActivity : AppCompatActivity() {
             moveToSearchActivity()
         }
         binding.btnAdditionAdd.setOnClickListener {
-            viewModel.postMission(
-                RequestMissionDto(
-                    binding.tvAdditionMissionName.text.toString(),
-                    binding.tvAdditionSituationName.text.toString(),
-                    returnActionsList(),
-                    binding.etAdditionGoalTitle.text.toString(),
-                    binding.tvAdditionDate.text.toString()
-                )
-            )
+            postMission()
         }
 
         observeResponse()
@@ -64,6 +56,18 @@ class AdditionActivity : AppCompatActivity() {
 
         observeToActivateAddBtn()
         observePlusBtn()
+    }
+
+    private fun postMission() {
+        viewModel.postMission(
+            RequestMissionDto(
+                binding.tvAdditionMissionName.text.toString(),
+                binding.tvAdditionSituationName.text.toString(),
+                returnActionsList(),
+                binding.etAdditionGoalTitle.text.toString(),
+                binding.tvAdditionDate.text.toString()
+            )
+        )
     }
 
     private fun observeResponse() {
