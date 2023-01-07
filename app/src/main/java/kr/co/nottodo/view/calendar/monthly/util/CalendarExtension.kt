@@ -1,5 +1,7 @@
 package kr.co.nottodo.view.calendar.monthly.util
 
+import android.util.TypedValue
+import android.view.View
 import java.util.*
 
 fun Date.isTheSameDay(comparedDate: Date): Boolean {
@@ -18,4 +20,14 @@ fun Calendar.withTime(date: Date) {
     set(Calendar.MINUTE, 0)
     set(Calendar.SECOND, 0)
     set(Calendar.MILLISECOND, 0)
+}
+
+fun View.addRipple() = with(TypedValue()) {
+    context.theme.resolveAttribute(android.R.attr.selectableItemBackground, this, true)
+    setBackgroundResource(resourceId)
+}
+
+fun View.addCircleRipple() = with(TypedValue()) {
+    context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, this, true)
+    setBackgroundResource(resourceId)
 }

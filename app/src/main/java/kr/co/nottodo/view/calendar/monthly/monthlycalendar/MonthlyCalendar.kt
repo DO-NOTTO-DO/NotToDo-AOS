@@ -2,15 +2,21 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendar
 
 import android.content.Context
 import android.graphics.Color
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
+import android.icu.text.ListFormatter
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.GridLayoutManager
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
@@ -21,9 +27,7 @@ import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.monthly.model.DateType
 import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.monthly.util.isWeekend
-import kr.co.nottodo.view.calendar.monthly.util.toPrettyDateString
-import kr.co.nottodo.view.calendar.monthly.util.toPrettyMonthString
+import kr.co.nottodo.view.calendar.monthly.util.*
 import java.util.*
 import java.util.Calendar.*
 
@@ -51,25 +55,42 @@ class MonthlyCalendar @JvmOverloads constructor(
             updateCurrentDateTextView()
         }
 
-    private val currentDateTextView = TextView(context, null, R.style.M12).apply {
+    private val currentDateTextView = TextView(context, null, R.style.M14).apply {
         id = ViewCompat.generateViewId()
         text = currentDate
         layoutParams =
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        setTextColor(ContextCompat.getColor(context, R.color.gray_1_626068))
+        gravity = Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
+        typeface = ResourcesCompat.getFont(context,R.font.pretendard_medium)
+        setTextColor(ContextCompat.getColor(context, R.color.black_2a292d))
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
+        setBackgroundResource(R.drawable.bg_monthly_calendar_current_month)
     }
 
     private val calendarHeaderLinearLayout = LinearLayout(context).apply {
         id = ViewCompat.generateViewId()
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
-        setPadding(context.dpToPx(30), context.dpToPx(24), 0, context.dpToPx(10))
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.WRAP_CONTENT
+        )
+        setPadding(context.dpToPx(24),context.dpToPx(24),0,context.dpToPx(24))
+
+        addView(currentDateTextView)
+
+        addView(
+            View(context).apply {
+                layoutParams = LinearLayout.LayoutParams(0, 0, 1f)
+            }
+        )
+
         addView(
             ImageView(this.context).apply {
                 setImageDrawable(
                     ContextCompat.getDrawable(
                         this.context,
-                        R.drawable.ic_arrow_left_gray4
+                        R.drawable.ic_left_arrow_monthly_calendar
                     )
                 )
                 setOnClickListener {
@@ -77,17 +98,18 @@ class MonthlyCalendar @JvmOverloads constructor(
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
                 }
+
+                setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
+                addCircleRipple()
             }
         )
-
-        addView(currentDateTextView)
 
         addView(
             ImageView(this.context).apply {
                 setImageDrawable(
                     ContextCompat.getDrawable(
                         this.context,
-                        R.drawable.ic_arrow_right_gray4
+                        R.drawable.ic_right_arrow_monthly_calendar
                     )
                 )
                 setOnClickListener {
@@ -95,8 +117,13 @@ class MonthlyCalendar @JvmOverloads constructor(
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
                 }
+
+                setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
+                addCircleRipple()
             }
         )
+
+        addInvisibleDivider(context.dpToPx(20))
     }
 
     private val calendarWeekDescriptionView = ViewCalendarWeekDescriptionBinding.inflate(
@@ -283,4 +310,14 @@ class MonthlyCalendar @JvmOverloads constructor(
     private fun getStyleableAttrs(attrs: AttributeSet) {
 
     }
+}
+
+fun LinearLayout.addInvisibleDivider(width: Int) {
+    addView(
+        View(this.context).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                width,0
+            )
+        }
+    )
 }
