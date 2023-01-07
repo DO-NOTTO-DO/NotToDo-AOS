@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".presentation.home.HomeBottomFragment">
+
+    <TextView
+        android:id="@+id/tv_home_title_situation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:text="@string/home_bottom_another_day"
+        android:theme="@style/R16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_home_bottom_title_nottodo" />
+
+    <TextView
+        android:id="@+id/tv_home_bottom_title_nottodo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="31dp"
+        android:text="@string/home_outter_item_title_second"
+        android:theme="@style/B16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_home_title_situation"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_home_bottom_trash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_trash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_title_nottodo" />
+
+    <TextView
+        android:id="@+id/tv_home_bottom_trash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/home_bottom_trash"
+        android:theme="@style/M16"
+        app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_trash"
+        app:layout_constraintStart_toEndOf="@id/iv_home_bottom_trash"
+        app:layout_constraintTop_toTopOf="@id/iv_home_bottom_trash" />
+
+    <View
+        android:id="@+id/v_home_trash"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray_4_d7d7d8"
+        app:layout_constraintTop_toBottomOf="@id/iv_home_bottom_trash" />
+
+    <ImageView
+        android:id="@+id/iv_home_bottom_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_home_trash" />
+
+    <TextView
+        android:id="@+id/tv_home_bottom_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/home_bottom_edit"
+        android:theme="@style/M16"
+        app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_edit"
+        app:layout_constraintStart_toEndOf="@id/iv_home_bottom_edit"
+        app:layout_constraintTop_toTopOf="@id/iv_home_bottom_edit" />
+
+    <View
+        android:id="@+id/v_home_edit"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/gray_4_d7d7d8"
+        app:layout_constraintTop_toBottomOf="@id/iv_home_bottom_edit" />
+
+    <ImageView
+        android:id="@+id/iv_home_bottom_anather_natodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/ic_anotherday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_home_edit" />
+
+    <TextView
+        android:id="@+id/tv_home_anather_natodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/home_bottom_another_day"
+        android:theme="@style/M16"
+        app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_anather_natodo"
+        app:layout_constraintStart_toEndOf="@id/iv_home_bottom_anather_natodo"
+        app:layout_constraintTop_toTopOf="@id/iv_home_bottom_anather_natodo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/home_bottom_another_day_description"
+        android:theme="@style/R12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_home_anather_natodo"
+        app:layout_constraintTop_toBottomOf="@id/tv_home_anather_natodo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
