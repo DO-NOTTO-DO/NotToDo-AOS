@@ -1,6 +1,7 @@
 package kr.co.nottodo.presentation.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -9,14 +10,15 @@ import kr.co.nottodo.databinding.ItemHomeOutBinding
 import kr.co.nottodo.util.DiffUtilItemCallback
 
 class HomeOutterAdapter(
-    private val itemClick: (Int) -> Unit
+    private val menuItemClick: (Int) -> Unit,
+    private val todoItemClick: (Int, View) -> Unit
 ) :
     ListAdapter<HomeDaily, HomeOutterAdapter.OutterViewHolder>(diffUtil) {
-
+    private lateinit var itemCheckBoxClickListener: ItemCheckBoxClickListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutterViewHolder {
         val binding =
             ItemHomeOutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return OutterViewHolder(binding, itemClick)
+        return OutterViewHolder(binding, menuItemClick, todoItemClick)
     }
 
     override fun onBindViewHolder(holder: OutterViewHolder, position: Int) {
@@ -25,14 +27,13 @@ class HomeOutterAdapter(
 
     class OutterViewHolder(
         private val binding: ItemHomeOutBinding,
-        private val itemClick: (Int) -> Unit
+        private val menuItemClick: (Int) -> Unit,
+        private val todoItemClick: (Int, View) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: HomeDaily) {
-            binding.root.setOnClickListener {
-                itemClick(absoluteAdapterPosition)
-            }
-            binding.ivHomeOutCheckbox.setOnClickListener { }
+            binding.ivHomeItemOutMeatball.setOnClickListener { menuItemClick(absoluteAdapterPosition) }
+            binding.ivHomeOutCheckbox.setOnClickListener { todoItemClick(absoluteAdapterPosition, binding.ivHomeOutCheckbox) }
             binding.tvHomeItemOutTitle.text = data.title
 //            binding.tvHomeItemOutTitleNotodo.text = data.situation
 //            binding.tvHomeOutterDesciption.text = data.situation
@@ -40,19 +41,13 @@ class HomeOutterAdapter(
         }
     }
 
-//    private fun ballonIconClickEvent() {
-//        binding.iv.setOnClickListener {
-//            iconBalloon.showAlignBottom(it)
-//        }
-//        val button: ImageView =
-//            iconBalloon.getContentView().findViewById(R.id.iv_first)
-//        button.setOnClickListener {
-//            binding.ivIcon.setImageResource(R.drawable.ic_what_mint)
-//            iconBalloon.dismiss()
-//        }
-//
-//    }
+    interface ItemCheckBoxClickListener {
+        fun onClick(view: View, position: Int, itemId: Long)
+    }
 
+    fun setItemCheckBoxClickListener(itemCheckBoxClickListener: ItemCheckBoxClickListener) {
+        this.itemCheckBoxClickListener = itemCheckBoxClickListener
+    }
 
     companion object {
         val diffUtil = DiffUtilItemCallback<HomeDaily>(
