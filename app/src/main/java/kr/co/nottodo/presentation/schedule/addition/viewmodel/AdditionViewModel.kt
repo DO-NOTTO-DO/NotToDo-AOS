@@ -1,8 +1,17 @@
 package kr.co.nottodo.presentation.schedule.addition.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import kr.co.nottodo.data.remote.api.ServicePool
+import kr.co.nottodo.data.remote.model.RequestMissionDto
+import kr.co.nottodo.data.remote.model.ResponseMissionDto
+import retrofit2.await
 
 class AdditionViewModel : ViewModel() {
+
+    private val missionService by lazy { ServicePool.missionService }
+
     val additionMissionName: MutableLiveData<String> = MutableLiveData("")
     val isAdditionMissionNameFilled: LiveData<Boolean> = Transformations.map(additionMissionName) {
         it.isNotEmpty()
@@ -57,5 +66,28 @@ class AdditionViewModel : ViewModel() {
                 && isAdditionActionNameFirstFilled.value == true
                 && isAdditionSituationNameFilled.value == true
                 && isAdditionGoalNameFilled.value == true)
+    }
+
+    private val _responsePostMission: MutableLiveData<ResponseMissionDto> = MutableLiveData()
+    val responsePostMission: LiveData<ResponseMissionDto> get() = _responsePostMission
+
+    private val _errorMessageMission: MutableLiveData<String> = MutableLiveData()
+    val errorMessageMission: LiveData<String>
+        get() = _errorMessageMission
+
+    fun postMission(request: RequestMissionDto) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                missionService.postMission(request).await()
+            }.fold(
+                onSuccess = {
+                    _responsePostMission.value = it
+                },
+                onFailure = {
+                    Log.d("ssong-develop", "$it")
+                    _errorMessageMission.value = it.message
+                }
+            )
+        }
     }
 }
