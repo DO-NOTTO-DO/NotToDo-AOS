@@ -14,7 +14,6 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-import kr.co.nottodo.presentation.toplevel.recommendation.RecommendationFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 //todo 이거 자기꺼에 맞게 바꿔주세요
                 when (item.itemId) {
                     R.id.menu_home -> HomeFragment()
-                    R.id.menu_recommend -> RecommendationFragment()
+                    R.id.menu_recommend -> HomeFragment()
                     R.id.menu_result -> AchievementFragment()
                     else -> HomeFragment()
                 }
