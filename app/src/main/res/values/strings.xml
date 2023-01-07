@@ -9,10 +9,16 @@
     <string name="home_add_nottodo">낫투두 추가</string>
     <string name="home_nothing_nottodo">아직 아무것도 없네요,\n새로운 낫투두를 작성해보세요!</string>
     <string name="home_date">12월 3주차</string>
-    <string name="home_motive_description">본인만의 규율 지켜보세요 라이팅 수정</string>
+    <string name="home_motive_description">낫투두를 통해 본인만의 규율을 지켜보세요</string>
     <string name="home_inner_item_title">유튜브 프리미엄 구독 취소하기</string>
-    <string name="home_outter_item_title">기상 직후 유튜브 보지 않기</string>
+    <string name="home_outter_item_title">기상 직후</string>
+    <string name="home_outter_item_title_second"> 유튜브 보지 않기</string>
     <string name="home_inner_item_description">캡스톤 PPT 만들기</string>
+    <string name="home_outter_goals">목표</string>
+    <string name="home_bottom_trash">삭제하기</string>
+    <string name="home_bottom_edit">수정하기</string>
+    <string name="home_bottom_another_day">다른 날도 할래요</string>
+    <string name="home_bottom_another_day_description">이 낫투두를 원하는 날짜에 추가할 수 있어요</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
