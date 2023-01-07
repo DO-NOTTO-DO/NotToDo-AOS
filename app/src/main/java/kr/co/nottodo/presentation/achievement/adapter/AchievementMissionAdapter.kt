@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
+import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementRvMissionBinding
 
-class AchievementMissionAdapter(context: Context) :
+class AchievementMissionAdapter(
+    context: Context,
+    private val missionStatisticList: List<ResponseMissionStatisticDto.MissionStatistic>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
-    val sampleList = listOf(1, 2, 3, 4, 5)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemAchievementRvMissionBinding.inflate(inflater, parent, false)
@@ -32,12 +35,11 @@ class AchievementMissionAdapter(context: Context) :
             R.drawable.ic_rank_fourth, R.drawable.ic_rank_fifth
         )
 
-        fun onBind(position: Int) {
-            binding.ivAchievementRvMission.setImageResource(R.drawable.ic_rank_first)
-            binding.tvAchievementRvMissionCount.text = "10회"
-            binding.tvAchievementRvMissionName.text = "낫투두명"
+        fun onBind(item: ResponseMissionStatisticDto.MissionStatistic, position: Int) {
             binding.ivAchievementRvMission.setImageResource(icRankList[position])
             binding.layoutAchievementRvMission.setBackgroundResource(backgroundList[position])
+            binding.tvAchievementRvMissionCount.text = item.count.toString()
+            binding.tvAchievementRvMissionName.text = item.title
             when (position) {
                 0 -> {
                     binding.tvAchievementRvMissionCount.setTextColor(
@@ -60,11 +62,11 @@ class AchievementMissionAdapter(context: Context) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as AchievementMissionViewHolder).onBind(position)
+        (holder as AchievementMissionViewHolder).onBind(missionStatisticList[position], position)
     }
 
 
     override fun getItemCount(): Int {
-        return sampleList.size
+        return missionStatisticList.size
     }
 }

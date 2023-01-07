@@ -4,12 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementRvSituationChildBinding
 
-class AchievementSituationChildAdapter(context: Context) :
+class AchievementSituationChildAdapter(
+    context: Context,
+    private val missionStatisticList: List<ResponseMissionStatisticDto.MissionStatistic>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
-    val sampleList = listOf<Int>(1, 2, 3)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemAchievementRvSituationChildBinding.inflate(inflater, parent, false)
@@ -18,18 +21,18 @@ class AchievementSituationChildAdapter(context: Context) :
 
     class AchievementMissionViewHolder(private val binding: ItemAchievementRvSituationChildBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind() {
-            binding.tvAchievementRvSituationChildRank.text = "1"
-            binding.tvAchievementRvSituationChildCount.text = "2회"
-            binding.tvAchievementRvSituationChildMissionName.text = "낫투두명"
+        fun onBind(item: ResponseMissionStatisticDto.MissionStatistic, position: Int) {
+            binding.tvAchievementRvSituationChildRank.text = (position+1).toString()
+            binding.tvAchievementRvSituationChildCount.text = item.count.toString()
+            binding.tvAchievementRvSituationChildMissionName.text = item.title
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as AchievementMissionViewHolder).onBind()
+        (holder as AchievementMissionViewHolder).onBind(missionStatisticList[position], position)
     }
 
     override fun getItemCount(): Int {
-        return sampleList.size
+        return missionStatisticList.size
     }
 }

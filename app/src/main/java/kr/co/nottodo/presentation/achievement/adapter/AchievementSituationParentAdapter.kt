@@ -8,12 +8,15 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
+import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementRvSituationParentBinding
 
-class AchievementSituationParentAdapter(context: Context) :
+class AchievementSituationParentAdapter(
+    context: Context,
+    private val situationStatisticList: List<ResponseSituationStatisticDto.SituationStatistic>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
-    val sampleList = listOf<Int>(1, 2, 3)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemAchievementRvSituationParentBinding.inflate(inflater, parent, false)
@@ -40,12 +43,11 @@ class AchievementSituationParentAdapter(context: Context) :
                 R.color.yellow_mild_fbf8af
             )
 
-        fun onBind(position: Int) {
-            binding.ivAchievementRvSituationParentRank.setImageResource(R.drawable.ic_rank_first)
-            binding.tvAchievementRvSituationParentCount.text = "10회"
-            binding.tvAchievementRvSituationParentName.text = "상황명"
+        fun onBind(item: ResponseSituationStatisticDto.SituationStatistic, position: Int) {
+            binding.tvAchievementRvSituationParentCount.text = item.count.toString()
+            binding.tvAchievementRvSituationParentName.text = item.name
             binding.rvAchievementPagerSituationChild.adapter =
-                AchievementSituationChildAdapter(binding.root.context)
+                AchievementSituationChildAdapter(binding.root.context, item.missions)
             binding.rvAchievementPagerSituationChild.layoutManager =
                 LinearLayoutManager(binding.root.context)
             binding.ivAchievementRvSituationParentRank.setImageResource(icRankList[position])
@@ -83,11 +85,11 @@ class AchievementSituationParentAdapter(context: Context) :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as AchievementMissionViewHolder).onBind(position)
+        (holder as AchievementMissionViewHolder).onBind(situationStatisticList[position], position)
         holder.onClickListener(position)
     }
 
     override fun getItemCount(): Int {
-        return sampleList.size
+        return situationStatisticList.size
     }
 }
