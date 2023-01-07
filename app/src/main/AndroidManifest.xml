@@ -16,22 +16,9 @@
         android:theme="@style/Theme.NotToDo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
-            android:name=".AddSituationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".AddsituationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".AddSituation"
+            android:name=".presentation.addsituation.AddSituationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
