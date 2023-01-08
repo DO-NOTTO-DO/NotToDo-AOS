@@ -3,6 +3,7 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -19,16 +20,11 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.view.NoRippleRecyclerView
-import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
-import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.monthly.model.DateType
-import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.monthly.util.isWeekend
-import kr.co.nottodo.view.calendar.monthly.util.toPrettyDateString
-import kr.co.nottodo.view.calendar.monthly.util.toPrettyMonthString
+import kr.co.nottodo.view.calendar.monthly.model.*
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.adapter.MonthlyCalendarPickerDayAdapter
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
-import kr.co.nottodo.view.calendar.monthly.util.addCircleRipple
+import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.type.CalendarPickerType
+import kr.co.nottodo.view.calendar.monthly.util.*
 import java.util.*
 
 /**
@@ -56,6 +52,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             field = value
             updateCurrentDateTextView()
         }
+    var calendarPickerMode: Int = 0
 
     private val currentDateTextView = TextView(context, null, R.style.B18).apply {
         id = ViewCompat.generateViewId()
@@ -171,18 +168,38 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
             set(Calendar.YEAR, calendar.get(Calendar.YEAR))
         }
+        val todayCalendar = Calendar.getInstance()
 
         val totalDayInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val monthlyCalendarDayList = mutableListOf<MonthlyCalendarDay>()
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
-            val dateType = if (proxyCalendar.isWeekend()) {
-                DateType.WEEKEND
-            } else {
-                DateType.WEEKDAY
+            val dateType = when (calendarPickerMode) {
+                0 -> {
+                    if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
+                        DateType.DISABLED
+                    } else if (proxyCalendar.isWeekend()) {
+                        DateType.WEEKEND
+                    } else {
+                        DateType.WEEKDAY
+                    }
+                }
+                1 -> {
+                    if (proxyCalendar.isWeekend()) {
+                        DateType.WEEKEND
+                    } else {
+                        DateType.WEEKDAY
+                    }
+                }
+                else -> {
+                    if (proxyCalendar.isWeekend()) {
+                        DateType.WEEKEND
+                    } else {
+                        DateType.WEEKDAY
+                    }
+                }
             }
-
             when (day) {
                 1 -> {
                     monthlyCalendarDayList.addAll(
@@ -305,7 +322,9 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     }
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
-
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.MonthlyCalendarPicker)
+        calendarPickerMode = typedArray.getInt(R.styleable.MonthlyCalendarPicker_calendar_picker_mode,0)
+        typedArray.recycle()
     }
 
     fun setOnMonthlyCalendarPickerClickListener(monthlyCalendarPickerClickListener: MonthlyCalendarPickerClickListener) {
@@ -317,8 +336,10 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     }
 
     override fun onDayClick(view: View, date: Date) {
-        selectedDate = date
-        monthlyCalendarPickerDayAdapter.selectedDate = date
-        monthlyCalendarPickerClickListener?.onDayClick(view, date)
+        if (!date.isToday()) {
+            selectedDate = date
+            monthlyCalendarPickerDayAdapter.selectedDate = date
+            monthlyCalendarPickerClickListener?.onDayClick(view, date)
+        }
     }
 }

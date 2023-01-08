@@ -315,6 +315,10 @@ class MonthlyCalendar @JvmOverloads constructor(
 
     }
 
+    fun setNotToDoCountList(list: List<Pair<Date?,Int>>) {
+        monthlyCalendarDayAdapter.submitNotTodoCountList(list)
+    }
+
     fun setOnMonthlyCalendarNextMonthListener(monthlyCalendarNextMonthListener: MonthlyCalendarNextMonthListener) {
         this.monthlyCalendarNextMonthListener = monthlyCalendarNextMonthListener
     }

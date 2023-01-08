@@ -13,6 +13,14 @@ fun Date.isTheSameDay(comparedDate: Date): Boolean {
             calendar.get(Calendar.YEAR) == comparedCalendarDate.get(Calendar.YEAR)
 }
 
+fun Date.isToday(): Boolean {
+    val calendar = Calendar.getInstance()
+    calendar.withTime(this)
+    val todayCalendar= Calendar.getInstance()
+    return (todayCalendar.get(Calendar.DAY_OF_YEAR)) == calendar.get(Calendar.DAY_OF_YEAR) &&
+            todayCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+}
+
 fun Calendar.withTime(date: Date) {
     clear()
     time = date

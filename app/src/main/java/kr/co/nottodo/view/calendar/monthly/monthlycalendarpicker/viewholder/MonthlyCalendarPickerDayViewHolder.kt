@@ -3,6 +3,7 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ViewMonthlyCalendarPickerDayBinding
+import kr.co.nottodo.view.calendar.monthly.model.DateType
 import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
 
@@ -41,7 +42,9 @@ class MonthlyCalendarPickerDayViewHolder(
     }
 
     override fun onClick(view: View) {
-        clickHandler.onDayClick(view, dayData.date)
+        if (dayData.state != DateType.DISABLED) {
+            clickHandler.onDayClick(view, dayData.date)
+        }
     }
 
     override fun onLongClick(view: View): Boolean = false

@@ -1,5 +1,6 @@
 package kr.co.nottodo.view.calendar.monthly.util
 
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
 
@@ -31,6 +32,13 @@ fun Calendar.toApiDateString(): String {
         month = "0${month}"
     }
     return "${year}${month}"
+}
+
+fun String.convertStringToDate(): Date? {
+    val format = SimpleDateFormat("yyyy-MM-dd")
+    return runCatching {
+        format.parse(this)
+    }.getOrNull()
 }
 
 // 현재 날짜로 부터 날이 이미 지났는지 체크하는 함수
