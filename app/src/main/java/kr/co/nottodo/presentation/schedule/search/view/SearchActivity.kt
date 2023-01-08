@@ -2,6 +2,7 @@ package kr.co.nottodo.presentation.schedule.search.view
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,7 @@ import timber.log.Timber
 
 class SearchActivity : AppCompatActivity() {
     lateinit var binding: ActivitySearchBinding
-    private val viewModel by lazy { SearchViewModel() }
+    private val viewModel by viewModels<SearchViewModel>()
     lateinit var itemList: List<ResponseHistoryDto.History>
 
     override fun onCreate(savedInstanceState: Bundle?) {

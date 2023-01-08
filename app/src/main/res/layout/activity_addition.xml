@@ -395,7 +395,7 @@
                             android:layout_marginVertical="9dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="10dp"
-                            android:text="2022.12.16"
+                            tools:text="yyyyMMdd"
                             android:textColor="@color/gray_1_626068"
                             android:theme="@style/M14"
                             app:layout_constraintBottom_toBottomOf="parent"
