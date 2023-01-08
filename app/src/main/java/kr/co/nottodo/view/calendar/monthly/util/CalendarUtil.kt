@@ -24,6 +24,15 @@ fun Calendar.toPrettyDateString(): String {
     return "$year.$month.$day"
 }
 
+fun Calendar.toApiDateString(): String {
+    var month = (get(MONTH) + 1).toString()
+    val year = get(YEAR).toString()
+    if (month.length == 1) {
+        month = "0${month}"
+    }
+    return "${year}${month}"
+}
+
 // 현재 날짜로 부터 날이 이미 지났는지 체크하는 함수
 fun Calendar.isBefore(otherCalendar: Calendar): Boolean {
     return get(YEAR) == otherCalendar.get(YEAR)

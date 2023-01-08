@@ -23,7 +23,7 @@
             android:id="@+id/iv_today"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:background="@drawable/bg_monthly_calendar_today"
+            android:src="@drawable/bg_monthly_calendar_today"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -2,8 +2,6 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendar
 
 import android.content.Context
 import android.graphics.Color
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
-import android.icu.text.ListFormatter
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -16,7 +14,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.GridLayoutManager
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
@@ -27,6 +24,8 @@ import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.monthly.model.DateType
 import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
+import kr.co.nottodo.view.calendar.monthly.monthlycalendar.listener.MonthlyCalendarNextMonthListener
+import kr.co.nottodo.view.calendar.monthly.monthlycalendar.listener.MonthlyCalendarPrevMonthListener
 import kr.co.nottodo.view.calendar.monthly.util.*
 import java.util.*
 import java.util.Calendar.*
@@ -54,6 +53,9 @@ class MonthlyCalendar @JvmOverloads constructor(
             field = value
             updateCurrentDateTextView()
         }
+
+    private var monthlyCalendarNextMonthListener: MonthlyCalendarNextMonthListener? = null
+    private var monthlyCalendarPrevMonthListener: MonthlyCalendarPrevMonthListener? = null
 
     private val currentDateTextView = TextView(context, null, R.style.M14).apply {
         id = ViewCompat.generateViewId()
@@ -97,6 +99,7 @@ class MonthlyCalendar @JvmOverloads constructor(
                     calendar.add(Calendar.MONTH, -1)
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
+                    monthlyCalendarPrevMonthListener?.onShowPrevMonth(this,calendar.toApiDateString())
                 }
 
                 setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
@@ -116,6 +119,7 @@ class MonthlyCalendar @JvmOverloads constructor(
                     calendar.add(Calendar.MONTH, 1)
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
+                    monthlyCalendarNextMonthListener?.onShowNextMonth(this, calendar.toApiDateString())
                 }
 
                 setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
@@ -309,6 +313,22 @@ class MonthlyCalendar @JvmOverloads constructor(
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
 
+    }
+
+    fun setOnMonthlyCalendarNextMonthListener(monthlyCalendarNextMonthListener: MonthlyCalendarNextMonthListener) {
+        this.monthlyCalendarNextMonthListener = monthlyCalendarNextMonthListener
+    }
+
+    fun setOnMonthlyCalendarNextMonthListener(block: (view: View, dateString: String) -> Unit) {
+        this.monthlyCalendarNextMonthListener = MonthlyCalendarNextMonthListener(block)
+    }
+
+    fun setOnMonthlyCalendarPrevMonthListener(monthlyCalendarPrevMonthListener: MonthlyCalendarPrevMonthListener) {
+        this.monthlyCalendarPrevMonthListener = monthlyCalendarPrevMonthListener
+    }
+
+    fun setOnMonthlyCalendarPrevMonthListener(block: (view: View, dateString: String) -> Unit) {
+        this.monthlyCalendarPrevMonthListener = MonthlyCalendarPrevMonthListener(block)
     }
 }
 

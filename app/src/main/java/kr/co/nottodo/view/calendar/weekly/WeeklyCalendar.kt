@@ -3,6 +3,7 @@ package kr.co.nottodo.view.calendar.weekly
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -10,12 +11,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
+import kr.co.nottodo.view.calendar.weekly.listener.OnSwipeTouchListener
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-// 리사이클러뷰가 맞는거 같음
-// 코드 정리합시다
 @SuppressLint("ClickableViewAccessibility")
 class WeeklyCalendar @JvmOverloads constructor(
     context: Context,
@@ -40,19 +40,29 @@ class WeeklyCalendar @JvmOverloads constructor(
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT)
         adapter = weeklyAdapter
         var currentDate = LocalDate.now()
-        initGestureDetector(
-            onSwipeLeft = {
-                weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
-                currentDate = currentDate.plusWeeks(1)
-            },
-            onSwipeRight = {
+        // 이 touchListener가 recyclerview 본인 자체를 터치하게 되면 e1좌표가 나오지 않는 것이 문제이다
+        // 이 시...그럼 어떻게 해야하는건데
+        this.setOnTouchListener(object: OnSwipeTouchListener(context) {
+            override fun onSwipeRight() {
+                super.onSwipeRight()
                 weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
                 currentDate = currentDate.minusWeeks(1)
             }
-        )
-        setOnTouchListener { v, event ->
-            gestureDetector.onTouchEvent(event)
-        }
+
+            override fun onSwipeLeft() {
+                super.onSwipeLeft()
+                weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
+                currentDate = currentDate.plusWeeks(1)
+            }
+
+            override fun onSwipeUp() {
+                super.onSwipeUp()
+            }
+
+            override fun onSwipeDown() {
+                super.onSwipeDown()
+            }
+        })
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
     }
 
@@ -62,58 +72,6 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     private fun removeScrollRippleEffect() {
         overScrollMode = OVER_SCROLL_NEVER
-    }
-
-    private fun initGestureDetector(
-        onSwipeLeft: () -> Unit,
-        onSwipeRight: () -> Unit
-    ) {
-        gestureDetector = GestureDetector(context, object : GestureDetector.OnGestureListener {
-            override fun onDown(e: MotionEvent): Boolean = false
-
-            override fun onShowPress(e: MotionEvent) {
-                /** no - op **/
-            }
-
-            override fun onSingleTapUp(e: MotionEvent): Boolean = false
-
-            override fun onScroll(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean = false
-
-            override fun onLongPress(e: MotionEvent) {
-                /** no - op **/
-            }
-
-            override fun onFling(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                velocityX: Float,
-                velocityY: Float
-            ): Boolean {
-                var result = false
-                try {
-                    val diffY = e2.y - e1.y
-                    val diffX = e2.x - e1.x
-                    if (Math.abs(diffX) > Math.abs(diffY)) {
-                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (diffX > 0) {
-                                onSwipeRight()
-                            } else {
-                                onSwipeLeft()
-                            }
-                            result = true
-                        }
-                    }
-                } catch (exception: Exception) {
-                    exception.printStackTrace()
-                }
-                return result
-            }
-        })
     }
 
     private fun daysInWeek(date: LocalDate): List<LocalDate> {
