@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -15,12 +16,12 @@ import kr.co.nottodo.databinding.ActivityAdditionBinding
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AdditionActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdditionBinding
-    private val viewModel by lazy {
-        AdditionViewModel()
-    }
+    private val viewModel by viewModels<AdditionViewModel>()
     lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +31,7 @@ class AdditionActivity : AppCompatActivity() {
         initResultLauncher()
         initBinding()
         initBottomSheet()
+        initDate()
         btnActionPlusOnClickListener()
         binding.tvAdditionMissionName.setOnClickListener {
             moveToSearchActivity()
@@ -37,8 +39,6 @@ class AdditionActivity : AppCompatActivity() {
         binding.btnAdditionAdd.setOnClickListener {
             postMission()
         }
-
-        observeResponse()
 
         binding.layoutAdditionMoveSituationPage.setOnClickListener {
             // TODO by 김준서 : 상황 추가 화면으로 이동 - 상황 추가 화면 구현시 개발
@@ -50,12 +50,27 @@ class AdditionActivity : AppCompatActivity() {
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
             // TODO by 김준서 : 추후 행동 추천 화면 구현시 개발
         }
+
         observeEditText()
+        observeDate()
         btnDeleteActionOnClickListener()
         ivDeletePageOnClickListener()
 
         observeToActivateAddBtn()
         observePlusBtn()
+
+        observeResponse()
+    }
+
+    private fun observeDate() {
+        viewModel.additionDate.observe(this) {
+            binding.tvAdditionDate.text = it
+        }
+    }
+
+    private fun initDate() {
+        binding.tvAdditionDate.text =
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
     }
 
     private fun postMission() {

@@ -61,6 +61,8 @@ class AdditionViewModel : ViewModel() {
         }
     }
 
+    val additionDate: MutableLiveData<String> = MutableLiveData()
+
     private fun _isBtnSuitConditions(): Boolean {
         return (isAdditionMissionNameFilled.value == true
                 && isAdditionActionNameFirstFilled.value == true
@@ -84,10 +86,10 @@ class AdditionViewModel : ViewModel() {
                     _responsePostMission.value = it
                 },
                 onFailure = {
-                    Log.d("ssong-develop", "$it")
                     _errorMessageMission.value = it.message
                 }
             )
         }
     }
+
 }
