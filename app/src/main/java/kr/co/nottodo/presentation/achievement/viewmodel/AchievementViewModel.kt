@@ -3,12 +3,14 @@ package kr.co.nottodo.presentation.achievement.viewmodel
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kr.co.nottodo.data.remote.api.ServicePool
+import kr.co.nottodo.data.remote.model.ResponseAchievementDto
 import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
 import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import retrofit2.await
 
 class AchievementViewModel : ViewModel() {
     private val statisticService by lazy { ServicePool.statisticService }
+    private val achievementService by lazy { ServicePool.achievementService }
 
     private val _responseMission: MutableLiveData<ResponseMissionStatisticDto> = MutableLiveData()
     val responseMission: LiveData<ResponseMissionStatisticDto>
@@ -29,16 +31,23 @@ class AchievementViewModel : ViewModel() {
 
     val isDataCome: MediatorLiveData<Boolean> = MediatorLiveData()
 
+    private val _responseAchievement: MutableLiveData<ResponseAchievementDto> = MutableLiveData()
+    val responseAchievement: LiveData<ResponseAchievementDto> get() = _responseAchievement
+
+    private val _errorMessageAchievement: MutableLiveData<String> =
+        MutableLiveData()
+    val errorMessageAchievement: LiveData<String> get() = _errorMessageAchievement
+
     init {
         isDataCome.addSource(responseMission) {
-            isDataCome.value = _isDataCome()
+            isDataCome.value = _isDataCame()
         }
         isDataCome.addSource(responseSituation) {
-            isDataCome.value = _isDataCome()
+            isDataCome.value = _isDataCame()
         }
     }
 
-    private fun _isDataCome(): Boolean {
+    private fun _isDataCame(): Boolean {
         return (responseMission.value?.data?.isNotEmpty() == true
                 && responseSituation.value?.data?.isNotEmpty() == true)
     }
@@ -47,7 +56,8 @@ class AchievementViewModel : ViewModel() {
         viewModelScope.launch {
             kotlin.runCatching {
                 statisticService.getMissionStatistic().await()
-            }.fold({ _responseMission.value = it }, { _errorMessageMission.value = it.message })
+            }.fold(onSuccess = { _responseMission.value = it },
+                onFailure = { _errorMessageMission.value = it.message })
         }
     }
 
@@ -55,8 +65,17 @@ class AchievementViewModel : ViewModel() {
         viewModelScope.launch {
             kotlin.runCatching {
                 statisticService.getSituationStatistic().await()
-            }.fold({ _responseSituation.value = it }, { _errorMessageSituation.value = it.message })
+            }.fold(onSuccess = { _responseSituation.value = it },
+                onFailure = { _errorMessageSituation.value = it.message })
         }
     }
 
+    fun getAchievement(month: String) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                achievementService.getAchievement(month).await()
+            }.fold(onSuccess = { _responseAchievement.value = it },
+                onFailure = { _errorMessageAchievement.value = it.message })
+        }
+    }
 }
