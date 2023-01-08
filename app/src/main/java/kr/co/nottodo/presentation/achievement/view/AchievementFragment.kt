@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
@@ -20,7 +21,7 @@ class AchievementFragment : Fragment() {
     private var _binding: FragmentAchievementBinding? = null
     private val binding: FragmentAchievementBinding
         get() = requireNotNull(_binding) { "서치 프래그먼트에서 _binding이 널임" }
-    private val viewModel by lazy { AchievementViewModel() }
+    private val viewModel by viewModels<AchievementViewModel>()
 
     lateinit var missionStatistic: List<ResponseMissionStatisticDto.MissionStatistic>
     lateinit var situationStatistic: List<ResponseSituationStatisticDto.SituationStatistic>
