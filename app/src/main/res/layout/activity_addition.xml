@@ -208,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="9dp"
                         android:background="@null"
-                        android:text="* 상황 추가는 낫투두 당 2개까지 가능합니다."
+                        android:text="* 실천 행동 추가는 낫투두 당 2개까지 가능합니다."
                         android:textColor="@color/gray_2_8e8e93"
                         android:theme="@style/R12"
                         app:layout_constraintStart_toStartOf="parent"

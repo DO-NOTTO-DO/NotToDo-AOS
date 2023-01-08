@@ -1,19 +1,29 @@
 package kr.co.nottodo.presentation.achievement.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
+import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import kr.co.nottodo.databinding.FragmentAchievementBinding
 import kr.co.nottodo.presentation.achievement.adapter.AchievementViewPagerAdapter
+import kr.co.nottodo.presentation.achievement.adapter.AchievementViewPagerEmptyDataAdapter
+import kr.co.nottodo.presentation.achievement.viewmodel.AchievementViewModel
+import timber.log.Timber
 
 class AchievementFragment : Fragment() {
     private var _binding: FragmentAchievementBinding? = null
     private val binding: FragmentAchievementBinding
         get() = requireNotNull(_binding) { "서치 프래그먼트에서 _binding이 널임" }
+    private val viewModel by lazy { AchievementViewModel() }
+
+    lateinit var missionStatistic: List<ResponseMissionStatisticDto.MissionStatistic>
+    lateinit var situationStatistic: List<ResponseSituationStatisticDto.SituationStatistic>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,28 +37,51 @@ class AchievementFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO by 김준서 : 데이터 유무에 따른 분기처리
+        getStatistics()
+        initViewPager()
+    }
 
-        // 데이터가 없는 경우
-        // val emptyDataAdapter = AchievementViewPagerEmptyDataAdapter(requireContext())
-        // binding.viewpagerAchievement.adapter = emptyDataAdapter
-        // binding.tvAchievementStatistics.visibility = View.GONE
+    private fun getStatistics() {
+        viewModel.getMissionStatistic()
+        viewModel.getSituationStatistic()
+    }
 
-        // 데이터 있는 경우
-        val adapter = AchievementViewPagerAdapter(requireContext())
-        binding.viewpagerAchievement.adapter = adapter
-        binding.viewpagerAchievement.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                adapter.notifyDataSetChanged()
+    private fun initViewPager() {
+        viewModel.isDataCome.observe(viewLifecycleOwner){
+            if(it){
+                missionStatistic = viewModel.responseMission.value?.data ?: listOf()
+                situationStatistic = viewModel.responseSituation.value?.data ?: listOf()
+
+                val adapter = AchievementViewPagerAdapter(requireContext(), missionStatistic, situationStatistic)
+                binding.viewpagerAchievement.adapter = adapter
+                binding.tvAchievementStatistics.visibility = View.VISIBLE
+                binding.viewpagerAchievement.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
+                    override fun onPageScrolled(
+                        position: Int,
+                        positionOffset: Float,
+                        positionOffsetPixels: Int
+                    ) {
+                        super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                        adapter.notifyDataSetChanged()
+                    }
+                })
+            }else{
+                binding.viewpagerAchievement.adapter = AchievementViewPagerEmptyDataAdapter(requireContext())
+                binding.tvAchievementStatistics.visibility = View.GONE
             }
-        })
-        val tabTitles = listOf<String>("   낫투두 통계 보기   ", "   상황별 통계 보기   ")
+            initTabLayout()
+        }
+        viewModel.errorMessageMission.observe(viewLifecycleOwner){
+            Timber.d(it)
+        }
+        viewModel.errorMessageSituation.observe(viewLifecycleOwner){
+            Timber.d(it)
+        }
+    }
+
+    private fun initTabLayout() {
+        val tabTitles = listOf("   낫투두 통계 보기   ", "   상황별 통계 보기   ")
         TabLayoutMediator(
             binding.tablayoutAchievementStatistics,
             binding.viewpagerAchievement
