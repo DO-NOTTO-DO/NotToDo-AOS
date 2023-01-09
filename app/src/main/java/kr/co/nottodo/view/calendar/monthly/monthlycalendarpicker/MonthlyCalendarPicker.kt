@@ -164,9 +164,9 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     private fun buildCalendarData(): List<MonthlyCalendarDay> {
         // 현재 달력이 보여주고 있는 Calendar instance의 복사본
         val proxyCalendar = Calendar.getInstance().apply {
-            set(Calendar.MONTH, calendar.get(Calendar.MONTH))
-            set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
             set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+            set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, 1)
         }
         val todayCalendar = Calendar.getInstance()
 
@@ -175,30 +175,12 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
-            val dateType = when (calendarPickerMode) {
-                0 -> {
-                    if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
-                        DateType.DISABLED
-                    } else if (proxyCalendar.isWeekend()) {
-                        DateType.WEEKEND
-                    } else {
-                        DateType.WEEKDAY
-                    }
-                }
-                1 -> {
-                    if (proxyCalendar.isWeekend()) {
-                        DateType.WEEKEND
-                    } else {
-                        DateType.WEEKDAY
-                    }
-                }
-                else -> {
-                    if (proxyCalendar.isWeekend()) {
-                        DateType.WEEKEND
-                    } else {
-                        DateType.WEEKDAY
-                    }
-                }
+            val dateType = if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
+                DateType.DISABLED
+            } else if (proxyCalendar.isWeekend()) {
+                DateType.WEEKEND
+            } else {
+                DateType.WEEKDAY
             }
             when (day) {
                 1 -> {
