@@ -8,6 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.nottodo.databinding.FragmentHomeBottomBinding
+import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 
 
 class HomeBottomFragment : BottomSheetDialogFragment() {
@@ -34,7 +35,11 @@ class HomeBottomFragment : BottomSheetDialogFragment() {
     private fun click() {
         binding.tvHomeBottomTrash.setOnClickListener { this.dismiss() }
         binding.tvHomeBottomEdit.setOnClickListener { this.dismiss() }
-        binding.tvHomeAnatherNatodo.setOnClickListener { this.dismiss() }
+        binding.tvHomeAnatherNatodo.setOnClickListener {
+            CalendarBottomSheet().show(childFragmentManager, CalendarBottomSheet().tag)
+            //.show(, CalendarBottomSheet().tag)
+//            this.dismiss()
+        }
     }
 
     override fun onDestroyView() {
