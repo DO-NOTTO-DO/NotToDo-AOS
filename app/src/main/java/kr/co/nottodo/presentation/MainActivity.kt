@@ -1,6 +1,5 @@
 package kr.co.nottodo.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,7 +10,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.achievement.view.AchievementFragment
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.home.HomeFragment
 import kr.co.nottodo.presentation.toplevel.recommendation.RecommendationFragment
 
 
