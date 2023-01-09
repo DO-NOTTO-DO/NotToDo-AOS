@@ -1,6 +1,5 @@
-package kr.co.nottodo.presentation.toplevel.recommendation
+package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemRecommendBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationData
 
 class RecommendationAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {
 

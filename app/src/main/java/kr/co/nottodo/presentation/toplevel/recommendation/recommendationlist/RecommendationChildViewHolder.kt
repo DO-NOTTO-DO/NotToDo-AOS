@@ -3,7 +3,7 @@ package com.ssong_develop.nestedrecyclerview.viewholder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ItemNottodoRecommendationListBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationChildData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationChildData
 
 
 class RecommendationChildViewHolder(

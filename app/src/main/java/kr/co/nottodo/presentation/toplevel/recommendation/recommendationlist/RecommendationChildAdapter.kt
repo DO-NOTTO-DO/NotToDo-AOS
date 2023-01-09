@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.nestedrecyclerview.viewholder.RecommendationChildViewHolder
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemNottodoRecommendationListBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationChildData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationChildData
 
     class ChildAdapter(
         private val childClickListener: (view: View, childData: RecommendationChildData) -> Unit

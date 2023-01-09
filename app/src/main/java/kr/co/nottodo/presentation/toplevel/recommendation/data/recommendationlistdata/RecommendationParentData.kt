@@ -1,4 +1,4 @@
-package kr.co.nottodo.presentation.toplevel.recommendation.data
+package kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata
 
 data class RecommendationParentData(
     val id: Int,

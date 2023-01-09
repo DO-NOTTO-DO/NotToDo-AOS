@@ -1,4 +1,4 @@
-package kr.co.nottodo.presentation.toplevel.recommendation
+package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentRecommendationBinding

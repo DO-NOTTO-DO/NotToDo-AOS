@@ -1,9 +1,9 @@
-package kr.co.nottodo.presentation.toplevel.recommendation
+package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.co.nottodo.databinding.ItemRecommendBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationData
 
 class RecommendationViewHolder(
     val binding: ItemRecommendBinding

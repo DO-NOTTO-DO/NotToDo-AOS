@@ -4,8 +4,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.databinding.ItemNottodoRecommendationListTitleBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationChildData
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationParentData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationChildData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationParentData
 
 class RecommendationParentViewHolder(
     private val binding: ItemNottodoRecommendationListTitleBinding,
