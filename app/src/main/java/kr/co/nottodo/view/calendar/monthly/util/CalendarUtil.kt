@@ -58,9 +58,13 @@ fun Calendar.isBefore(otherCalendar: Calendar): Boolean {
 
 fun Calendar.isBeforeCalendar(otherCalendar: Calendar): Boolean {
     if (get(YEAR) < otherCalendar.get(YEAR)) return true
-    if (get(MONTH) < otherCalendar.get(MONTH)) return true
-    if (get(DAY_OF_MONTH) < otherCalendar.get(DAY_OF_MONTH)) return true
-    return false
+    return if (get(MONTH) < otherCalendar.get(MONTH)) {
+        true
+    } else if (get(MONTH) == otherCalendar.get(MONTH)) {
+        get(DAY_OF_MONTH) < otherCalendar.get(DAY_OF_MONTH)
+    } else {
+        false
+    }
 }
 
 // 현재 날짜로 부터 이후의 날인지 체크하는 함수
