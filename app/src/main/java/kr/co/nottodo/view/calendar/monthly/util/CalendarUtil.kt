@@ -31,11 +31,19 @@ fun Calendar.toApiDateString(): String {
     if (month.length == 1) {
         month = "0${month}"
     }
-    return "${year}${month}"
+    return "${year}-${month}"
 }
 
 fun String.convertStringToDate(): Date? {
     val format = SimpleDateFormat("yyyy-MM-dd")
+    return runCatching {
+        format.parse(this)
+    }.getOrNull()
+}
+
+// 성취 캘린더를 위한 함수
+fun String.achievementConvertStringToDate(): Date? {
+    val format = SimpleDateFormat("yyyy.MM.dd")
     return runCatching {
         format.parse(this)
     }.getOrNull()

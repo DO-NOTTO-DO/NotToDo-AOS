@@ -46,7 +46,7 @@ class MonthlyCalendar @JvmOverloads constructor(
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
     private val monthlyCalendarDayAdapter = MonthlyCalendarDayAdapter()
-    private val calendar = Calendar.getInstance(timeZone, locale)
+    val calendar = Calendar.getInstance(timeZone, locale)
     private var calendarDataList: List<MonthlyCalendarDay> = listOf()
     private var currentDate = calendar.toPrettyMonthString(locale = locale)
         set(value) {
