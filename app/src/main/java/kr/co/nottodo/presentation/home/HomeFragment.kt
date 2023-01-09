@@ -38,7 +38,6 @@ class HomeFragment : Fragment() {
 
     private fun initAdapter() {
         outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
-//        addRepoList()
         binding.rvHomeShowTodo.adapter = outterAdapter
         outterAdapter.checkBox("AMBIGUOUS")
 
@@ -66,8 +65,6 @@ class HomeFragment : Fragment() {
             balloon.getContentView().findViewById(R.id.iv_balloon_complete)
         fail.setOnClickListener {
             Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
-//            outterAdapter.checkBox("AMBIGUOUS")
-//            outterAdapter.notifyItemChanged(outterAdapter.checkBox("AMBIGUOUS"))
 
             balloon.dismiss()
         }
@@ -84,25 +81,6 @@ class HomeFragment : Fragment() {
     private fun initStatus() {
         viewModel.initServer("2023-01-07")
     }
-
-//    private fun addRepoList() {
-//        outterAdapter.submitList(
-//            listOf(
-//                HomeDaily(
-//                    1, "김수빈"
-//                ),
-//                HomeDaily(
-//                    2, "김수빈"
-//                ),
-//                HomeDaily(
-//                    3, "김수빈"
-//                ),
-//                HomeDaily(
-//                    4, "김수빈"
-//                ),
-//            )
-//        )
-//    }
 
     private fun clickFbtn() {
         binding.fbtnHomeFloating.setOnClickListener {
