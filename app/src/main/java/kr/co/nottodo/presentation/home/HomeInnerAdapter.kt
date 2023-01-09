@@ -9,18 +9,18 @@ import kr.co.nottodo.databinding.ItemHomeInnerBinding
 import kr.co.nottodo.util.DiffUtilItemCallback
 import timber.log.Timber
 
-class HomeInnerAdapter(private val actionList: List<HomeDaily.Action>) :
+class HomeInnerAdapter() :
     ListAdapter<HomeDaily.Action, HomeInnerAdapter.InnerViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerViewHolder {
         val binding =
             ItemHomeInnerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        Timber.e("inner ${actionList.size}")
+//        Timber.e("inner ${actionList.size}")
         return InnerViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: InnerViewHolder, position: Int) {
-        holder.onBind(actionList[position])
+        holder.onBind(currentList[position])
 //        (holder as InnerViewHolder).onBind(actionList[position])
     }
 

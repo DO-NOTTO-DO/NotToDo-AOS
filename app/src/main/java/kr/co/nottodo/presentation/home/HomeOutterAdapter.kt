@@ -1,5 +1,6 @@
 package kr.co.nottodo.presentation.home
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,18 +41,25 @@ class HomeOutterAdapter(
                     it
                 )
             }
-//            todo completionstatus에 따라서 분기처리
-            when (data.completionStatus) {
-                "NOTYET" -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
-                "AMBIGUOUS" -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
-                else -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
+            if (data.completionStatus == "NOTYET") {
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
+            } else if (data.completionStatus == "AMBIGUOUS") {
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
+            } else {
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
+                binding.tvHomeItemOutTitle!!.setPaintFlags(binding.tvHomeItemOutTitle!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+                binding.tvHomeItemOutTitleNotodo!!.setPaintFlags(binding.tvHomeItemOutTitleNotodo!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
             }
+
             binding.tvHomeItemOutTitle.text = data.title
             binding.tvHomeItemOutTitleNotodo.text = data.situation
             binding.tvHomeOutterDesciption.text = data.goal
             binding.ivHomeItemOutMeatball.setOnClickListener { menuItemClick(absoluteAdapterPosition) }
             Timber.e("out ${data.actions}")
-            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter(data.actions)
+            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter().apply {
+                submitList(data.actions)
+            }
+
         }
     }
 
