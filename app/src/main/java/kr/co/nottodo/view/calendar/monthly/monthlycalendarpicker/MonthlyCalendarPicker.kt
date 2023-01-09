@@ -42,7 +42,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyle), MonthlyCalendarPickerClickListener {
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
-    private var selectedDate: Date? = null
+    var selectedDate: Date? = null
     private var monthlyCalendarPickerClickListener : MonthlyCalendarPickerClickListener? = null
     private val monthlyCalendarPickerDayAdapter = MonthlyCalendarPickerDayAdapter(this)
     private val calendar = Calendar.getInstance(timeZone, locale)

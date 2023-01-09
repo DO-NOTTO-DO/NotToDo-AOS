@@ -2,40 +2,44 @@ package kr.co.nottodo.presentation.schedule.addition.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
+import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.databinding.ActivityAdditionBinding
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AdditionActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdditionBinding
-    private val viewModel by lazy {
-        AdditionViewModel()
-    }
+    private val viewModel by viewModels<AdditionViewModel>()
     lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initResultLauncher()
         setContentView(R.layout.activity_addition)
+        initResultLauncher()
         initBinding()
         initBottomSheet()
+        initDate()
         btnActionPlusOnClickListener()
         binding.tvAdditionMissionName.setOnClickListener {
             moveToSearchActivity()
         }
         binding.btnAdditionAdd.setOnClickListener {
-            // TODO by 김준서 : 서버 통신을 통해 낫투두 추가하는 기능
+            postMission()
         }
+
         binding.layoutAdditionMoveSituationPage.setOnClickListener {
             // TODO by 김준서 : 상황 추가 화면으로 이동 - 상황 추가 화면 구현시 개발
         }
@@ -46,12 +50,80 @@ class AdditionActivity : AppCompatActivity() {
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
             // TODO by 김준서 : 추후 행동 추천 화면 구현시 개발
         }
+
         observeEditText()
+        observeDate()
         btnDeleteActionOnClickListener()
         ivDeletePageOnClickListener()
 
         observeToActivateAddBtn()
         observePlusBtn()
+
+        observeResponse()
+    }
+
+    private fun observeDate() {
+        viewModel.additionDate.observe(this) {
+            binding.tvAdditionDate.text = it
+        }
+    }
+
+    private fun initDate() {
+        binding.tvAdditionDate.text =
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+    }
+
+    private fun postMission() {
+        viewModel.postMission(
+            RequestMissionDto(
+                binding.tvAdditionMissionName.text.toString(),
+                binding.tvAdditionSituationName.text.toString(),
+                returnActionsList(),
+                binding.etAdditionGoalTitle.text.toString(),
+                binding.tvAdditionDate.text.toString()
+            )
+        )
+    }
+
+    private fun observeResponse() {
+        viewModel.responsePostMission.observe(this) {
+            finish()
+        }
+
+        viewModel.errorMessageMission.observe(this) {
+            makeErrorToast(it)
+        }
+    }
+
+    private fun makeErrorToast(text: String) {
+        when (text) {
+            "낫투두를 3개 이상 추가할 수 없습니다." -> {
+                Toast.makeText(this, "낫투두 추가는 하루 최대 3개까지 가능합니다.", Toast.LENGTH_SHORT).show()
+            }
+            "이미 존재하는 낫투두 입니다." -> {
+                Toast.makeText(this, "이미 같은 내용의 낫투두가 있어요", Toast.LENGTH_SHORT).show()
+            }
+            "올바르지 않은 날짜 형식입니다." -> {
+                Toast.makeText(this, "올바르지 않은 날짜입니다.", Toast.LENGTH_SHORT).show()
+            }
+            "액션은 최대 2개까지만 추가할 수 있습니다." -> {
+                Toast.makeText(this, "액션은 최대 2개까지만 추가할 수 있습니다.", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun returnActionsList(): List<String> {
+        if (binding.tvAdditionActionSecond.isVisible) {
+            return listOf(
+                binding.tvAdditionActionFirst.text.toString(),
+                binding.tvAdditionActionSecond.text.toString()
+            )
+        } else {
+            return listOf(binding.tvAdditionActionFirst.text.toString())
+        }
     }
 
     private fun initResultLauncher() {
