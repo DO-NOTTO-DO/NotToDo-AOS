@@ -12,8 +12,8 @@ import timber.log.Timber
 
 class HomeFragmentViewModel() : ViewModel() {
 
-//    private val _missionDailyDate: MutableLiveData<HomeDaily> = MutableLiveData()
-//    val missionDailyDate: LiveData<HomeDaily> = _missionDailyDate
+    private val _missionDailyDate: MutableLiveData<List<HomeDaily.Action>> = MutableLiveData()
+    val missionDailyDate: LiveData<List<HomeDaily.Action>> = _missionDailyDate
 
     //리사이클러뷰 조회
     private val _responseResult: MutableLiveData<List<HomeDaily>> =
@@ -28,7 +28,6 @@ class HomeFragmentViewModel() : ViewModel() {
 
     fun initServer(date: String) {
         viewModelScope.launch {
-            Timber.e("ViewModel asdfasdf")
             runCatching {
                 postService.getHomeDaily(date)
             }.fold({

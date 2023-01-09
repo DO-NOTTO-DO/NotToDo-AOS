@@ -15,12 +15,8 @@ interface HomeService {
         @Body body: RequestHomeMission
     ): ResponseWrapper<RequestHomeMission>
 
-    /*
-     @GET("post/{postId}")
-    fun getPost(
-        @Path("postId") postId: Int
-    ): Call<ResponsePostDTO>
-     */
+    @GET("banner")
+    suspend fun getBanner()
 
     @GET("mission/daily/{date}")
     suspend fun getHomeDaily(

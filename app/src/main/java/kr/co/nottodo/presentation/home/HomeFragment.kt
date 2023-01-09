@@ -20,7 +20,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
     private val viewModel by viewModels<HomeFragmentViewModel>()
-//    lateinit var dailyMission: List<ResponseWrapper<HomeDaily>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +42,8 @@ class HomeFragment : Fragment() {
                 outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
                 binding.rvHomeShowTodo.adapter = outterAdapter
                 outterAdapter.submitList(viewModel.responseResult.value)
+            } else {
+                viewModel.errorMessageSituation
             }
         }
         Timber.e("home ${viewModel.responseResult.value}")
@@ -79,8 +80,6 @@ class HomeFragment : Fragment() {
         complete.setOnClickListener {
             Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
 
-//            outterAdapter.notifyDataSetChanged()
-//            outterAdapter.setComplete("NOTYET")
             balloon.dismiss()
         }
         balloon.dismiss()

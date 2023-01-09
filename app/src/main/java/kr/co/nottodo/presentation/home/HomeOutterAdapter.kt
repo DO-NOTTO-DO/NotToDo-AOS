@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kr.co.nottodo.R
 import kr.co.nottodo.data.local.HomeDailyResponse.HomeDaily
 import kr.co.nottodo.databinding.ItemHomeOutBinding
 import kr.co.nottodo.util.DiffUtilItemCallback
@@ -39,45 +40,20 @@ class HomeOutterAdapter(
                     it
                 )
             }
-//            when(data.successstatus) {
-//                "success" -> {
-//                    binding.ivHomeOutCheckbox.setImageResource()
-//                }
-//                "failed" -> {}
-//            }
+//            todo completionstatus에 따라서 분기처리
+            when (data.completionStatus) {
+                "NOTYET" -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
+                "AMBIGUOUS" -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
+                else -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
+            }
             binding.tvHomeItemOutTitle.text = data.title
-            Timber.e("adapter $data")
             binding.tvHomeItemOutTitleNotodo.text = data.situation
-            binding.tvHomeOutterDesciption.text = data.situation
+            binding.tvHomeOutterDesciption.text = data.goal
             binding.ivHomeItemOutMeatball.setOnClickListener { menuItemClick(absoluteAdapterPosition) }
-            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter(data.actions ?: listOf())
+            Timber.e("out ${data.actions}")
+            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter(data.actions)
         }
     }
-
-//    fun setComplete(checkStatus: String) {
-//        binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
-//        binding.tvHomeItemOutTitle.setText("김준서").toString()
-//        binding.ivHomeOutCheckbox.requestLayout()
-//        Log.d("adapter", "setComplete: ")
-//    }
-
-//    fun setImage(pos: String) {
-//        when (pos) {
-//            "NOTYET" -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
-//            "AMBIGUOUS" -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
-//            else -> binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
-//        }
-//    }
-//
-//    fun checkBox(checkStatus: String): Int {
-//        //NOTYET, AMBIGUOUS, FINISH
-//        val status = when (checkStatus) {
-//            "NOTYET" -> R.drawable.ic_home_checkbox
-//            "AMBIGUOUS" -> R.drawable.ic_checkbox_fail
-//            else -> R.drawable.ic_checkbox_circle
-//        }
-//        return status
-//    }
 
     companion object {
         val diffUtil = DiffUtilItemCallback<HomeDaily>(
