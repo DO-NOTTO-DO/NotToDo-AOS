@@ -1,7 +1,12 @@
 package kr.co.nottodo.view.calendar.monthly.monthlycalendar
 
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -15,6 +20,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
@@ -53,6 +62,13 @@ class MonthlyCalendar @JvmOverloads constructor(
             field = value
             updateCurrentDateTextView()
         }
+    private val calendarHandler = Handler(Looper.getMainLooper())
+
+    private val borderRectF = RectF()
+    private val borderPaint = Paint()
+    private val borderColor = ContextCompat.getColor(context,R.color.gray_2_8e8e93)
+    private val borderWidth = context.dpToPx(1)
+
 
     private var monthlyCalendarNextMonthListener: MonthlyCalendarNextMonthListener? = null
     private var monthlyCalendarPrevMonthListener: MonthlyCalendarPrevMonthListener? = null
@@ -77,7 +93,7 @@ class MonthlyCalendar @JvmOverloads constructor(
             LayoutParams.MATCH_PARENT,
             LayoutParams.WRAP_CONTENT
         )
-        setPadding(context.dpToPx(24),context.dpToPx(24),0,context.dpToPx(24))
+        setPadding(context.dpToPx(6),context.dpToPx(24),0,context.dpToPx(24))
 
         addView(currentDateTextView)
 
@@ -126,8 +142,6 @@ class MonthlyCalendar @JvmOverloads constructor(
                 addCircleRipple()
             }
         )
-
-        addInvisibleDivider(context.dpToPx(20))
     }
 
     private val calendarWeekDescriptionView = ViewCalendarWeekDescriptionBinding.inflate(
@@ -146,12 +160,16 @@ class MonthlyCalendar @JvmOverloads constructor(
         }
         layoutParams =
             LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        overScrollMode = OVER_SCROLL_NEVER
+        setHasFixedSize(true)
     }
 
     init {
         if (attrs != null) {
             getStyleableAttrs(attrs)
         }
+        updateBorder()
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         orientation = LinearLayout.VERTICAL
 
@@ -160,6 +178,16 @@ class MonthlyCalendar @JvmOverloads constructor(
         addView(monthRecyclerView)
         initBackgroundColor()
         initializeNotToDoMonthCalendar()
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawRect(borderRectF,borderPaint)
+        super.onDraw(canvas)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        updateBorder()
     }
 
     private fun updateCurrentDateTextView() {
@@ -305,6 +333,21 @@ class MonthlyCalendar @JvmOverloads constructor(
             )
         }
         return listEmpty
+    }
+
+    private fun updateBorder() {
+        borderPaint.apply {
+            style = Paint.Style.STROKE
+            color = borderColor
+            strokeWidth = borderWidth.toFloat()
+        }
+
+        borderRectF.apply {
+            top = 0f
+            left = 0f
+            right = width.toFloat()
+            bottom = height.toFloat()
+        }
     }
 
     private fun initBackgroundColor() {
