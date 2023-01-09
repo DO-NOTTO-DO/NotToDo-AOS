@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import kr.co.nottodo.data.local.HomeDaily
+import kr.co.nottodo.data.local.HomeDailyResponse.HomeDaily
 import kr.co.nottodo.data.remote.api.HomeService
 import kr.co.nottodo.data.remote.api.ServicePool
-import kr.co.nottodo.data.remote.response.ResponseWrapper
-import retrofit2.await
+import timber.log.Timber
 
 class HomeFragmentViewModel() : ViewModel() {
 
@@ -17,8 +16,9 @@ class HomeFragmentViewModel() : ViewModel() {
 //    val missionDailyDate: LiveData<HomeDaily> = _missionDailyDate
 
     //리사이클러뷰 조회
-    private val _responseResult: MutableLiveData<ResponseWrapper<HomeDaily>> = MutableLiveData()
-    val responseResult: LiveData<ResponseWrapper<HomeDaily>> get() = _responseResult
+    private val _responseResult: MutableLiveData<List<HomeDaily>> =
+        MutableLiveData()
+    val responseResult: LiveData<List<HomeDaily>> get() = _responseResult
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
     val errorMessageSituation: LiveData<String>
@@ -28,13 +28,14 @@ class HomeFragmentViewModel() : ViewModel() {
 
     fun initServer(date: String) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                postService.getHomeDaily(date).await()
-            }.fold({ _responseResult.value = it }, { _errorMessageSituation.value = it.message })
+            Timber.e("ViewModel asdfasdf")
+            runCatching {
+                postService.getHomeDaily(date)
+            }.fold({
+                _responseResult.value = it.data
+                Timber.e("asdf ${_responseResult.value}")
+            }, { _errorMessageSituation.value = it.message })
+
         }
-    }
-
-    private fun initHomeDaily() {
-
     }
 }
