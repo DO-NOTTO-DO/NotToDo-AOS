@@ -8,12 +8,21 @@ data class ResponseAddSituationDto(
     val status: Int,
     val success: Boolean,
     val message: String,
-    val data: List<ResponseAddSituationDetailDto>,
-)
-{
+    val data: ResponseAddSituationDetailDto,
+) {
     @Serializable
     data class ResponseAddSituationDetailDto(
-        val title: String,
-        val action: String,
+        val recommends: List<Recommend>,
+        val recents: List<Recent>
+    )
+
+    @Serializable
+    data class Recommend(
+        val name: String
+    )
+
+    @Serializable
+    data class Recent(
+        val name: String
     )
 }

@@ -7,11 +7,13 @@ data class ResponseRecommendationCategorySituationDto(
     val status: Int,
     val success: Boolean,
     val message: String,
-    val data: List<ResponseRecommendationCategorySituationDetailDto>,
+    val data: List<CategorySituation>
 ) {
     @Serializable
-    data class ResponseRecommendationCategorySituationDetailDto(
-        val title: String,
-        val action: String,
+    data class CategorySituation(
+        val id: Int,
+        val name: String,
+        val image: String,
+        val activeImage: String,
     )
 }

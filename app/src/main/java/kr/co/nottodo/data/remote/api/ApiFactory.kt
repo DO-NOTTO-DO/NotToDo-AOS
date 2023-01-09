@@ -18,7 +18,8 @@ object ApiFactory {
             }).build()
     }
     val retrofit: Retrofit by lazy {
-        Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .client(client).build()
     }
