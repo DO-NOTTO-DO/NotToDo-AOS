@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
@@ -132,6 +133,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         }
         layoutParams =
             LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        overScrollMode = OVER_SCROLL_NEVER
     }
 
     init {
@@ -175,13 +178,32 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
-            val dateType = if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
-                DateType.DISABLED
-            } else if (proxyCalendar.isWeekend()) {
-                DateType.WEEKEND
-            } else {
-                DateType.WEEKDAY
+            val dateType = when(calendarPickerMode) {
+                0 -> {
+                    if (proxyCalendar.isWeekend()) {
+                        DateType.WEEKEND
+                    } else {
+                        DateType.WEEKDAY
+                    }
+                }
+                1 -> {
+                    if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
+                        DateType.DISABLED
+                    } else if (proxyCalendar.isWeekend()) {
+                        DateType.WEEKEND
+                    } else {
+                        DateType.WEEKDAY
+                    }
+                }
+                else -> {
+                    if (proxyCalendar.isWeekend()) {
+                        DateType.WEEKEND
+                    } else {
+                        DateType.WEEKDAY
+                    }
+                }
             }
+
             when (day) {
                 1 -> {
                     monthlyCalendarDayList.addAll(

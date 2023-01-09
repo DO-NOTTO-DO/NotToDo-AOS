@@ -7,16 +7,18 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import kr.co.nottodo.R
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.weekly.listener.OnSwipeTouchListener
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-@SuppressLint("ClickableViewAccessibility")
 class WeeklyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -29,41 +31,93 @@ class WeeklyCalendar @JvmOverloads constructor(
     }
 
     private val weeklyAdapter = WeeklyAdapter(this)
+    private var currentDate = LocalDate.now()
+    private lateinit var gestureDetectorCompat: GestureDetectorCompat
 
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
-
-    private lateinit var gestureDetector: GestureDetector
 
     init {
         removeDefaultItemAnimator()
         removeScrollRippleEffect()
+        setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT)
         adapter = weeklyAdapter
-        var currentDate = LocalDate.now()
-        // 이 touchListener가 recyclerview 본인 자체를 터치하게 되면 e1좌표가 나오지 않는 것이 문제이다
-        // 이 시...그럼 어떻게 해야하는건데
-        this.setOnTouchListener(object: OnSwipeTouchListener(context) {
-            override fun onSwipeRight() {
-                super.onSwipeRight()
-                weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
-                currentDate = currentDate.minusWeeks(1)
+        gestureDetectorCompat = GestureDetectorCompat(context, object: GestureDetector.OnGestureListener {
+            override fun onDown(e: MotionEvent): Boolean = false
+
+            override fun onShowPress(e: MotionEvent) {
+                /** no - op **/
             }
 
-            override fun onSwipeLeft() {
-                super.onSwipeLeft()
-                weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
-                currentDate = currentDate.plusWeeks(1)
+            override fun onSingleTapUp(e: MotionEvent): Boolean = false
+
+            override fun onScroll(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean = true
+
+            override fun onLongPress(e: MotionEvent) {
+                /** no - op **/
             }
 
-            override fun onSwipeUp() {
-                super.onSwipeUp()
-            }
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                Log.d("ssong-develop1","invoke!")
+                val result = false
 
-            override fun onSwipeDown() {
-                super.onSwipeDown()
+                if(e1 != null && e2 != null){
+                    try {
+                        val diffY = e2.y - e1.y
+                        val diffX = e2.x - e1.x
+                        if (Math.abs(diffX) > Math.abs(diffY)) {
+                            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                                if (diffX > 0) {
+                                    weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
+                                    currentDate = currentDate.minusWeeks(1)
+                                } else {
+                                    weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
+                                    currentDate = currentDate.plusWeeks(1)
+                                }
+                            }
+                        }
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                }
+                return result
             }
         })
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        return ev?.let {
+            if (gestureDetectorCompat != null) {
+                Log.d("ssong-develop1","invoke")
+                gestureDetectorCompat.onTouchEvent(it)
+            } else {
+                Log.d("ssong-develop2","invoke")
+                super.dispatchTouchEvent(ev)
+                true
+            }
+        } ?: super.dispatchTouchEvent(ev)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return event?.let {
+            if (it.action == MotionEvent.ACTION_MOVE) {
+                gestureDetectorCompat.onTouchEvent(event)
+                true
+            } else {
+                super.onTouchEvent(event)
+            }
+        } ?: super.onTouchEvent(event)
     }
 
     private fun removeDefaultItemAnimator() {
