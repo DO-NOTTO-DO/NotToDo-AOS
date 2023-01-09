@@ -20,6 +20,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
     private val viewModel by viewModels<HomeFragmentViewModel>()
+//    lateinit var dailyMission: List<ResponseWrapper<HomeDaily>>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,10 +38,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
-        binding.rvHomeShowTodo.adapter = outterAdapter
-        outterAdapter.checkBox("AMBIGUOUS")
-
+        viewModel.responseResult.observe(viewLifecycleOwner) {
+            if (it != null) {
+                outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
+                binding.rvHomeShowTodo.adapter = outterAdapter
+                outterAdapter.submitList(viewModel.responseResult.value)
+            }
+        }
+        Timber.e("home ${viewModel.responseResult.value}")
+//        outterAdapter.checkBox("AMBIGUOUS")
     }
 
     private fun menuClick(index: Int) {
@@ -55,14 +61,16 @@ class HomeFragment : Fragment() {
         Timber.e(index.toString())
 
         balloon = HomeBallonFactory().create(requireContext(), viewLifecycleOwner)
-        if (balloon.isShowing) {
-            balloon.dismiss()
-        } else balloon.showAlignTop(view)
 
         val fail: ImageView =
             balloon.getContentView().findViewById(R.id.iv_balloon_fail)
         val complete: ImageView =
             balloon.getContentView().findViewById(R.id.iv_balloon_complete)
+
+        if (balloon.isShowing) {
+            balloon.dismiss()
+        } else balloon.showAlignTop(view)
+
         fail.setOnClickListener {
             Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
 
