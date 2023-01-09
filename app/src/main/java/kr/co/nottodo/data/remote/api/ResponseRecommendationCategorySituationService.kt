@@ -4,7 +4,7 @@ import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.Respo
 import retrofit2.Call
 import retrofit2.http.GET
 
-interface ResponseRecommendationCategorySituationService {
+interface RecommendationCategorySituationService {
     @GET("environment/category")
     fun getCategorySituation(): Call<ResponseRecommendationCategorySituationDto>
 }
