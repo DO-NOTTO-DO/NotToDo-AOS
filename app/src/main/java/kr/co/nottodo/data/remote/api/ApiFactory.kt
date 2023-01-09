@@ -29,4 +29,5 @@ object ServicePool {
     //TODO: 각자 서비스 만드시고 해당 페이지에 서비스 객체 생성해주시면 됩니다 !!
     val searchService = ApiFactory.create<SearchService>()
     val statisticService = ApiFactory.create<StatisticService>()
+    val HomeService = ApiFactory.create<HomeService>()
 }
