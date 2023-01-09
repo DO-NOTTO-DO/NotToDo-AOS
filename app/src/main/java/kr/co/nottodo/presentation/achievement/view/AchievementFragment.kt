@@ -1,7 +1,6 @@
 package kr.co.nottodo.presentation.achievement.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,10 @@ import kr.co.nottodo.databinding.FragmentAchievementBinding
 import kr.co.nottodo.presentation.achievement.adapter.AchievementViewPagerAdapter
 import kr.co.nottodo.presentation.achievement.adapter.AchievementViewPagerEmptyDataAdapter
 import kr.co.nottodo.presentation.achievement.viewmodel.AchievementViewModel
+import kr.co.nottodo.view.calendar.monthly.util.achievementConvertStringToDate
+import kr.co.nottodo.view.calendar.monthly.util.toApiDateString
 import timber.log.Timber
+import java.util.*
 
 class AchievementFragment : Fragment() {
     private var _binding: FragmentAchievementBinding? = null
@@ -25,6 +27,7 @@ class AchievementFragment : Fragment() {
 
     lateinit var missionStatistic: List<ResponseMissionStatisticDto.MissionStatistic>
     lateinit var situationStatistic: List<ResponseSituationStatisticDto.SituationStatistic>
+    lateinit var achievementList: MutableList<Pair<Date?, Int>>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +42,37 @@ class AchievementFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getStatistics()
+        getAchievement()
         initViewPager()
+        setAchievementCalendar()
+    }
+
+    private fun getAchievement() {
+        viewModel.getAchievement(binding.calendarAchievement.calendar.toApiDateString())
+        binding.calendarAchievement.setOnMonthlyCalendarNextMonthListener { view, dateString ->
+            viewModel.getAchievement(dateString)
+        }
+        binding.calendarAchievement.setOnMonthlyCalendarPrevMonthListener { view, dateString ->
+            viewModel.getAchievement(dateString)
+        }
+    }
+
+    private fun setAchievementCalendar() {
+        viewModel.responseAchievement.observe(viewLifecycleOwner) {
+            if(it.data.isNotEmpty()){
+            achievementList = mutableListOf()
+            var position = 0
+            while (position < it.data.size) {
+                achievementList.add(position, Pair(
+                        it.data[position].actionDate.achievementConvertStringToDate(),
+                        it.data[position].count
+                    )
+                )
+                position += 1
+            }
+            binding.calendarAchievement.setNotToDoCountList(achievementList)
+            }
+        }
     }
 
     private fun getStatistics() {
@@ -48,12 +81,16 @@ class AchievementFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        viewModel.isDataCome.observe(viewLifecycleOwner){
-            if(it){
+        viewModel.isDataCome.observe(viewLifecycleOwner) {
+            if (it) {
                 missionStatistic = viewModel.responseMission.value?.data ?: listOf()
                 situationStatistic = viewModel.responseSituation.value?.data ?: listOf()
 
-                val adapter = AchievementViewPagerAdapter(requireContext(), missionStatistic, situationStatistic)
+                val adapter = AchievementViewPagerAdapter(
+                    requireContext(),
+                    missionStatistic,
+                    situationStatistic
+                )
                 binding.viewpagerAchievement.adapter = adapter
                 binding.tvAchievementStatistics.visibility = View.VISIBLE
                 binding.viewpagerAchievement.registerOnPageChangeCallback(object :
@@ -67,16 +104,17 @@ class AchievementFragment : Fragment() {
                         adapter.notifyDataSetChanged()
                     }
                 })
-            }else{
-                binding.viewpagerAchievement.adapter = AchievementViewPagerEmptyDataAdapter(requireContext())
+            } else {
+                binding.viewpagerAchievement.adapter =
+                    AchievementViewPagerEmptyDataAdapter(requireContext())
                 binding.tvAchievementStatistics.visibility = View.GONE
             }
             initTabLayout()
         }
-        viewModel.errorMessageMission.observe(viewLifecycleOwner){
+        viewModel.errorMessageMission.observe(viewLifecycleOwner) {
             Timber.d(it)
         }
-        viewModel.errorMessageSituation.observe(viewLifecycleOwner){
+        viewModel.errorMessageSituation.observe(viewLifecycleOwner) {
             Timber.d(it)
         }
     }
