@@ -1,9 +1,8 @@
 package kr.co.nottodo.data.remote.api
 
-import kr.co.nottodo.data.local.HomeDaily
+import kr.co.nottodo.data.local.HomeDailyResponse
 import kr.co.nottodo.data.remote.RequestHomeMission
 import kr.co.nottodo.data.remote.response.ResponseWrapper
-import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -26,7 +25,7 @@ interface HomeService {
     @GET("mission/daily/{date}")
     suspend fun getHomeDaily(
         @Path("date") date: String
-    ): Call<ResponseWrapper<HomeDaily>>
+    ): HomeDailyResponse
     /*
      patchNotificationSettings(
 @Body body: NotificationSettingsRequest
