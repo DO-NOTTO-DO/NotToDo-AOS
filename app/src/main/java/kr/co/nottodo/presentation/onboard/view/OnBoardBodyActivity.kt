@@ -22,6 +22,16 @@ class OnBoardBodyActivity : AppCompatActivity() {
 
         setBtnStartClickEvent()
         setTvSkipClickEvent()
+        setArrowClickEvent()
+    }
+
+    private fun setArrowClickEvent() {
+        binding.layoutOnBoardPrev.setOnClickListener {
+            binding.viewpagerOnBoard.currentItem = binding.viewpagerOnBoard.currentItem-1
+        }
+        binding.layoutOnBoardNext.setOnClickListener {
+            binding.viewpagerOnBoard.currentItem = binding.viewpagerOnBoard.currentItem+1
+        }
     }
 
     private fun setTvSkipClickEvent() {
