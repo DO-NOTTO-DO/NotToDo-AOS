@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_myprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="31dp"
+        android:text="내 정보"
+        android:textColor="@color/gray_1_626068"
+        android:theme="@style/B20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_profile_bg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/img_profile_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_img_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="19dp"
+        android:src="@drawable/ic_img_profile"
+        app:layout_constraintBottom_toBottomOf="@id/iv_profile_bg"
+        app:layout_constraintStart_toStartOf="@id/iv_profile_bg"
+        app:layout_constraintTop_toTopOf="@id/iv_profile_bg" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="29dp"
+        android:text="홍서현"
+        android:textColor="@color/black"
+        android:theme="@style/M16"
+        app:layout_constraintStart_toEndOf="@id/ic_img_profile"
+
+        app:layout_constraintTop_toTopOf="@id/iv_profile_bg" />
+
+    <TextView
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:text="ghdtjgus123!"
+        android:textColor="@color/gray_2_8e8e93"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/ic_img_profile"
+        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle1"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile_bg" />
+
+    <ImageView
+        android:id="@+id/iv_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:src="@drawable/ic_guide"
+        app:layout_constraintStart_toStartOf="@id/iv_rectangle1"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="낫투두 가이드"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/iv_guide"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle1" />
+
+    <ImageView
+        android:id="@+id/iv_arrow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_rectangle1"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle1" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle1" />
+
+    <ImageView
+        android:id="@+id/_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="13dp"
+        android:src="@drawable/ic_question"
+        app:layout_constraintStart_toStartOf="@id/iv_rectangle2"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="자주 묻는 질문"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/_question"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle2" />
+
+    <ImageView
+        android:id="@+id/iv_arrow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_rectangle2"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle2" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle3"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="푸시 알림 설정"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/_question"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle3" />
+
+    <ImageView
+        android:id="@+id/iv_arrow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_rectangle3"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle3" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle4"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="공지사항"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/_question"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle4" />
+
+    <ImageView
+        android:id="@+id/iv_arrow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_rectangle4"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle4" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle5"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="문의하기"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/_question"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle5" />
+
+    <ImageView
+        android:id="@+id/iv_arrow5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_rectangle5"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle5" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle6"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="약관 및 정책"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/_question"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle6" />
+
+    <ImageView
+        android:id="@+id/iv_arrow6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="13dp"
+        android:src="@drawable/ic_arrow"
+        app:layout_constraintEnd_toEndOf="@id/iv_rectangle6"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle6" />
+
+    <ImageView
+        android:id="@+id/iv_rectangle7"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:src="@drawable/rectangle_border_gray2_0point5"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="19dp"
+        android:layout_marginStart="5dp"
+        android:text="버전 정보 0.0.1"
+        android:textColor="@color/black"
+        android:theme="@style/R14"
+        app:layout_constraintStart_toEndOf="@id/_question"
+        app:layout_constraintTop_toTopOf="@id/iv_rectangle7" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_rectangle7">
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그아웃" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="13dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/gray_2_8e8e93"
+            android:layout_marginHorizontal="25dp"/>
+
+        <TextView
+            android:id="@+id/tv_withdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원탈퇴" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
