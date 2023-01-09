@@ -34,20 +34,18 @@ class HomeFragment : Fragment() {
         initAdapter()
         clickFbtn()
         initStatus()
+        showBanner()
     }
 
     private fun initAdapter() {
+        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
-                outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
                 binding.rvHomeShowTodo.adapter = outterAdapter
-                outterAdapter.submitList(viewModel.responseResult.value)
-            } else {
-                viewModel.errorMessageSituation
+                outterAdapter.submitList(it)
             }
         }
         Timber.e("home ${viewModel.responseResult.value}")
-//        outterAdapter.checkBox("AMBIGUOUS")
     }
 
     private fun menuClick(index: Int) {
@@ -87,6 +85,22 @@ class HomeFragment : Fragment() {
 
     private fun initStatus() {
         viewModel.initServer("2023-01-07")
+        viewModel.homeBannerInitServer()
+    }
+
+    private fun showBanner() {
+        viewModel.responseBannerResult.observe(viewLifecycleOwner) {
+            when (it.image) {
+                "이미지1" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic1)
+                "이미지2" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic2)
+                "이미지3" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic3)
+                "이미지4" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic4)
+            }
+
+            it.image
+            Timber.e("home${it.image}")
+            binding.tvHomeMotiveDescription.text = it.title
+        }
     }
 
     private fun clickFbtn() {
