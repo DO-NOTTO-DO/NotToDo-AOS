@@ -8,7 +8,6 @@ import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.ResponseHistoryDto
 import kr.co.nottodo.databinding.ItemSearchRvBinding
 
-
 class SearchRecyclerViewAdapter(
     context: Context, private val sampleList: List<ResponseHistoryDto.History>,
     private val onHistoryClick: (String) -> Unit
