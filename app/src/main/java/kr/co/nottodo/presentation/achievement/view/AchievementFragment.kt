@@ -59,19 +59,23 @@ class AchievementFragment : Fragment() {
 
     private fun setAchievementCalendar() {
         viewModel.responseAchievement.observe(viewLifecycleOwner) {
-            if(it.data.isNotEmpty()){
-            achievementList = mutableListOf()
-            var position = 0
-            while (position < it.data.size) {
-                achievementList.add(position, Pair(
-                        it.data[position].actionDate.achievementConvertStringToDate(),
-                        it.data[position].count
+            if (it.data.isNotEmpty()) {
+                achievementList = mutableListOf()
+                var position = 0
+                while (position < it.data.size) {
+                    achievementList.add(
+                        position, Pair(
+                            it.data[position].actionDate.achievementConvertStringToDate(),
+                            it.data[position].count
+                        )
                     )
-                )
-                position += 1
+                    position += 1
+                }
+                binding.calendarAchievement.setNotToDoCountList(achievementList)
             }
-            binding.calendarAchievement.setNotToDoCountList(achievementList)
-            }
+        }
+        viewModel.errorMessageAchievement.observe(viewLifecycleOwner) {
+            Timber.e(it)
         }
     }
 
@@ -120,7 +124,7 @@ class AchievementFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        val tabTitles = listOf("   낫투두 통계 보기   ", "   상황별 통계 보기   ")
+        val tabTitles = listOf(missionStatisticForTab, situationStatisticForTab)
         TabLayoutMediator(
             binding.tablayoutAchievementStatistics,
             binding.viewpagerAchievement
@@ -132,5 +136,12 @@ class AchievementFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        const val missionStatisticForTab = "   낫투두 통계 보기   "
+        const val situationStatisticForTab = "   상황별 통계 보기   "
+        const val missionStatisticTitle = "내가 달성한 낫투두의 순위는?"
+        const val situationStatisticTitle = "언제 낫투두를 가장 많이 시도했을까요?"
     }
 }

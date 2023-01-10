@@ -35,7 +35,7 @@ class CalendarBottomSheet : BottomSheetDialogFragment() {
             viewModel.additionDate.value =
                 binding.calendarBottomSheet.selectedDate?.toInstant()?.atOffset(
                     ZoneOffset.UTC
-                )?.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+                )?.format(DateTimeFormatter.ofPattern(datePattern))
             dismiss()
         }
     }
@@ -43,5 +43,9 @@ class CalendarBottomSheet : BottomSheetDialogFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        const val datePattern = "yyyy.MM.dd"
     }
 }

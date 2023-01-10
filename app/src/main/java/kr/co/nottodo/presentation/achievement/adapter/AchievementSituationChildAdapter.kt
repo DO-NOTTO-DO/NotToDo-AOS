@@ -22,7 +22,7 @@ class AchievementSituationChildAdapter(
     class AchievementMissionViewHolder(private val binding: ItemAchievementRvSituationChildBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: ResponseMissionStatisticDto.MissionStatistic, position: Int) {
-            binding.tvAchievementRvSituationChildRank.text = (position+1).toString()
+            binding.tvAchievementRvSituationChildRank.text = (position + 1).toString()
             binding.tvAchievementRvSituationChildCount.text = item.count.toString()
             binding.tvAchievementRvSituationChildMissionName.text = item.title
         }

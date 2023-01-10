@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kr.co.nottodo.databinding.FragmentOnBoardSecondBinding
 import kr.co.nottodo.databinding.FragmentOnBoardThirdBinding
 
 class OnBoardThirdFragment : Fragment() {
