@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rectangle_solid_white_border_gray1_1_radius_100"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingHorizontal="21dp"
+    android:paddingVertical="7dp"
+    android:text="출근시간"
+    android:textColor="@color/gray_1_626068"
+    android:theme="@style/M14" />

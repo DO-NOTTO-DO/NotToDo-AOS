@@ -1,27 +1,27 @@
-package com.ssong_develop.nestedrecyclerview.viewholder
+package kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.databinding.ItemNottodoRecommendationListBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.RecommendationChildData
-
+import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategoryListDto
 
 class RecommendationChildViewHolder(
     private val binding: ItemNottodoRecommendationListBinding,
-    private val childClickListener: (view: View, childData: RecommendationChildData) -> Unit
+    private val childClickListener: (view: View, childData: ResponseRecommendationCategoryListDto.RecommendationActions) -> Unit
 ) : ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    private lateinit var childData: RecommendationChildData
+    private lateinit var childData: ResponseRecommendationCategoryListDto.RecommendationActions
+
     init {
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)
     }
 
 
-    fun bind(data: RecommendationChildData) {
+    fun bind(data: ResponseRecommendationCategoryListDto.RecommendationActions) {
         childData = data
         binding.apply {
-            tvItemNottodoRecommedationList.text = data.title
+            tvItemNottodoRecommedationList.text = data.name
         }
     }
     override fun onClick(view: View) {

@@ -8,6 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.nottodo.databinding.FragmentHomeBottomBinding
+import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 
 
 class HomeBottomFragment : BottomSheetDialogFragment() {
@@ -19,9 +20,13 @@ class HomeBottomFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBottomBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initBottomSheet()
         click()
-        return binding.root
     }
 
     private fun initBottomSheet() {
@@ -32,13 +37,16 @@ class HomeBottomFragment : BottomSheetDialogFragment() {
     }
 
     private fun click() {
-        binding.tvHomeBottomTrash.setOnClickListener { this.dismiss() }
-        binding.tvHomeBottomEdit.setOnClickListener { this.dismiss() }
-        binding.tvHomeAnatherNatodo.setOnClickListener { this.dismiss() }
+        binding.tvHomeBottomTrash.setOnClickListener { dismiss() }
+        binding.tvHomeBottomEdit.setOnClickListener { dismiss() }
+        binding.tvHomeAnatherNatodo.setOnClickListener {
+            CalendarBottomSheet().show(childFragmentManager, CalendarBottomSheet().tag)
+
+        }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

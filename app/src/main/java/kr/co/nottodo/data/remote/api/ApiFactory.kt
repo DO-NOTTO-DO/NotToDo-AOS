@@ -17,10 +17,18 @@ object ApiFactory {
                 level = HttpLoggingInterceptor.Level.BODY
             }).build()
     }
+
+    private val json by lazy {
+        Json {
+            coerceInputValues = true
+        }
+    }
     val retrofit: Retrofit by lazy {
-        Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
-            .client(client).build()
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(client)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .build()
     }
 
     inline fun <reified T> create(): T = retrofit.create<T>(T::class.java)
@@ -32,4 +40,7 @@ object ServicePool {
     val statisticService = ApiFactory.create<StatisticService>()
     val missionService = ApiFactory.create<MissionService>()
     val achievementService = ApiFactory.create<AchievementService>()
+    val HomeService = ApiFactory.create<HomeService>()
+    val recommendationCategoryListService = ApiFactory.create<RecommendationCategoryListService>()
+    val recommendationCategorySituationService = ApiFactory.create<RecommendationCategorySituationService>()
 }

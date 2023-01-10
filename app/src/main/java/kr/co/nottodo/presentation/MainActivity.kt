@@ -15,6 +15,9 @@ import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 import kr.co.nottodo.presentation.toplevel.myprofile.MyProfileFragment
 import kr.co.nottodo.presentation.toplevel.recommendation.RecommendationFragment
 import kr.co.nottodo.presentation.home.HomeFragment
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+
+import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationFragment
 
 
 

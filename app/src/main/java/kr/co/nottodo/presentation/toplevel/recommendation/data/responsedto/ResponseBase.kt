@@ -1,11 +1,11 @@
-package kr.co.nottodo.data.remote.response
+package kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseWrapper<T>(
+data class ResponseBase<T>(
     val status: Int,
     val success: Boolean,
     val message: String,
-    val data: T
+    val data: T,
 )
