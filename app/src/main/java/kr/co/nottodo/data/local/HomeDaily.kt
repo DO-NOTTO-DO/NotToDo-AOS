@@ -1,14 +1,26 @@
 package kr.co.nottodo.data.local
 
-data class HomeDaily(
-//    val actions: List<Action>,
-//    val completionStatus: String,
-//    val goal: String,
-    val id: Int,
-//    val situation: String,
-    val title: String
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class HomeDailyResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String,
+    val data: List<HomeDaily>
 ) {
-    data class Action(
-        val name: String
-    )
+    @Serializable
+    data class HomeDaily(
+        val id: Int,
+        val title: String,
+        val situation: String,
+        val completionStatus: String,
+        val goal: String,
+        val actions: List<Action> = emptyList()
+    ) {
+        @Serializable
+        data class Action(
+            val name: String
+        )
+    }
 }

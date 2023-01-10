@@ -5,29 +5,35 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/iv_balloon_check"
+        android:id="@+id/iv_balloon_complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/btn_check_blank"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="9dp"
+        android:src="@drawable/ic_btn_check_complete"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/iv_balloon_circle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_checkbox_circle"
-        app:layout_constraintBottom_toBottomOf="@id/iv_balloon_check"
-        app:layout_constraintStart_toStartOf="@id/iv_balloon_check"
-        app:layout_constraintTop_toTopOf="@id/iv_balloon_check" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="18dp"
+        android:background="@color/gray_4_d7d7d8"
+        app:layout_constraintBottom_toBottomOf="@id/iv_balloon_complete"
+        app:layout_constraintStart_toEndOf="@id/iv_balloon_complete"
+        app:layout_constraintTop_toTopOf="@id/iv_balloon_complete" />
 
     <ImageView
-        android:id="@+id/tv_balloon_triangle"
+        android:id="@+id/iv_balloon_fail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_checkbox_triangle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_balloon_circle" />
+        android:layout_marginStart="34dp"
+        android:src="@drawable/ic_btn_check_fail"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_balloon_complete"
+        app:layout_constraintStart_toEndOf="@+id/iv_balloon_complete"
+        app:layout_constraintTop_toTopOf="@id/iv_balloon_complete" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

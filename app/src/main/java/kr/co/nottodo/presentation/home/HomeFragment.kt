@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.skydoves.balloon.Balloon
-import kr.co.nottodo.data.local.HomeDaily
+import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import timber.log.Timber
@@ -16,6 +19,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
+    private val viewModel by viewModels<HomeFragmentViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,39 +33,83 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         clickFbtn()
+        initStatus()
+        showBanner()
     }
 
     private fun initAdapter() {
-        outterAdapter = HomeOutterAdapter(::click)
-        addRepoList()
-        binding.rvHomeShowTodo.adapter = outterAdapter
+        viewModel.responseCheckResult.observe(viewLifecycleOwner) {
+            viewModel.initServer("2023-01-07")
+            Timber.e("home2 $it")
+        }
+        viewModel.responseResult.observe(viewLifecycleOwner) {
+            if (it != null) {
+                binding.rvHomeShowTodo.adapter = outterAdapter
+                outterAdapter.submitList(it.toMutableList())
+                Timber.e("submitList $it")
+            }
+        }
+        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
     }
 
-    private fun addRepoList() {
-        outterAdapter.submitList(
-            listOf(
-                HomeDaily(
-                    1, "김수빈"
-                ),
-                HomeDaily(
-                    2, "김수빈"
-                ),
-                HomeDaily(
-                    3, "김수빈"
-                ),
-                HomeDaily(
-                    4, "김수빈"
-                ),
-
-                )
-        )
-
-    }
-
-    private fun click(index: Int) {
+    private fun menuClick(index: Int) {
         Timber.e(index.toString())
         val bottomSheetDialogFragment = HomeBottomFragment()
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    private lateinit var balloon: Balloon
+
+    private fun todoClick(index: Int, view: View) {
+        Timber.e(index.toString())
+
+        balloon = HomeBallonFactory().create(requireContext(), viewLifecycleOwner)
+
+        val fail: ImageView =
+            balloon.getContentView().findViewById(R.id.iv_balloon_fail)
+        val complete: ImageView =
+            balloon.getContentView().findViewById(R.id.iv_balloon_complete)
+
+        if (balloon.isShowing) {
+            balloon.dismiss()
+        } else balloon.showAlignTop(view)
+
+
+        fail.setOnClickListener {
+            Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
+            viewModel.responseHomeMissionCheck(28, "AMBIGUOUS")
+            Timber.e("home1 $it")
+            //todo patch에서 데이터 클래스 observe하고 변했을 경우에 get 서버통신 다시하기
+
+            balloon.dismiss()
+        }
+        complete.setOnClickListener {
+            Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
+            viewModel.responseHomeMissionCheck(28, "FINISH")
+
+            balloon.dismiss()
+        }
+        balloon.dismiss()
+    }
+
+    private fun initStatus() {
+        viewModel.initServer("2023-01-07")
+        viewModel.homeBannerInitServer()
+//        viewModel.homeMissionCheckInitServer(1)
+    }
+
+    private fun showBanner() {
+        viewModel.responseBannerResult.observe(viewLifecycleOwner) {
+            when (it.image) {
+                "이미지1" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic1)
+                "이미지2" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic2)
+                "이미지3" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic3)
+                "이미지4" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic4)
+            }
+
+            it.image
+            binding.tvHomeMotiveDescription.text = it.title
+        }
     }
 
     private fun clickFbtn() {
@@ -69,9 +118,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

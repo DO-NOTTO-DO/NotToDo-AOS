@@ -1,58 +1,68 @@
 package kr.co.nottodo.presentation.home
 
+import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import kr.co.nottodo.data.local.HomeDaily
+import kr.co.nottodo.R
+import kr.co.nottodo.data.local.HomeDailyResponse.HomeDaily
 import kr.co.nottodo.databinding.ItemHomeOutBinding
 import kr.co.nottodo.util.DiffUtilItemCallback
+import timber.log.Timber
 
 class HomeOutterAdapter(
-    private val itemClick: (Int) -> Unit
+    private val menuItemClick: (Int) -> Unit,
+    private val todoItemClick: (Int, View) -> Unit,
 ) :
     ListAdapter<HomeDaily, HomeOutterAdapter.OutterViewHolder>(diffUtil) {
-
+    lateinit var binding: ItemHomeOutBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OutterViewHolder {
-        val binding =
+        binding =
             ItemHomeOutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return OutterViewHolder(binding, itemClick)
+        return OutterViewHolder(binding, menuItemClick, todoItemClick)
     }
 
     override fun onBindViewHolder(holder: OutterViewHolder, position: Int) {
-        holder.onBind(currentList[position])
+        holder.onBind(getItem(position))
     }
 
     class OutterViewHolder(
         private val binding: ItemHomeOutBinding,
-        private val itemClick: (Int) -> Unit
+        private val menuItemClick: (Int) -> Unit,
+        private val todoItemClick: (Int, View) -> Unit,
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: HomeDaily) {
-            binding.root.setOnClickListener {
-                itemClick(absoluteAdapterPosition)
+            binding.ivHomeOutCheckbox.setOnClickListener {
+                todoItemClick(
+                    absoluteAdapterPosition,
+                    it
+                )
             }
-            binding.ivHomeOutCheckbox.setOnClickListener { }
+            if (data.completionStatus == "NOTYET") {
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
+            } else if (data.completionStatus == "AMBIGUOUS") {
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
+                Timber.e("outter에 submitList ${data.title}")
+            } else {
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
+                binding.tvHomeItemOutTitle!!.setPaintFlags(binding.tvHomeItemOutTitle!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+                binding.tvHomeItemOutTitleNotodo!!.setPaintFlags(binding.tvHomeItemOutTitleNotodo!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+            }
+
             binding.tvHomeItemOutTitle.text = data.title
-//            binding.tvHomeItemOutTitleNotodo.text = data.situation
-//            binding.tvHomeOutterDesciption.text = data.situation
-            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter()
+            binding.tvHomeItemOutTitleNotodo.text = data.situation
+            binding.tvHomeOutterDesciption.text = data.goal
+            binding.ivHomeItemOutMeatball.setOnClickListener { menuItemClick(absoluteAdapterPosition) }
+            Timber.e("out ${data.actions}")
+            binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter().apply {
+                submitList(data.actions)
+            }
+
         }
     }
-
-//    private fun ballonIconClickEvent() {
-//        binding.iv.setOnClickListener {
-//            iconBalloon.showAlignBottom(it)
-//        }
-//        val button: ImageView =
-//            iconBalloon.getContentView().findViewById(R.id.iv_first)
-//        button.setOnClickListener {
-//            binding.ivIcon.setImageResource(R.drawable.ic_what_mint)
-//            iconBalloon.dismiss()
-//        }
-//
-//    }
-
 
     companion object {
         val diffUtil = DiffUtilItemCallback<HomeDaily>(
