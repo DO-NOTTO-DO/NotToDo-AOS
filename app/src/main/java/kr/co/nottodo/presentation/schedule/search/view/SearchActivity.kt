@@ -25,6 +25,11 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        overridePendingTransition(
+            R.anim.animation_enter,
+            R.anim.animation_exit
+        )
+
         initBinding()
         viewModel.getHistory()
         viewModel.getHistoryResult.observe(this) {
