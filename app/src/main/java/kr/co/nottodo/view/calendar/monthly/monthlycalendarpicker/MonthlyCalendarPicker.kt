@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
@@ -132,6 +133,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         }
         layoutParams =
             LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        overScrollMode = OVER_SCROLL_NEVER
     }
 
     init {
@@ -164,9 +167,9 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     private fun buildCalendarData(): List<MonthlyCalendarDay> {
         // 현재 달력이 보여주고 있는 Calendar instance의 복사본
         val proxyCalendar = Calendar.getInstance().apply {
-            set(Calendar.MONTH, calendar.get(Calendar.MONTH))
-            set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH))
             set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+            set(Calendar.MONTH, calendar.get(Calendar.MONTH))
+            set(Calendar.DAY_OF_MONTH, 1)
         }
         val todayCalendar = Calendar.getInstance()
 
@@ -175,18 +178,18 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
-            val dateType = when (calendarPickerMode) {
+            val dateType = when(calendarPickerMode) {
                 0 -> {
-                    if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
-                        DateType.DISABLED
-                    } else if (proxyCalendar.isWeekend()) {
+                    if (proxyCalendar.isWeekend()) {
                         DateType.WEEKEND
                     } else {
                         DateType.WEEKDAY
                     }
                 }
                 1 -> {
-                    if (proxyCalendar.isWeekend()) {
+                    if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
+                        DateType.DISABLED
+                    } else if (proxyCalendar.isWeekend()) {
                         DateType.WEEKEND
                     } else {
                         DateType.WEEKDAY
@@ -200,6 +203,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     }
                 }
             }
+
             when (day) {
                 1 -> {
                     monthlyCalendarDayList.addAll(

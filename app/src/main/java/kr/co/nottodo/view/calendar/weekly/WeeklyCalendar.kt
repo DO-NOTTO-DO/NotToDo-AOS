@@ -1,27 +1,26 @@
 package kr.co.nottodo.view.calendar.weekly
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import kr.co.nottodo.R
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.weekly.listener.OnSwipeTouchListener
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
 import java.time.LocalDate
 
-@SuppressLint("ClickableViewAccessibility")
 class WeeklyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener {
+) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener, View.OnTouchListener {
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
@@ -29,40 +28,65 @@ class WeeklyCalendar @JvmOverloads constructor(
     }
 
     private val weeklyAdapter = WeeklyAdapter(this)
+    private var currentDate = LocalDate.now()
+    private lateinit var gestureDetectorCompat: GestureDetectorCompat
 
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
-
-    private lateinit var gestureDetector: GestureDetector
 
     init {
         removeDefaultItemAnimator()
         removeScrollRippleEffect()
+        setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT)
         adapter = weeklyAdapter
-        var currentDate = LocalDate.now()
-        // 이 touchListener가 recyclerview 본인 자체를 터치하게 되면 e1좌표가 나오지 않는 것이 문제이다
-        // 이 시...그럼 어떻게 해야하는건데
-        this.setOnTouchListener(object: OnSwipeTouchListener(context) {
-            override fun onSwipeRight() {
-                super.onSwipeRight()
-                weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
-                currentDate = currentDate.minusWeeks(1)
-            }
+        gestureDetectorCompat =
+            GestureDetectorCompat(context, object : GestureDetector.OnGestureListener {
+                override fun onDown(e: MotionEvent): Boolean = false
 
-            override fun onSwipeLeft() {
-                super.onSwipeLeft()
-                weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
-                currentDate = currentDate.plusWeeks(1)
-            }
+                override fun onShowPress(e: MotionEvent) {
+                    /** no - op **/
+                }
 
-            override fun onSwipeUp() {
-                super.onSwipeUp()
-            }
+                override fun onSingleTapUp(e: MotionEvent): Boolean = false
 
-            override fun onSwipeDown() {
-                super.onSwipeDown()
-            }
-        })
+                override fun onScroll(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    distanceX: Float,
+                    distanceY: Float
+                ): Boolean = true
+
+                override fun onLongPress(e: MotionEvent) {
+                    /** no - op **/
+                }
+
+                override fun onFling(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float
+                ): Boolean {
+                    val result = false
+                    try {
+                        val diffY = e2.y - e1.y
+                        val diffX = e2.x - e1.x
+                        if (Math.abs(diffX) > Math.abs(diffY)) {
+                            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                                if (diffX > 0) {
+                                    weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
+                                    currentDate = currentDate.minusWeeks(1)
+                                } else {
+                                    weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
+                                    currentDate = currentDate.plusWeeks(1)
+                                }
+                            }
+                        }
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                    return result
+                }
+            })
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
     }
 
@@ -105,11 +129,16 @@ class WeeklyCalendar @JvmOverloads constructor(
         this.onWeeklyDayClickListener = onWeeklyDayClickListener
     }
 
-    fun setOnWeeklyDayClickListener(block : (view: View, date: LocalDate) -> Unit) {
+    fun setOnWeeklyDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
         this.onWeeklyDayClickListener = OnWeeklyDayClickListener(block)
     }
 
     override fun onWeeklyDayClick(view: View, date: LocalDate) {
         onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        gestureDetectorCompat.onTouchEvent(event!!)
+        return true
     }
 }
