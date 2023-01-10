@@ -57,5 +57,11 @@
     <string name="addition_add_btn">추가하기</string>
     <!--calendar_bottom_sheet-->
     <string name="calendar_bottom_sheet_complete">선택 완료</string>
+    <!--achievement-->
+    <string name="achievement_title">성취</string>
+    <string name="achievement_desc">* 올해의 낫투두가 누적된 통계예요!</string>
+    <string name="achievement_pager_empty_desc">아직 아무것도 없네요,\n새로운 낫투두를 작성해보세요!</string>
+    <string name="achievement_pager_situation_title">언제 낫투두를 가장 많이 시도했을까요?</string>
+    <string name="achievement_pager_mission_title">내가 달성한 낫투두의 순위는?</string>
 
 </resources>
