@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface RecommendationCategoryListService {
-    @GET("environment/{Path}")
+    @GET("environment/{id}")
     fun getCategoryList(@Path("id") id: Int): Call<ResponseRecommendationCategoryListDto>
 
 }

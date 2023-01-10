@@ -35,20 +35,21 @@ class RecommendationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate<FragmentRecommendationBinding>(
-            inflater, R.layout.fragment_recommendation, container, false
-        )
+        _binding = FragmentRecommendationBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
-    val sampleList = listOf(
-        "SNS",
-        "작업,업무",
-        "건강",
-        "생활습관",
-        "기상,취침",
-    )
+    companion object {
+        val sampleList = listOf(
+            "SNS",
+            "작업,업무",
+            "건강",
+            "생활습관",
+            "기상,취침",
+        )
+    }
+
 
     private fun getRecommendationCategorySitatuationService() {
         viewModel.categorySituation.observe(viewLifecycleOwner) {
@@ -67,7 +68,7 @@ class RecommendationFragment : Fragment() {
 
         }
         viewModel.errorCategorySituation.observe(viewLifecycleOwner) {
-            Timber.d(it)
+            Timber.e(it)
         }
     }
 
@@ -77,9 +78,10 @@ class RecommendationFragment : Fragment() {
         viewModel.getRecommendationCategorySitatuationService()
 
         parentAdapter =
-            RecommendationParentAdapter(testChildItemViewClickBlock = { view, childData ->
+            RecommendationParentAdapter{ view, childData ->
                 Log.d("ssong-develop", "hello!")
-            })
+            }
+
 
         binding.rvNottodoRecommendListTitle.apply {
             layoutManager = LinearLayoutManager(context)
