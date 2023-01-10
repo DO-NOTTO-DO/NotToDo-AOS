@@ -45,6 +45,7 @@ class HomeOutterAdapter(
                 binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
             } else if (data.completionStatus == "AMBIGUOUS") {
                 binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
+                Timber.e("outter에 submitList ${data.title}")
             } else {
                 binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
                 binding.tvHomeItemOutTitle!!.setPaintFlags(binding.tvHomeItemOutTitle!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)

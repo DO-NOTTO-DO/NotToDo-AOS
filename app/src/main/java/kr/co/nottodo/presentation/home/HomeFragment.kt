@@ -38,13 +38,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
+        viewModel.responseCheckResult.observe(viewLifecycleOwner) {
+            viewModel.initServer("2023-01-07")
+            Timber.e("home2 $it")
+        }
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.rvHomeShowTodo.adapter = outterAdapter
-                outterAdapter.submitList(it)
+                outterAdapter.submitList(it.toMutableList())
+                Timber.e("submitList $it")
             }
         }
+        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
     }
 
     private fun menuClick(index: Int) {
@@ -69,22 +74,18 @@ class HomeFragment : Fragment() {
             balloon.dismiss()
         } else balloon.showAlignTop(view)
 
+
         fail.setOnClickListener {
             Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
-            viewModel.responseHomeMissionCheck(30, "AMBIGUOUS")
+            viewModel.responseHomeMissionCheck(28, "AMBIGUOUS")
             Timber.e("home1 $it")
             //todo patch에서 데이터 클래스 observe하고 변했을 경우에 get 서버통신 다시하기
 
-            viewModel.responseCheckResult.observe(viewLifecycleOwner) {
-//                viewModel.initServer("2023-01-07")
-                Timber.e("home2 $it")
-                initAdapter()
-            }
             balloon.dismiss()
         }
         complete.setOnClickListener {
             Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
-            viewModel.responseHomeMissionCheck(30, "FINISH")
+            viewModel.responseHomeMissionCheck(28, "FINISH")
 
             balloon.dismiss()
         }
