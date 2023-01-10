@@ -1,5 +1,6 @@
 package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,8 +10,12 @@ import com.bumptech.glide.Glide
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemRecommendBinding
 import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationData
+import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
 
-class RecommendationAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {
+class RecommendationAdapter(
+    context: Context,
+    private val sampleList: ResponseRecommendationCategorySituationDto.CategorySituation.Companion,
+) : RecyclerView.Adapter<RecommendationViewHolder>() {
 
     private val sampleItems = mutableListOf<RecommendationData>(
         RecommendationData("", ""), RecommendationData("", ""), RecommendationData("", ""),

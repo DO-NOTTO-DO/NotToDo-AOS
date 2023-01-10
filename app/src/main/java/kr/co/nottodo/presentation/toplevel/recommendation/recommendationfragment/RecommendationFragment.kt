@@ -8,12 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentRecommendationBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
+import timber.log.Timber
 
 
 class RecommendationFragment : Fragment() {
@@ -23,7 +26,8 @@ class RecommendationFragment : Fragment() {
         get() = requireNotNull(_binding) { "_binding is Null ..." }
     private lateinit var recommendationAdapter: RecommendationAdapter
     private lateinit var parentAdapter: RecommendationParentAdapter
-    lateinit var recommendationViewModel: RecommendationViewModel
+    private val viewModel by viewModels<RecommendationViewModel>()
+    lateinit var itemList: List<ResponseRecommendationCategorySituationDto.CategorySituation>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,16 +41,29 @@ class RecommendationFragment : Fragment() {
 
     }
 
-    private fun getRecommendationCategorySitatuationService() {
-        getRecommendationCategorySitatuationService()
-    }
+    val sampleList = listOf(
+        "SNS",
+        "작업,업무",
+        "건강",
+        "생활습관",
+        "기상,취침",
+    )
 
+    private fun getRecommendationCategorySitatuationService() {
+        viewModel.categorySituation.observe(this) {
+            itemList = it.data
+        }
+        viewModel.errorCategorySituation.observe(this) {
+            Timber.d(it)
+        }
+    }
 //    private val viewModel.getRecommendationCategorySitatuationService()
 //    private val viewModel.getCategorySituation.observe(owner:)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recommendationAdapter = RecommendationAdapter()
+        recommendationAdapter =
+            RecommendationAdapter(sampleList = ResponseRecommendationCategorySituationDto.CategorySituation)
         parentAdapter =
             RecommendationParentAdapter(testChildItemViewClickBlock = { view, childData ->
                 Log.d("ssong-develop", "hello!")
@@ -64,6 +81,7 @@ class RecommendationFragment : Fragment() {
             startActivity(Intent(context, AdditionActivity::class.java))
 
         }
+
 
     }
 
