@@ -19,6 +19,7 @@
         android:id="@+id/cl_home_inner_test"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0.5dp"
         android:background="@drawable/rectangle_border_gray2_05"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/v_home_inner_item"
