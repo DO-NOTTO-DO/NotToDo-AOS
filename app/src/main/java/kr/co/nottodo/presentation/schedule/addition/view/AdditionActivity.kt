@@ -28,10 +28,12 @@ class AdditionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_addition)
+
         initResultLauncher()
         initBinding()
         initBottomSheet()
         initDate()
+
         btnActionPlusOnClickListener()
         binding.tvAdditionMissionName.setOnClickListener {
             moveToSearchActivity()
@@ -251,24 +253,11 @@ class AdditionActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setDropdownMenu() {
-//        binding.etAdditionMissionName.setOnClickListener {
-//            AdditionDropdownFragment().show(supportFragmentManager, AdditionDropdownFragment().tag)
-//        }
-//    }
-
     companion object {
-        const val additionRecentHeader = "낫투두 기록"
-        val additionRecentSearch: List<String> = listOf(
-            "침대에 다시 눕지 않기",
-            "알람 끄고 다시 자지 않기",
-            "10시 이후에 일어나지 않기",
-            "일어났으면 다시 침대에 눕지 않기",
-            "모바일 게임 하지 않기"
-        )
         const val blank = ""
         const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
         const val missionName = "missionName"
         const val currentMissionName = "currentMissionName"
+        const val input = "input"
     }
 }

@@ -1,45 +1,43 @@
 package kr.co.nottodo.presentation.schedule.addition.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.data.remote.model.ResponseMissionDto
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.input
 import retrofit2.await
 
 class AdditionViewModel : ViewModel() {
 
     private val missionService by lazy { ServicePool.missionService }
 
-    val additionMissionName: MutableLiveData<String> = MutableLiveData("")
+    val additionMissionName: MutableLiveData<String> = MutableLiveData(blank)
     val isAdditionMissionNameFilled: LiveData<Boolean> = Transformations.map(additionMissionName) {
         it.isNotEmpty()
     }
-    val additionActionName: MutableLiveData<String> = MutableLiveData("")
+    val additionActionName: MutableLiveData<String> = MutableLiveData(blank)
     val isAdditionActionNameFilled: LiveData<Boolean> = Transformations.map(additionActionName) {
         it.isNotEmpty()
     }
 
-    val additionActionNameFirst: MutableLiveData<String> = MutableLiveData("")
+    val additionActionNameFirst: MutableLiveData<String> = MutableLiveData(blank)
     private val isAdditionActionNameFirstFilled: LiveData<Boolean> =
         Transformations.map(additionActionNameFirst) {
             it.isNotEmpty()
         }
-    val additionActionNameSecond: MutableLiveData<String> = MutableLiveData("")
+    val additionActionNameSecond: MutableLiveData<String> = MutableLiveData(blank)
     val isAdditionActionNameSecondFilled: LiveData<Boolean> =
         Transformations.map(additionActionNameSecond) {
             it.isNotEmpty()
         }
 
-    val additionSituationName: MutableLiveData<String> = MutableLiveData("입력하기")
-    private val isAdditionSituationNameSuit: LiveData<Boolean> =
-        Transformations.map(additionSituationName) {
-            it != "입력하기"
-        }
+    val additionSituationName: MutableLiveData<String> = MutableLiveData(input)
+
     val isAdditionSituationNameFilled: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val additionGoalName: MutableLiveData<String> = MutableLiveData("")
+    val additionGoalName: MutableLiveData<String> = MutableLiveData(blank)
     val isAdditionGoalNameFilled: LiveData<Boolean> = Transformations.map(additionGoalName) {
         it.isNotEmpty()
     }
