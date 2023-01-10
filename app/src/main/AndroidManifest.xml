@@ -16,8 +16,6 @@
         android:theme="@style/Theme.NotToDo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
         <activity
             android:name=".presentation.schedule.search.view.SearchActivity"
             android:exported="false">
@@ -33,7 +31,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true">

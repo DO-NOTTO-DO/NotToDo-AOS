@@ -8,10 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemNottodoRecommendationListTitleBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationChildData
-import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationParentData
 import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategoryListDto
-import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
 
 object ParentDiffUtilItemCallback : DiffUtil.ItemCallback<ResponseRecommendationCategoryListDto.CategoryList>() {
     override fun areItemsTheSame(
