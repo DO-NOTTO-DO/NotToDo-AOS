@@ -13,14 +13,9 @@ import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlis
 import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
 
 class RecommendationAdapter(
-    context: Context,
-    private val sampleList: ResponseRecommendationCategorySituationDto.CategorySituation.Companion,
+    private val sampleList: List<ResponseRecommendationCategorySituationDto.CategorySituation>,
 ) : RecyclerView.Adapter<RecommendationViewHolder>() {
 
-    private val sampleItems = mutableListOf<RecommendationData>(
-        RecommendationData("", ""), RecommendationData("", ""), RecommendationData("", ""),
-        RecommendationData("", ""), RecommendationData("", ""), RecommendationData("", "")
-    )
     private var selectedPosition = -1
     private var lastItemSelectedPosition = -1
 
@@ -37,21 +32,21 @@ class RecommendationAdapter(
         holder: RecommendationViewHolder, position: Int
     ) {
         if (position == selectedPosition) {
-            selectBackground(holder, sampleItems[position])
+            selectBackground(holder, sampleList[position])
         } else {
-            normalBackground(holder, sampleItems[position])
+            normalBackground(holder, sampleList[position])
         }
         bind(holder, position)
-        holder.onBind(sampleItems[position])
+        holder.onBind(sampleList[position])
     }
 
-    override fun getItemCount(): Int = sampleItems.size
+    override fun getItemCount(): Int = sampleList.size
 
-    fun submitList(list: List<RecommendationData>) {
-        sampleItems.clear()
-        sampleItems.addAll(list)
-        notifyDataSetChanged()
-    }
+//    fun submitList(list: List<RecommendationData>) {
+//        sampleList.clear()
+//        sampleList.addAll(list)
+//        notifyDataSetChanged()
+//    }
 
     private fun bind(
         holder: RecommendationViewHolder,
@@ -73,7 +68,7 @@ class RecommendationAdapter(
 
     private fun normalBackground(
         holder: RecommendationViewHolder,
-        data: RecommendationData
+        data: ResponseRecommendationCategorySituationDto.CategorySituation
     ) {
         holder.binding.apply {
             Glide.with(
@@ -90,7 +85,7 @@ class RecommendationAdapter(
 
     private fun selectBackground(
         holder: RecommendationViewHolder,
-        data: RecommendationData
+        data: ResponseRecommendationCategorySituationDto.CategorySituation
     ) {
         holder.binding.apply {
             Glide.with(

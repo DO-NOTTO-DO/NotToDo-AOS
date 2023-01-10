@@ -27,7 +27,8 @@ class RecommendationFragment : Fragment() {
     private lateinit var recommendationAdapter: RecommendationAdapter
     private lateinit var parentAdapter: RecommendationParentAdapter
     private val viewModel by viewModels<RecommendationViewModel>()
-    lateinit var itemList: List<ResponseRecommendationCategorySituationDto.CategorySituation>
+    private var itemList: List<ResponseRecommendationCategorySituationDto.CategorySituation> =
+        listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,28 +51,35 @@ class RecommendationFragment : Fragment() {
     )
 
     private fun getRecommendationCategorySitatuationService() {
-        viewModel.categorySituation.observe(this) {
+        viewModel.categorySituation.observe(viewLifecycleOwner) {
             itemList = it.data
+            if (itemList.isNotEmpty()) {
+                recommendationAdapter =
+                    RecommendationAdapter(sampleList = itemList)
+                binding.rvRecommendation.apply {
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = recommendationAdapter
+                }
+            }else {
+                Timber.tag("tag").e("itemList가 빈 배열입니다.")
+            }
+
         }
-        viewModel.errorCategorySituation.observe(this) {
+        viewModel.errorCategorySituation.observe(viewLifecycleOwner) {
             Timber.d(it)
         }
     }
-//    private val viewModel.getRecommendationCategorySitatuationService()
-//    private val viewModel.getCategorySituation.observe(owner:)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recommendationAdapter =
-            RecommendationAdapter(sampleList = ResponseRecommendationCategorySituationDto.CategorySituation)
+        getRecommendationCategorySitatuationService()
+        viewModel.getRecommendationCategorySitatuationService()
+
         parentAdapter =
             RecommendationParentAdapter(testChildItemViewClickBlock = { view, childData ->
                 Log.d("ssong-develop", "hello!")
             })
-        binding.rvRecommendation.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = recommendationAdapter
-        }
 
         binding.rvNottodoRecommendListTitle.apply {
             layoutManager = LinearLayoutManager(context)

@@ -27,7 +27,6 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="12dp"
             android:textColor="@color/gray_1_626068"
-            android:text="SNS"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/iv_recommend"
             app:layout_constraintStart_toStartOf="@id/iv_recommend"
