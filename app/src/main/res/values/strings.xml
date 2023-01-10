@@ -55,5 +55,7 @@
     <string name="addition_goal_name">ex) 유튜브 2시간 이상 보지 않기</string>
     <string name="addition_date_title">실천 날짜</string>
     <string name="addition_add_btn">추가하기</string>
+    <!--calendar_bottom_sheet-->
+    <string name="calendar_bottom_sheet_complete">선택 완료</string>
 
 </resources>
