@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.databinding.ActivityAdditionBinding
+import kr.co.nottodo.presentation.addsituation.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
@@ -20,19 +21,20 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class AdditionActivity : AppCompatActivity() {
-    lateinit var binding: ActivityAdditionBinding
+    private lateinit var binding: ActivityAdditionBinding
     private val viewModel by viewModels<AdditionViewModel>()
-    lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var missionNameResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var actionNameResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var situationNameResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_addition)
-
-        initResultLauncher()
         initBinding()
+        initResultLauncher()
         initBottomSheet()
         initDate()
+        initActionName()
 
         btnActionPlusOnClickListener()
         binding.tvAdditionMissionName.setOnClickListener {
@@ -43,14 +45,10 @@ class AdditionActivity : AppCompatActivity() {
         }
 
         binding.layoutAdditionMoveSituationPage.setOnClickListener {
-            // TODO by 김준서 : 상황 추가 화면으로 이동 - 상황 추가 화면 구현시 개발
+            moveToAddSituationActivity()
         }
-        binding.ivAdditionMoveSituationPage.setOnClickListener {
-            viewModel.additionSituationName.value = "입력하기"
-            viewModel.isAdditionSituationNameFilled.value = true
-        } // TODO by 김준서 : 추후 상황 추가 화면 구현시 개발
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
-            // TODO by 김준서 : 추후 행동 추천 화면 구현시 개발
+            moveToActionActivity()
         }
 
         observeEditText()
@@ -62,6 +60,10 @@ class AdditionActivity : AppCompatActivity() {
         observePlusBtn()
 
         observeResponse()
+    }
+
+    private fun initActionName() {
+        viewModel.additionActionName.value = intent.getStringExtra("") ?: ""
     }
 
     private fun observeDate() {
@@ -118,29 +120,62 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun returnActionsList(): List<String> {
-        if (binding.tvAdditionActionSecond.isVisible) {
-            return listOf(
+        return if (binding.tvAdditionActionSecond.isVisible) {
+            listOf(
                 binding.tvAdditionActionFirst.text.toString(),
                 binding.tvAdditionActionSecond.text.toString()
             )
         } else {
-            return listOf(binding.tvAdditionActionFirst.text.toString())
+            listOf(binding.tvAdditionActionFirst.text.toString())
         }
     }
 
     private fun initResultLauncher() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    binding.tvAdditionMissionName.text = result.data?.getStringExtra(missionName)
+        missionNameResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == RESULT_OK) {
+                    binding.tvAdditionMissionName.text =
+                        it.data?.getStringExtra(missionName) ?: blank
                 }
             }
+
+        actionNameResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == RESULT_OK) {
+                    viewModel.additionActionName.value =
+                        it.data?.getStringExtra(actionName) ?: blank
+                    viewModel.isAdditionSituationNameFilled.value =
+                        it.data?.getStringExtra(actionName) != blank
+
+                }
+            }
+
+        situationNameResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == RESULT_OK) {
+                    viewModel.additionSituationName.value =
+                        it.data?.getStringExtra(situationName) ?: blank
+                }
+            }
+
     }
 
     private fun moveToSearchActivity() {
         val intent = Intent(Intent(this, SearchActivity::class.java))
         intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
-        resultLauncher.launch(intent)
+        missionNameResultLauncher.launch(intent)
+    }
+
+    private fun moveToActionActivity() {
+        val intent = Intent(Intent(this, SearchActivity::class.java))
+        actionNameResultLauncher.launch(intent)
+        viewModel.additionSituationName.value = "입력하기"
+        viewModel.isAdditionSituationNameFilled.value = true
+    }
+
+    private fun moveToAddSituationActivity() {
+        val intent = Intent(Intent(this, AddSituationActivity::class.java))
+        situationNameResultLauncher.launch(intent)
     }
 
     private fun observePlusBtn() {
@@ -257,6 +292,8 @@ class AdditionActivity : AppCompatActivity() {
         const val blank = ""
         const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
         const val missionName = "missionName"
+        const val actionName = "actionName"
+        const val situationName = "situationName"
         const val currentMissionName = "currentMissionName"
         const val input = "입력하기"
     }
