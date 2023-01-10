@@ -1,9 +1,7 @@
 package kr.co.nottodo.view.calendar.weekly
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.R
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.weekly.listener.OnSwipeTouchListener
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -23,7 +20,7 @@ class WeeklyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener {
+) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener, View.OnTouchListener {
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
@@ -42,36 +39,34 @@ class WeeklyCalendar @JvmOverloads constructor(
         setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT)
         adapter = weeklyAdapter
-        gestureDetectorCompat = GestureDetectorCompat(context, object: GestureDetector.OnGestureListener {
-            override fun onDown(e: MotionEvent): Boolean = false
+        gestureDetectorCompat =
+            GestureDetectorCompat(context, object : GestureDetector.OnGestureListener {
+                override fun onDown(e: MotionEvent): Boolean = false
 
-            override fun onShowPress(e: MotionEvent) {
-                /** no - op **/
-            }
+                override fun onShowPress(e: MotionEvent) {
+                    /** no - op **/
+                }
 
-            override fun onSingleTapUp(e: MotionEvent): Boolean = false
+                override fun onSingleTapUp(e: MotionEvent): Boolean = false
 
-            override fun onScroll(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean = true
+                override fun onScroll(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    distanceX: Float,
+                    distanceY: Float
+                ): Boolean = true
 
-            override fun onLongPress(e: MotionEvent) {
-                /** no - op **/
-            }
+                override fun onLongPress(e: MotionEvent) {
+                    /** no - op **/
+                }
 
-            override fun onFling(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                velocityX: Float,
-                velocityY: Float
-            ): Boolean {
-                Log.d("ssong-develop1","invoke!")
-                val result = false
-
-                if(e1 != null && e2 != null){
+                override fun onFling(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    velocityX: Float,
+                    velocityY: Float
+                ): Boolean {
+                    val result = false
                     try {
                         val diffY = e2.y - e1.y
                         val diffX = e2.x - e1.x
@@ -89,35 +84,10 @@ class WeeklyCalendar @JvmOverloads constructor(
                     } catch (exception: Exception) {
                         exception.printStackTrace()
                     }
+                    return result
                 }
-                return result
-            }
-        })
+            })
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        return ev?.let {
-            if (gestureDetectorCompat != null) {
-                Log.d("ssong-develop1","invoke")
-                gestureDetectorCompat.onTouchEvent(it)
-            } else {
-                Log.d("ssong-develop2","invoke")
-                super.dispatchTouchEvent(ev)
-                true
-            }
-        } ?: super.dispatchTouchEvent(ev)
-    }
-
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return event?.let {
-            if (it.action == MotionEvent.ACTION_MOVE) {
-                gestureDetectorCompat.onTouchEvent(event)
-                true
-            } else {
-                super.onTouchEvent(event)
-            }
-        } ?: super.onTouchEvent(event)
     }
 
     private fun removeDefaultItemAnimator() {
@@ -159,11 +129,16 @@ class WeeklyCalendar @JvmOverloads constructor(
         this.onWeeklyDayClickListener = onWeeklyDayClickListener
     }
 
-    fun setOnWeeklyDayClickListener(block : (view: View, date: LocalDate) -> Unit) {
+    fun setOnWeeklyDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
         this.onWeeklyDayClickListener = OnWeeklyDayClickListener(block)
     }
 
     override fun onWeeklyDayClick(view: View, date: LocalDate) {
         onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        gestureDetectorCompat.onTouchEvent(event!!)
+        return true
     }
 }
