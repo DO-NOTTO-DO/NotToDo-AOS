@@ -24,7 +24,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="19dp"
         android:background="@drawable/rectangle_solid_black_radius_100"
-        android:text="선택 완료"
+        android:text="@string/calendar_bottom_sheet_complete"
         android:textColor="@color/white"
         android:theme="@style/B18"
         app:layout_constraintBottom_toBottomOf="parent"

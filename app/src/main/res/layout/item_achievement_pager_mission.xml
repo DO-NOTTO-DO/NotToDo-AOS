@@ -30,7 +30,7 @@
             android:id="@+id/tv_achievement_pager_mission_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내가 달성한 낫투두의 순위는?"
+            android:text="@string/achievement_pager_mission_title"
             android:textColor="@color/gray_1_626068"
             android:theme="@style/B16"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f5f5f5"
+    tools:context=".presentation.onboard.view.OnBoardHeaderActivity">
+
+    <ImageView
+        android:id="@+id/iv_on_board_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:src="@drawable/ic_onboarding_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_on_board_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/on_board_header_title"
+        android:theme="@style/Typography.B25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_on_board_logo" />
+
+    <TextView
+        android:id="@+id/tv_on_board_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:text="@string/on_board_header_desc"
+        android:textColor="@color/gray_1_626068"
+        android:theme="@style/M16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_on_board_title" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:layout_marginBottom="62dp"
+        android:src="@drawable/ic_onboarding_page1"
+        app:layout_constraintBottom_toTopOf="@id/btn_on_board_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_on_board_desc" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_on_board_start"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/rectangle_solid_black_radius_100"
+        android:text="@string/on_board_header_start"
+        android:textColor="@color/bg_f5f5f5"
+        android:theme="@style/M16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

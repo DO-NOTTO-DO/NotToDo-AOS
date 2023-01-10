@@ -22,7 +22,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="54dp"
         android:gravity="center"
-        android:text="아직 아무것도 없네요,\n새로운 낫투두를 작성해보세요!"
+        android:text="@string/achievement_pager_empty_desc"
         android:textColor="@color/gray_2_8e8e93"
         android:textStyle="bold"
         android:theme="@style/Sb16"

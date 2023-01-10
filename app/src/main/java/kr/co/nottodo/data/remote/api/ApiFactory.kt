@@ -41,4 +41,6 @@ object ServicePool {
     val missionService = ApiFactory.create<MissionService>()
     val achievementService = ApiFactory.create<AchievementService>()
     val HomeService = ApiFactory.create<HomeService>()
+    val recommendationCategoryListService = ApiFactory.create<RecommendationCategoryListService>()
+    val recommendationCategorySituationService = ApiFactory.create<RecommendationCategorySituationService>()
 }
