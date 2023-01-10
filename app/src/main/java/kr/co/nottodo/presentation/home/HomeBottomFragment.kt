@@ -20,9 +20,13 @@ class HomeBottomFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBottomBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initBottomSheet()
         click()
-        return binding.root
     }
 
     private fun initBottomSheet() {
@@ -33,17 +37,16 @@ class HomeBottomFragment : BottomSheetDialogFragment() {
     }
 
     private fun click() {
-        binding.tvHomeBottomTrash.setOnClickListener { this.dismiss() }
-        binding.tvHomeBottomEdit.setOnClickListener { this.dismiss() }
+        binding.tvHomeBottomTrash.setOnClickListener { dismiss() }
+        binding.tvHomeBottomEdit.setOnClickListener { dismiss() }
         binding.tvHomeAnatherNatodo.setOnClickListener {
             CalendarBottomSheet().show(childFragmentManager, CalendarBottomSheet().tag)
-            //.show(, CalendarBottomSheet().tag)
-//            this.dismiss()
+
         }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }
