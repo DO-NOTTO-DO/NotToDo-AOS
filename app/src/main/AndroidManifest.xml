@@ -25,14 +25,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".RecommendActivity"
-            android:name=".presentation.onboard.view.OnBoardHeaderActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".presentation.onboard.view.OnBoardBodyActivity"
             android:exported="false">
             <meta-data
@@ -46,13 +38,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".RecommendActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
 
         <service
             android:name=".FirebaseMessagingService"
@@ -61,6 +47,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true">
