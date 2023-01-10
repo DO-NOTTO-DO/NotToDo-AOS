@@ -67,6 +67,10 @@ class AchievementSituationParentAdapter(
                             textYellowColorList[position]
                         )
                     )
+                    binding.ivAchievementRvSituationParentArrow.setImageResource(
+                        R.drawable.ic_toggle_open
+                    )
+
 
                 } else {
                     binding.rvAchievementPagerSituationChild.visibility = View.GONE
@@ -78,6 +82,9 @@ class AchievementSituationParentAdapter(
                             binding.root.context,
                             R.color.gray_1_626068
                         )
+                    )
+                    binding.ivAchievementRvSituationParentArrow.setImageResource(
+                        R.drawable.ic_toggle_closed
                     )
                 }
             }
