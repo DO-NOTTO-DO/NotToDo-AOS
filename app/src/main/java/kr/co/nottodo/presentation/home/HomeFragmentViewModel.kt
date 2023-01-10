@@ -8,8 +8,9 @@ import kotlinx.coroutines.launch
 import kr.co.nottodo.data.local.HomeDailyResponse.HomeDaily
 import kr.co.nottodo.data.remote.api.HomeService
 import kr.co.nottodo.data.remote.api.ServicePool
-import kr.co.nottodo.data.remote.model.HomeMissionCheckDto
+import kr.co.nottodo.data.remote.model.RequestHomeMissionCheck
 import kr.co.nottodo.data.remote.model.ResponseHomeBannerDto
+import kr.co.nottodo.data.remote.model.ResponseHomeMissionCheckDto
 import timber.log.Timber
 
 class HomeFragmentViewModel() : ViewModel() {
@@ -27,9 +28,9 @@ class HomeFragmentViewModel() : ViewModel() {
     val responseBannerResult: LiveData<ResponseHomeBannerDto.HomeBanner> get() = _responseBannerResult
 
     //투두 체크확인
-    private val _responseCheckResult: MutableLiveData<HomeMissionCheckDto.CheckTodo> =
+    private val _responseCheckResult: MutableLiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> =
         MutableLiveData()
-    val responseCheckResult: LiveData<HomeMissionCheckDto.CheckTodo> get() = _responseCheckResult
+    val responseCheckResult: LiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> get() = _responseCheckResult
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
     val errorMessageSituation: LiveData<String>
@@ -37,47 +38,47 @@ class HomeFragmentViewModel() : ViewModel() {
 
     private val postService: HomeService = ServicePool.HomeService
 
+    //home daily 조회하는거
     fun initServer(date: String) {
         viewModelScope.launch {
             runCatching {
                 postService.getHomeDaily(date)
             }.fold({
                 _responseResult.value = it.data
-                Timber.e("asdf ${_responseResult.value}")
+//                Timber.e("asdf ${_responseResult.value}")
             }, { _errorMessageSituation.value = it.message })
-
         }
     }
 
     fun homeBannerInitServer() {
         viewModelScope.launch {
-            Timber.e("asdfasdf ")
             runCatching {
                 postService.getBanner()
             }.fold({
                 _responseBannerResult.value = it.data
-                Timber.e("asdfasdf ${_responseBannerResult.value}")
             }, {
                 _errorMessageSituation.value = it.message
-                Timber.e("asdfasdf3 ${_responseBannerResult.value}")
             })
 
         }
     }
 
-//    fun homeMissionCheckInitServer() {
-//        viewModelScope.launch {
-//            Timber.e("asdfasdf ")
-//            runCatching {
-//                postService.getBanner()
-//            }.fold({
-//                _responseCheckResult.value = it.data
-//                Timber.e("asdfasdf ${_responseCheckResult.value}")
-//            }, {
-//                _errorMessageSituation.value = it.message
-//                Timber.e("asdfasdf3 ${_responseBannerResult.value}")
-//            })
-//
-//        }
-//    }
+    //patch
+    fun responseHomeMissionCheck(id: Int, completionStatus: String) {
+        viewModelScope.launch {
+            runCatching {
+                postService.patchHomeTodoCheck(
+                    id, RequestHomeMissionCheck(
+                        completionStatus
+                    )
+                )
+            }.fold({
+                _responseCheckResult.value = it.data
+                Timber.d("mission ${it.data}")
+            }, {
+                _errorMessageSituation.value = it.message
+            })
+
+        }
+    }
 }

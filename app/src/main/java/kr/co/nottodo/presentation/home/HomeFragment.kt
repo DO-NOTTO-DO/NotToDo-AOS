@@ -45,7 +45,6 @@ class HomeFragment : Fragment() {
                 outterAdapter.submitList(it)
             }
         }
-        Timber.e("home ${viewModel.responseResult.value}")
     }
 
     private fun menuClick(index: Int) {
@@ -72,11 +71,20 @@ class HomeFragment : Fragment() {
 
         fail.setOnClickListener {
             Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
+            viewModel.responseHomeMissionCheck(30, "AMBIGUOUS")
+            Timber.e("home1 $it")
+            //todo patch에서 데이터 클래스 observe하고 변했을 경우에 get 서버통신 다시하기
 
+            viewModel.responseCheckResult.observe(viewLifecycleOwner) {
+//                viewModel.initServer("2023-01-07")
+                Timber.e("home2 $it")
+                initAdapter()
+            }
             balloon.dismiss()
         }
         complete.setOnClickListener {
             Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
+            viewModel.responseHomeMissionCheck(30, "FINISH")
 
             balloon.dismiss()
         }
@@ -86,6 +94,7 @@ class HomeFragment : Fragment() {
     private fun initStatus() {
         viewModel.initServer("2023-01-07")
         viewModel.homeBannerInitServer()
+//        viewModel.homeMissionCheckInitServer(1)
     }
 
     private fun showBanner() {
@@ -98,7 +107,6 @@ class HomeFragment : Fragment() {
             }
 
             it.image
-            Timber.e("home${it.image}")
             binding.tvHomeMotiveDescription.text = it.title
         }
     }
