@@ -1,6 +1,6 @@
 package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ItemRecommendBinding
-import kr.co.nottodo.presentation.toplevel.recommendation.data.recommendationlistdata.RecommendationData
 import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
 
 class RecommendationAdapter(
-    private val sampleList: List<ResponseRecommendationCategorySituationDto.CategorySituation>,
+    private val delegate: RecommendationViewHolder.RecommendationClickDelegate
 ) : RecyclerView.Adapter<RecommendationViewHolder>() {
 
     private var selectedPosition = -1
     private var lastItemSelectedPosition = -1
 
+    private val recommendItemList =
+        mutableListOf<ResponseRecommendationCategorySituationDto.CategorySituation>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             RecommendationViewHolder {
@@ -31,22 +32,24 @@ class RecommendationAdapter(
     override fun onBindViewHolder(
         holder: RecommendationViewHolder, position: Int
     ) {
-        if (position == selectedPosition) {
-            selectBackground(holder, sampleList[position])
-        } else {
-            normalBackground(holder, sampleList[position])
-        }
+        // 로직이 그리 좋지 않습니다
         bind(holder, position)
-        holder.onBind(sampleList[position])
+        holder.onBind(recommendItemList[position])
+        if (position == selectedPosition) {
+            selectBackground(holder, recommendItemList[position])
+        } else {
+            normalBackground(holder, recommendItemList[position])
+        }
     }
 
-    override fun getItemCount(): Int = sampleList.size
+    override fun getItemCount(): Int = recommendItemList.size
 
-//    fun submitList(list: List<RecommendationData>) {
-//        sampleList.clear()
-//        sampleList.addAll(list)
-//        notifyDataSetChanged()
-//    }
+    @SuppressLint("NotifyDataSetChanged")
+    fun submitList(list: List<ResponseRecommendationCategorySituationDto.CategorySituation>) {
+        recommendItemList.clear()
+        recommendItemList.addAll(list)
+        notifyDataSetChanged()
+    }
 
     private fun bind(
         holder: RecommendationViewHolder,
@@ -61,6 +64,7 @@ class RecommendationAdapter(
                     notifyItemChanged(lastItemSelectedPosition)
                     selectedPosition
                 }
+                delegate.onClickRecommendation(recommendItemList[selectedPosition])
                 notifyItemChanged(selectedPosition)
             }
         }
@@ -71,12 +75,11 @@ class RecommendationAdapter(
         data: ResponseRecommendationCategorySituationDto.CategorySituation
     ) {
         holder.binding.apply {
-            Glide.with(
-                holder.itemView.context
-            )
-                .load("https://nottodo-bucket.s3.ap-northeast-2.amazonaws.com/%EC%B6%94%EC%B2%9C+%ED%83%AD+%EC%95%84%EC%9D%B4%EC%BD%98/Property+1%3Dic_sns_default%402x.png")
+            Glide.with(holder.itemView.context)
+                .load(data.image)
                 .into(ivRecommend)
-            this.root.setBackgroundColor(
+
+            root.setBackgroundColor(
                 ContextCompat.getColor(holder.binding.root.context, R.color.white)
             )
             executePendingBindings()
@@ -88,15 +91,26 @@ class RecommendationAdapter(
         data: ResponseRecommendationCategorySituationDto.CategorySituation
     ) {
         holder.binding.apply {
-            Glide.with(
-                holder.itemView.context
-            )
-                .load("https://picsum.photos/id/237/200/300")
+            Glide.with(holder.itemView.context)
+                .load(data.activeImage)
                 .into(ivRecommend)
-            this.root.setBackgroundColor(
+
+            root.setBackgroundColor(
                 ContextCompat.getColor(holder.binding.root.context, R.color.yellow_basic_fef652)
             )
             executePendingBindings()
         }
+    }
+
+    fun notifyFirstItemIsClick() {
+        selectedPosition = 0
+        lastItemSelectedPosition = if (lastItemSelectedPosition == -1) {
+            selectedPosition
+        } else {
+            notifyItemChanged(lastItemSelectedPosition)
+            selectedPosition
+        }
+        delegate.onClickRecommendation(recommendItemList[selectedPosition])
+        notifyItemChanged(selectedPosition)
     }
 }

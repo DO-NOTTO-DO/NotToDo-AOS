@@ -8,52 +8,67 @@ import kotlinx.coroutines.launch
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategoryListDto
 import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
-import retrofit2.await
-import retrofit2.http.Path
+import timber.log.Timber
 
 class RecommendationViewModel : ViewModel() {
     private val recommendationCategoryListService by lazy { ServicePool.recommendationCategoryListService }
     private val recommendationCategorySituationService by lazy { ServicePool.recommendationCategorySituationService }
 
-    //ResponseRecommendationCategoryListDto
-    //List<ResponseRecommendationCategoryListDto.CategoryList>
-//
-    private val _categorySituation: MutableLiveData<ResponseRecommendationCategorySituationDto> =
+    private val _categorySituation: MutableLiveData<List<ResponseRecommendationCategorySituationDto.CategorySituation>> =
         MutableLiveData()
-    val categorySituation: LiveData<ResponseRecommendationCategorySituationDto>
+    val categorySituation: LiveData<List<ResponseRecommendationCategorySituationDto.CategorySituation>>
         get() = _categorySituation
 
-    private val _errorCategorySituation: MutableLiveData<String> = MutableLiveData()
-    val errorCategorySituation: LiveData<String>
-        get() = _errorCategorySituation
-
-    private val _categoryList: MutableLiveData<ResponseRecommendationCategoryListDto> =
+    private val _categoryList: MutableLiveData<List<ResponseRecommendationCategoryListDto.CategoryList>> =
         MutableLiveData()
-    val categoryList: LiveData<ResponseRecommendationCategoryListDto>
+    val categoryList: LiveData<List<ResponseRecommendationCategoryListDto.CategoryList>>
         get() = _categoryList
 
-    private val _errorcategoryList: MutableLiveData<String> = MutableLiveData()
-    val errorcategoryList: LiveData<String>
-        get() = _errorcategoryList
+    private val _categoryId: MutableLiveData<Int> = MutableLiveData()
+    val categoryId: LiveData<Int> = _categoryId
 
-
-    fun getRecommendationCategorySitatuationService() {
+    init {
         viewModelScope.launch {
-            kotlin.runCatching {
-                recommendationCategorySituationService.getCategorySituation().await()
-            }.fold(onSuccess = { _categorySituation.value = it },
-                onFailure = { _errorCategorySituation.value = it.message })
+            runCatching {
+                recommendationCategorySituationService.getCategorySituation()
+            }.onSuccess { response ->
+                when (response.status) {
+                    200 -> {
+                        _categorySituation.value = response.data
+                    }
+                    else -> {
+                        _categorySituation.value = emptyList()
+                    }
+                }
+            }.onFailure { throwable ->
+                // 아예 실패
+                Timber.e(throwable)
+                _categorySituation.value = emptyList()
+            }
         }
     }
 
-    fun ResponseRecommendationCategoryListService(
-        id: Int
-    ) {
+    fun setCategoryId(id: Int) {
+        _categoryId.value = id
+    }
+
+    fun getRecommendList(id: Int) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                recommendationCategoryListService.getCategoryList(id).await()
-            }.fold(onSuccess = { _categoryList.value = it },
-                onFailure = { _errorcategoryList.value = it.message })
+            runCatching {
+                recommendationCategoryListService.getCategoryList(id)
+            }.onSuccess { response ->
+                when (response.status) {
+                    200 -> {
+                        _categoryList.value = response.data
+                    }
+                    else -> {
+                        _categoryList.value = emptyList()
+                    }
+                }
+            }.onFailure { throwable ->
+                Timber.e(throwable)
+                _categoryList.value = emptyList()
+            }
         }
     }
 }

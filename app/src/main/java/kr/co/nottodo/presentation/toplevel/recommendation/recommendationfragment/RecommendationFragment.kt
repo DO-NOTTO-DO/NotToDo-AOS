@@ -2,22 +2,16 @@ package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragmen
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentRecommendationBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-import kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto.ResponseRecommendationCategorySituationDto
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
-import timber.log.Timber
-
 
 class RecommendationFragment : Fragment() {
 
@@ -27,8 +21,6 @@ class RecommendationFragment : Fragment() {
     private lateinit var recommendationAdapter: RecommendationAdapter
     private lateinit var parentAdapter: RecommendationParentAdapter
     private val viewModel by viewModels<RecommendationViewModel>()
-    private var itemList: List<ResponseRecommendationCategorySituationDto.CategorySituation> =
-        listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,62 +29,28 @@ class RecommendationFragment : Fragment() {
     ): View {
         _binding = FragmentRecommendationBinding.inflate(inflater, container, false)
         return binding.root
-
     }
-
-    companion object {
-        val sampleList = listOf(
-            "SNS",
-            "작업,업무",
-            "건강",
-            "생활습관",
-            "기상,취침",
-        )
-    }
-
-
-    private fun getRecommendationCategorySitatuationService() {
-        viewModel.categorySituation.observe(viewLifecycleOwner) {
-            itemList = it.data
-            if (itemList.isNotEmpty()) {
-                recommendationAdapter =
-                    RecommendationAdapter(sampleList = itemList)
-                binding.rvRecommendation.apply {
-                    layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = recommendationAdapter
-                }
-            }else {
-                Timber.tag("tag").e("itemList가 빈 배열입니다.")
-            }
-
-        }
-        viewModel.errorCategorySituation.observe(viewLifecycleOwner) {
-            Timber.e(it)
-        }
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        getRecommendationCategorySitatuationService()
-        viewModel.getRecommendationCategorySitatuationService()
+        initAdapter()
+        initRecyclerView()
+        initListener()
 
-        parentAdapter =
-            RecommendationParentAdapter{ view, childData ->
-                Log.d("ssong-develop", "hello!")
+        viewModel.categorySituation.observe(viewLifecycleOwner) { categorySituationList ->
+            if (categorySituationList.isNotEmpty()) {
+                // 어댑터한테 데이터를 넣어줬어요
+                recommendationAdapter.submitList(categorySituationList)
+                recommendationAdapter.notifyFirstItemIsClick()
             }
-
-
-        binding.rvNottodoRecommendListTitle.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = parentAdapter
-        }
-        binding.tvWriteDirect.setOnClickListener {
-            startActivity(Intent(context, AdditionActivity::class.java))
-
         }
 
+        viewModel.categoryId.observe(viewLifecycleOwner) { categoryId ->
+            viewModel.getRecommendList(categoryId)
+        }
 
+        viewModel.categoryList.observe(viewLifecycleOwner) { categoryList ->
+            parentAdapter.submitList(categoryList)
+        }
     }
 
     override fun onDestroyView() {
@@ -100,4 +58,36 @@ class RecommendationFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private fun initAdapter() {
+        recommendationAdapter = RecommendationAdapter(
+            delegate = { recommendItem ->
+                viewModel.setCategoryId(recommendItem.id)
+            }
+        )
+        parentAdapter = RecommendationParentAdapter { view, childData ->
+            startActivity(Intent(context, AdditionActivity::class.java))
+        }
+    }
+
+    private fun initRecyclerView() {
+        with(binding) {
+            rvRecommendation.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = recommendationAdapter
+            }
+
+            rvNottodoRecommendListTitle.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = parentAdapter
+            }
+        }
+    }
+
+    private fun initListener() {
+        binding.tvWriteDirect.setOnClickListener {
+            startActivity(Intent(context, AdditionActivity::class.java))
+        }
+
+    }
 }
