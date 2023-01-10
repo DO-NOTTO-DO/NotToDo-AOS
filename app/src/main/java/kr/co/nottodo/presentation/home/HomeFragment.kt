@@ -55,10 +55,10 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
-        var yoonjeong = true
+        var isThreadRun = true
         var position = -1
         Thread {
-            while (yoonjeong) {
+            while (isThreadRun) {
                 Thread.sleep(300)
                 mainActivity.runOnUiThread {
                     if (position < lable.length - 1) {
@@ -66,7 +66,7 @@ class HomeFragment : Fragment() {
                         binding.tvHomeMotiveDescription.setText(binding.tvHomeMotiveDescription.text.toString() + lable[position].toString())
 //                        Timber.e(binding.tvHomeMotiveDescription.text.toString())
                     } else {
-                        yoonjeong = false
+                        isThreadRun = false
                     }
                 }
             }
