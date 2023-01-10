@@ -3,7 +3,6 @@ package kr.co.nottodo.data.remote.api
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import kr.co.nottodo.BuildConfig
-import kr.co.nottodo.data.remote.model.ResponseAchievementDto
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +17,8 @@ object ApiFactory {
             }).build()
     }
     val retrofit: Retrofit by lazy {
-        Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .client(client).build()
     }
@@ -32,4 +32,6 @@ object ServicePool {
     val statisticService = ApiFactory.create<StatisticService>()
     val missionService = ApiFactory.create<MissionService>()
     val achievementService = ApiFactory.create<AchievementService>()
+    val recommendationCategoryListService = ApiFactory.create<RecommendationCategoryListService>()
+    val recommendationCategorySituationService = ApiFactory.create<RecommendationCategorySituationService>()
 }
