@@ -26,9 +26,20 @@
     <string name="on_board_third_desc"><b>정확하게</b> 달성을 기록하고\n변화를 <b>체계적으로</b> 관리하세요</string>
     <string name="on_board_fourth_desc">낫투두 실천이 막막할 때는\n구체적인 <b>방법을 추천</b>해드려요</string>
     <string name="on_board_fifth_desc">나의 성취 기록을\n<b>통계</b>로 만나보세요</string>
-
+    <string name="on_board_body_skip">건너뛰기</string>
+    <string name="on_board_body_prev">이전</string>
+    <string name="on_board_body_next">다음</string>
+    <string name="on_board_header_title">나만의 규율을 지키고\n더 나은 일상을 지속하세요</string>
+    <string name="on_board_header_desc">이제부터 낫투두가 도와줄게요!</string>
+    <string name="on_board_header_start">시작할래요!</string>
+    <string name="on_board_first">첫 번째,</string>
+    <string name="on_board_second">두 번째,</string>
+    <string name="on_board_third">세 번째,</string>
+    <string name="on_board_final">마지막으로,</string>
+    <string name="on_board_body_start">낫투두 등록하러 갈래요!</string>
     <!--search-->
     <string name="search_history_hint">하지 않을 일을 적어주세요…</string>
     <string name="search_complete">완료</string>
     <string name="search_history">낫투두 기록</string>
+
 </resources>

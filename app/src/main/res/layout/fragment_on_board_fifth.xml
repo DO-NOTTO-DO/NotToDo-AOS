@@ -12,7 +12,7 @@
         android:layout_marginStart="20dp"
         android:background="@color/yellow_basic_fef652"
         android:padding="3dp"
-        android:text="마지막으로,"
+        android:text="@string/on_board_final"
         android:theme="@style/B18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
