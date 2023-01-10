@@ -38,6 +38,7 @@ class WeeklyViewHolder(
                     R.color.black_2a292d
                 )
             )
+            tvWeeklyCalendarDay.setBackgroundResource(R.drawable.bg_monthly_calendar_normal)
         }
     }
 
@@ -60,6 +61,7 @@ class WeeklyViewHolder(
                     R.color.white
                 )
             )
+            tvWeeklyCalendarDay.setBackgroundResource(R.drawable.bg_monthly_calendar_normal)
         }
     }
 
@@ -72,34 +74,24 @@ class WeeklyViewHolder(
             ivToday.visibility = if (DateUtils.isToday(date.time)) View.VISIBLE else View.GONE
             when (notToDoCount) {
                 1 -> {
-                    ivNotToDo.visibility = View.VISIBLE
-                    ivNotToDo.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            binding.root.context,
-                            R.drawable.bg_monthly_calendar_not_to_do_1
-                        )
+                    tvWeeklyCalendarDay.setBackgroundResource(
+                        R.drawable.bg_monthly_calendar_not_to_do_1
                     )
                 }
                 2 -> {
-                    ivNotToDo.visibility = View.VISIBLE
-                    ivNotToDo.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            binding.root.context,
-                            R.drawable.bg_monthly_calendar_not_to_do_2
-                        )
+                    tvWeeklyCalendarDay.setBackgroundResource(
+                        R.drawable.bg_monthly_calendar_not_to_do_2
                     )
                 }
                 3 -> {
-                    ivNotToDo.visibility = View.VISIBLE
-                    ivNotToDo.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            binding.root.context,
-                            R.drawable.bg_monthly_calendar_not_to_do_3
-                        )
+                    tvWeeklyCalendarDay.setBackgroundResource(
+                        R.drawable.bg_monthly_calendar_not_to_do_3
                     )
                 }
                 else -> {
-                    ivNotToDo.visibility = View.GONE
+                    tvWeeklyCalendarDay.setBackgroundResource(
+                        R.drawable.bg_monthly_calendar_normal
+                    )
                 }
             }
         }
