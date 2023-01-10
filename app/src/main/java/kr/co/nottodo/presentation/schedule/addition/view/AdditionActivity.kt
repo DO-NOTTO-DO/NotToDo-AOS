@@ -258,6 +258,6 @@ class AdditionActivity : AppCompatActivity() {
         const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
         const val missionName = "missionName"
         const val currentMissionName = "currentMissionName"
-        const val input = "input"
+        const val input = "입력하기"
     }
 }
