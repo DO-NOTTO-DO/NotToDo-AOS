@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.databinding.ActivityAdditionBinding
-import kr.co.nottodo.presentation.addsituation.AddSituationActivity
+import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
