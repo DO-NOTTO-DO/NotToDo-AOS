@@ -65,7 +65,7 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun initActionName() {
-        viewModel.additionActionName.value = intent.getStringExtra(actionName) ?: ""
+        viewModel.additionActionName.value = intent.getStringExtra(actionName) ?: blank
     }
 
     private fun observeDate() {
@@ -76,7 +76,7 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun initDate() {
         binding.tvAdditionDate.text =
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern(datePattern))
     }
 
     private fun postMission() {
@@ -103,11 +103,11 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun makeErrorToast(text: String) {
         when (text) {
-            "낫투두를 3개 이상 추가할 수 없습니다." -> {
-                CustomSnackBar.makeSnackBar(binding.root, "낫투두 추가는 하루 최대 3개까지 가능합니다.").show()
+            responseNoMoreThanThree -> {
+                CustomSnackBar.makeSnackBar(binding.root, snackBarTextNoMoreThanThree).show()
             }
-            "이미 존재하는 낫투두 입니다." -> {
-                CustomSnackBar.makeSnackBar(binding.root, "이미 같은 내용의 낫투두가 있어요").show()
+            responseAlreadyExist -> {
+                CustomSnackBar.makeSnackBar(binding.root, snackBarTextAlreadyExist).show()
             }
             else -> {
                 CustomSnackBar.makeSnackBar(binding.root, text).show()
@@ -289,5 +289,11 @@ class AdditionActivity : AppCompatActivity() {
         const val situationName = "situationName"
         const val currentMissionName = "currentMissionName"
         const val input = "입력하기"
+        const val responseNoMoreThanThree = "낫투두를 3개 이상 추가할 수 없습니다."
+        const val responseAlreadyExist = "이미 존재하는 낫투두 입니다."
+        const val snackBarTextNoMoreThanThree = "낫투두 추가는 하루 최대 3개까지 가능합니다"
+        const val snackBarTextAlreadyExist = "이미 같은 내용의 낫투두가 있어요"
+        const val datePattern = "yyyy.MM.dd"
+
     }
 }
