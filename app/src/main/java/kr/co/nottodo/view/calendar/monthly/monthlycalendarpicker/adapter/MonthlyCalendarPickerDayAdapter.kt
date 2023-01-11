@@ -23,7 +23,7 @@ class MonthlyCalendarPickerDayAdapter(
 
     private val calendarPickerItems = mutableListOf<MonthlyCalendarDay>()
 
-    var selectedDate: Date? = null
+    var selectedDate: Date = Calendar.getInstance().time
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
@@ -67,13 +67,9 @@ class MonthlyCalendarPickerDayAdapter(
         when (holder) {
             is MonthlyCalendarPickerDayViewHolder -> {
                 if (calendarPickerItems[position] is MonthlyCalendarDay.DayMonthly) {
-                    selectedDate?.let {
-                        if ((calendarPickerItems[position] as MonthlyCalendarDay.DayMonthly).date.isTheSameDay(it)) {
-                            holder.onBindSelectedState(calendarPickerItems[position])
-                        } else {
-                            holder.onBind(calendarPickerItems[position])
-                        }
-                    } ?: run {
+                    if ((calendarPickerItems[position] as MonthlyCalendarDay.DayMonthly).date.isTheSameDay(selectedDate)) {
+                        holder.onBindSelectedState(calendarPickerItems[position])
+                    } else {
                         holder.onBind(calendarPickerItems[position])
                     }
                 } else {

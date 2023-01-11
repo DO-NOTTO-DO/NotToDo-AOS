@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
 import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,7 +21,7 @@ class WeeklyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener, View.OnTouchListener {
+) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener {
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
@@ -29,7 +30,8 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     private val weeklyAdapter = WeeklyAdapter(this)
     private var currentDate = LocalDate.now()
-    private lateinit var gestureDetectorCompat: GestureDetectorCompat
+    var selectedDate = LocalDate.now()
+    private lateinit var gestureDetector: GestureDetector
 
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
 
@@ -39,11 +41,11 @@ class WeeklyCalendar @JvmOverloads constructor(
         setBackgroundColor(ContextCompat.getColor(context, R.color.white))
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT)
         adapter = weeklyAdapter
-        gestureDetectorCompat =
-            GestureDetectorCompat(context, object : GestureDetector.OnGestureListener {
+        gestureDetector = GestureDetector(context, object : GestureDetector.OnGestureListener {
                 override fun onDown(e: MotionEvent): Boolean = false
 
                 override fun onShowPress(e: MotionEvent) {
+                    /** no - op **/
                     /** no - op **/
                 }
 
@@ -57,6 +59,7 @@ class WeeklyCalendar @JvmOverloads constructor(
                 ): Boolean = true
 
                 override fun onLongPress(e: MotionEvent) {
+                    /** no - op **/
                     /** no - op **/
                 }
 
@@ -87,6 +90,16 @@ class WeeklyCalendar @JvmOverloads constructor(
                     return result
                 }
             })
+        addOnItemTouchListener(object : OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                gestureDetector.onTouchEvent(e)
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
     }
 
@@ -134,11 +147,8 @@ class WeeklyCalendar @JvmOverloads constructor(
     }
 
     override fun onWeeklyDayClick(view: View, date: LocalDate) {
+        selectedDate = date
         onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
-    }
-
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        gestureDetectorCompat.onTouchEvent(event!!)
-        return true
+        weeklyAdapter.setSelectedDay(date)
     }
 }

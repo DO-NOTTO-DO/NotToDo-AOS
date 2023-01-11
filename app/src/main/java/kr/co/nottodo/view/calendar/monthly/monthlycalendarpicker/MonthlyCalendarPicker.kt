@@ -43,7 +43,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyle), MonthlyCalendarPickerClickListener {
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
-    var selectedDate: Date? = null
+    var selectedDate: Date = Calendar.getInstance().time
     private var monthlyCalendarPickerClickListener : MonthlyCalendarPickerClickListener? = null
     private val monthlyCalendarPickerDayAdapter = MonthlyCalendarPickerDayAdapter(this)
     private val calendar = Calendar.getInstance(timeZone, locale)
@@ -340,10 +340,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     }
 
     override fun onDayClick(view: View, date: Date) {
-        if (!date.isToday()) {
-            selectedDate = date
-            monthlyCalendarPickerDayAdapter.selectedDate = date
-            monthlyCalendarPickerClickListener?.onDayClick(view, date)
-        }
+        selectedDate = date
+        monthlyCalendarPickerDayAdapter.selectedDate = date
+        monthlyCalendarPickerClickListener?.onDayClick(view, date)
     }
 }
