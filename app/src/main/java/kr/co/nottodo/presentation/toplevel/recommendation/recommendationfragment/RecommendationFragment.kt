@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.nottodo.databinding.FragmentRecommendationBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.actionName
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
+import timber.log.Timber
 
 class RecommendationFragment : Fragment() {
 
@@ -65,7 +67,12 @@ class RecommendationFragment : Fragment() {
             }
         )
         parentAdapter = RecommendationParentAdapter { view, childData ->
-            startActivity(Intent(context, AdditionActivity::class.java))
+            startActivity(
+                Intent(context, AdditionActivity::class.java).putExtra(
+                    actionName,
+                    childData.name
+                )
+            )
         }
     }
 
