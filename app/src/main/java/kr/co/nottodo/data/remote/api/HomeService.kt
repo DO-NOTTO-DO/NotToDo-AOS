@@ -1,6 +1,7 @@
 package kr.co.nottodo.data.remote.api
 
 import kr.co.nottodo.data.local.HomeDailyResponse
+import kr.co.nottodo.data.remote.model.HomeWeeklyDto
 import kr.co.nottodo.data.remote.model.RequestHomeMissionCheck
 import kr.co.nottodo.data.remote.model.ResponseHomeBannerDto
 import kr.co.nottodo.data.remote.model.ResponseHomeMissionCheckDto
@@ -16,6 +17,11 @@ interface HomeService {
         @Path("missionId") missionId: Int,
         @Body body: RequestHomeMissionCheck
     ): ResponseHomeMissionCheckDto
+
+    @GET("mission/week/{startDate}")
+    suspend fun getWeekCount(
+        @Path("startDate") startDate: String
+    ): HomeWeeklyDto
 
     @GET("banner")
     suspend fun getBanner(): ResponseHomeBannerDto

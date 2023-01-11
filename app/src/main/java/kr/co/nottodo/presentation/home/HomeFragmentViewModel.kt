@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import kr.co.nottodo.data.local.HomeDailyResponse.HomeDaily
 import kr.co.nottodo.data.remote.api.HomeService
 import kr.co.nottodo.data.remote.api.ServicePool
+import kr.co.nottodo.data.remote.model.HomeWeeklyDto
 import kr.co.nottodo.data.remote.model.RequestHomeMissionCheck
 import kr.co.nottodo.data.remote.model.ResponseHomeBannerDto
 import kr.co.nottodo.data.remote.model.ResponseHomeMissionCheckDto
@@ -18,9 +19,9 @@ class HomeFragmentViewModel() : ViewModel() {
     private val _missionDailyDate: MutableLiveData<List<HomeDaily.Action>> = MutableLiveData()
     val missionDailyDate: LiveData<List<HomeDaily.Action>> = _missionDailyDate
 
-    //리사이클러뷰 missionId값 조회
-    private val _missionId: MutableLiveData<Int> = MutableLiveData()
-    val missionId: LiveData<Int> = _missionId
+//    //리사이클러뷰 missionId값 조회
+//    private val _missionId: MutableLiveData<Int> = MutableLiveData()
+//    val missionId: LiveData<Int> = _missionId
 
     //리사이클러뷰 조회
     private val _responseResult: MutableLiveData<List<HomeDaily>> = MutableLiveData()
@@ -35,6 +36,12 @@ class HomeFragmentViewModel() : ViewModel() {
     private val _responseCheckResult: MutableLiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> =
         MutableLiveData()
     val responseCheckResult: LiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> get() = _responseCheckResult
+
+    //위클리 투두 개수 확인
+    private val _responseWeeklyResult: MutableLiveData<HomeWeeklyDto> =
+        MutableLiveData()
+    val responseWeeklyResult: LiveData<HomeWeeklyDto> get() = _responseWeeklyResult
+
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
     val errorMessageSituation: LiveData<String>
@@ -54,6 +61,7 @@ class HomeFragmentViewModel() : ViewModel() {
         }
     }
 
+    //홈배너 조회
     fun homeBannerInitServer() {
         viewModelScope.launch {
             runCatching {
@@ -66,10 +74,23 @@ class HomeFragmentViewModel() : ViewModel() {
 
         }
     }
+//    //홈 위클리 성공조회
+//    fun homeWeeklyInitServer() {
+//        viewModelScope.launch {
+//            runCatching {
+//                postService.getWeekCount()
+//            }.fold({
+//                _responseBannerResult.value = it.data
+//            }, {
+//                _errorMessageSituation.value = it.message
+//            })
+//
+//        }
+//    }
 
-    fun setMissionId(id:Int){
-        _missionId.value = id
-    }
+//    fun setMissionId(id: Int) {
+//        _missionId.value = id
+//    }
 
     //patch
     fun responseHomeMissionCheck(id: Int, completionStatus: String) {

@@ -86,6 +86,7 @@
                     android:id="@+id/weekely_calendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_border_gray2_05"
                     app:layout_constraintTop_toTopOf="@id/cl_home_recyclerview_scroll" />
 
                 <androidx.recyclerview.widget.RecyclerView

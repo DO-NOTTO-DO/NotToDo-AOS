@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,18 +15,21 @@ import com.skydoves.balloon.Balloon
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kr.co.nottodo.R
-import kr.co.nottodo.data.local.HomeDailyResponse
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
     private val stringBuilder = StringBuilder()
-    private lateinit var dataId: HomeDailyResponse.HomeDaily
+    private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    private var weeklyData = todayData
     lateinit var mainActivity: MainActivity
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
@@ -50,20 +52,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         clickFbtn()
-        initServer()
+        initServer(weeklyData)
+        clickWeekly()
         observerData()
         showBanner()
     }
 
     private fun observerData() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
-            viewModel.initServer("2023-01-07")
+            viewModel.initServer(weeklyData)
             //체크박스 값이 바뀌면 서버통신 다시
         }
-        viewModel.missionId.observe(viewLifecycleOwner) { missionId ->
-            viewModel.setMissionId(missionId)
-
-        }
+//        viewModel.missionId.observe(viewLifecycleOwner) { missionId ->
+//            viewModel.setMissionId(missionId)
+//
+//        }
     }
 
     //todo adapter초기화에서 observer빼기
@@ -79,9 +82,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun menuClick(index: Int) {
-        Timber.e("index ${index}}")
         val bottomSheetDialogFragment = HomeBottomFragment()
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    private fun clickWeekly() {
+        binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
+            binding.tvHomeMotiveDescription.text = ""
+            weeklyData = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            Timber.d("date$weeklyData")
+            initServer(weeklyData)
+        }
     }
 
     private lateinit var balloon: Balloon
@@ -101,31 +112,29 @@ class HomeFragment : Fragment() {
         } else balloon.showAlignTop(view)
 
         fail.setOnClickListener {
-            Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
-            //todo dataId
             viewModel.responseHomeMissionCheck(itemId, "AMBIGUOUS")
             Timber.e("home1 $it")
 
             balloon.dismiss()
         }
         complete.setOnClickListener {
-            Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
             viewModel.responseHomeMissionCheck(itemId, "FINISH")
             balloon.dismiss()
         }
         balloon.dismiss()
     }
 
-    private fun initServer() {
-        viewModel.initServer("2023-01-07")
+    private fun initServer(day: String) {
+        viewModel.initServer(day)
         viewModel.homeBannerInitServer()
     }
 
     private fun refreshHomeBanner() {
         binding.homeSwipeRefreshLayout.setOnRefreshListener {
-            viewModel.homeBannerInitServer()
-            binding.tvHomeMotiveDescription.text = ""
+            initServer(todayData)
+            binding.tvHomeMotiveDescription.text = blank
             binding.homeSwipeRefreshLayout.isRefreshing = false
+            binding.weekelyCalendar.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -147,6 +156,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             val isThreadRun = false
             var position = 0
+            binding.tvHomeMotiveDescription.text = blank
             while (!isThreadRun) {
                 delay(100)
                 mainActivity.runOnUiThread {
