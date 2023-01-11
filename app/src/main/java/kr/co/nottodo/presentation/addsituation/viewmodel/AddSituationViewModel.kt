@@ -26,7 +26,7 @@ class AddSituationViewModel : ViewModel() {
     fun getSituationList() {
         viewModelScope.launch {
             kotlin.runCatching {
-                addSituationService.getResponseAddSituationDto().await()
+                addSituationService.getResponseAddSituationDto()
             }.fold(onSuccess = { situationList.value = it.data }, onFailure = {})
         }
     }

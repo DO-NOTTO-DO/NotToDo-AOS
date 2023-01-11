@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface AddSituationService {
     @GET("situation")
-    fun getResponseAddSituationDto(): Call<ResponseAddSituationDto>
+    suspend fun getResponseAddSituationDto(): ResponseAddSituationDto
 }
