@@ -1,4 +1,4 @@
-package kr.co.nottodo.presentation.toplevel.recommendation.data.responsedto
+package kr.co.nottodo.data.remote.model
 
 import kotlinx.serialization.Serializable
 
