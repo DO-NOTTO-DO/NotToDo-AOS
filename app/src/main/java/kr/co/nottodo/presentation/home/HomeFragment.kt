@@ -11,7 +11,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.skydoves.balloon.Balloon
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kr.co.nottodo.R
 import kr.co.nottodo.data.local.HomeDailyResponse
 import kr.co.nottodo.databinding.FragmentHomeBinding
@@ -24,7 +27,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
     private val stringBuilder = StringBuilder()
-    private lateinit var lable: String
+    private var lable = ""
     private lateinit var dataId: HomeDailyResponse.HomeDaily
     lateinit var mainActivity: MainActivity
 
@@ -36,13 +39,35 @@ class HomeFragment : Fragment() {
         mainActivity = context as MainActivity
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+        title()
         return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun title() {
+        lifecycleScope.launch {
+            val isThreadRun = false
+            var position = -1
+            while (!isThreadRun) {
+                delay(100)
+                mainActivity.runOnUiThread {
+                    Timber.e("homeFragment")
+                    if (position < lable.length - 1) {
+                        position += 1
+                        binding.tvHomeMotiveDescription.text =
+                            binding.tvHomeMotiveDescription.text.toString() + lable[position].toString()
+                        Timber.e("asdfasdf")
+                    }
+                }
+            }
+
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,35 +75,40 @@ class HomeFragment : Fragment() {
         initAdapter()
         clickFbtn()
         initStatus()
-        showBanner()
+        observerData()
+        refreshHomeBanner()
     }
 
     @SuppressLint("SetTextI18n")
     override fun onStart() {
         super.onStart()
-        var isThreadRun = true
-        var position = -1
-        Thread {
-            while (isThreadRun) {
-                Thread.sleep(300)
-                mainActivity.runOnUiThread {
-                    if (position < lable.length - 1) {
-                        position += 1
-                        binding.tvHomeMotiveDescription.setText(binding.tvHomeMotiveDescription.text.toString() + lable[position].toString())
-//                        Timber.e(binding.tvHomeMotiveDescription.text.toString())
-                    } else {
-                        isThreadRun = false
-                    }
-                }
-            }
-        }.start()
+//        var isThreadRun = true
+//        var position = -1
+//        Thread {
+//            while (isThreadRun) {
+//                Thread.sleep(300)
+//                mainActivity.runOnUiThread {
+//                    if (position < lable.length - 1) {
+//                        position += 1
+//                        binding.tvHomeMotiveDescription.setText(binding.tvHomeMotiveDescription.text.toString() + lable[position].toString())
+////                        Timber.e(binding.tvHomeMotiveDescription.text.toString())
+//                    } else {
+//                        isThreadRun = false
+//                    }
+//                }
+//            }
+//        }.start()
     }
 
-    private fun initAdapter() {
+    private fun observerData() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
             viewModel.initServer("2023-01-07")
             Timber.e("home2 $it")
         }
+    }
+
+    private fun initAdapter() {
+
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
 
@@ -130,7 +160,15 @@ class HomeFragment : Fragment() {
 
     private fun initStatus() {
         viewModel.initServer("2023-01-07")
+    }
+
+    private fun refreshHomeBanner() {
         viewModel.homeBannerInitServer()
+        showBanner()
+        binding.homeSwipeRefreshLayout.setOnRefreshListener {
+            viewModel.homeBannerInitServer()
+            binding.homeSwipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun showBanner() {
@@ -141,7 +179,6 @@ class HomeFragment : Fragment() {
                 "이미지3" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic3)
                 "이미지4" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic4)
             }
-            it.image
             lable = it.title
 //            binding.tvHomeMotiveDescription.text = it.title
         }
