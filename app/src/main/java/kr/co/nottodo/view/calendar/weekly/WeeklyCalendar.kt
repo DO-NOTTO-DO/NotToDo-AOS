@@ -30,6 +30,7 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     private val weeklyAdapter = WeeklyAdapter(this)
     private var currentDate = LocalDate.now()
+    var selectedDate = LocalDate.now()
     private lateinit var gestureDetector: GestureDetector
 
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
@@ -146,6 +147,7 @@ class WeeklyCalendar @JvmOverloads constructor(
     }
 
     override fun onWeeklyDayClick(view: View, date: LocalDate) {
+        selectedDate = date
         onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
         weeklyAdapter.setSelectedDay(date)
     }
