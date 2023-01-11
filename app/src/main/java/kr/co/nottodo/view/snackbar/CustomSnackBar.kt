@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewSnackBarBinding
+import kr.co.nottodo.util.extension.dpToPx
 
 class CustomSnackBar(view: View, private val message: String) {
     companion object {
@@ -14,11 +15,12 @@ class CustomSnackBar(view: View, private val message: String) {
     }
 
     private val context = view.context
-    private val snackbar = Snackbar.make(view, "", 2000)
+    private val snackbar = Snackbar.make(view, "", 1000)
     private val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
 
     private val inflater = LayoutInflater.from(context)
-    private val snackbarBinding: ViewSnackBarBinding = DataBindingUtil.inflate(inflater, R.layout.view_snack_bar, null, false)
+    private val snackbarBinding: ViewSnackBarBinding =
+        DataBindingUtil.inflate(inflater, R.layout.view_snack_bar, null, false)
 
     init {
         initView()
@@ -28,7 +30,7 @@ class CustomSnackBar(view: View, private val message: String) {
     private fun initView() {
         with(snackbarLayout) {
             removeAllViews()
-            setPadding(0, 0, 0, 0)
+            setPadding(0, 0, 0, context.dpToPx(85))
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
             addView(snackbarBinding.root, 0)
         }
