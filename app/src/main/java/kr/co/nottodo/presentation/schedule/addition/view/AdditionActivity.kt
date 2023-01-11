@@ -17,6 +17,7 @@ import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
+import kr.co.nottodo.view.snackbar.CustomSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -103,19 +104,13 @@ class AdditionActivity : AppCompatActivity() {
     private fun makeErrorToast(text: String) {
         when (text) {
             "낫투두를 3개 이상 추가할 수 없습니다." -> {
-                Toast.makeText(this, "낫투두 추가는 하루 최대 3개까지 가능합니다.", Toast.LENGTH_SHORT).show()
+                CustomSnackBar.makeSnackBar(binding.root, "낫투두 추가는 하루 최대 3개까지 가능합니다.").show()
             }
             "이미 존재하는 낫투두 입니다." -> {
-                Toast.makeText(this, "이미 같은 내용의 낫투두가 있어요", Toast.LENGTH_SHORT).show()
-            }
-            "올바르지 않은 날짜 형식입니다." -> {
-                Toast.makeText(this, "올바르지 않은 날짜입니다.", Toast.LENGTH_SHORT).show()
-            }
-            "액션은 최대 2개까지만 추가할 수 있습니다." -> {
-                Toast.makeText(this, "액션은 최대 2개까지만 추가할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                CustomSnackBar.makeSnackBar(binding.root, "이미 같은 내용의 낫투두가 있어요").show()
             }
             else -> {
-                Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+                CustomSnackBar.makeSnackBar(binding.root, text).show()
             }
         }
     }
