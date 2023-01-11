@@ -87,19 +87,16 @@
             app:layout_constraintTop_toBottomOf="@id/divider" />
 
 
-        <LinearLayout
+        <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/layout_addition_situation_recommend_keyword_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal"
+            app:flexWrap="wrap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_nottodo_situation_keyword">
-
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/tv_nottodo_situation_keyword" />
 
         <ImageView
             android:id="@+id/iv_recentuse"
@@ -121,19 +118,17 @@
             app:layout_constraintStart_toEndOf="@id/iv_recentuse"
             app:layout_constraintTop_toBottomOf="@id/layout_addition_situation_recommend_keyword_list" />
 
-        <LinearLayout
+        <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/layout_add_situation_recent_keyword_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:orientation="horizontal"
+            app:flexWrap="wrap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_add_situation_recent_keyword_list">
-
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/tv_add_situation_recent_keyword_list" />
 
 
         <EditText

@@ -28,13 +28,19 @@ class AddSituationActivity : AppCompatActivity() {
 
         viewModel.recommendSituationList.observe(this) {
             for (element in it) {
-                binding.layoutAdditionSituationRecommendKeywordList.addTextview(element.name)
+                binding.layoutAdditionSituationRecommendKeywordList.addTextview(
+                    element.name,
+                    binding.etAddSituationWriteDirect
+                )
             }
         }
 
         viewModel.recentSituationList.observe(this) {
             for (element in it) {
-                binding.layoutAddSituationRecentKeywordList.addTextview(element.name)
+                binding.layoutAddSituationRecentKeywordList.addTextview(
+                    element.name,
+                    binding.etAddSituationWriteDirect
+                )
             }
         }
 
