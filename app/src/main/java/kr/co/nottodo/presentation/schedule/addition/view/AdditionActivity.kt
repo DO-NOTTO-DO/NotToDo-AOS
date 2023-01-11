@@ -17,6 +17,7 @@ import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
+import kr.co.nottodo.view.snackbar.CustomSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -64,7 +65,7 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun initActionName() {
-        viewModel.additionActionName.value = intent.getStringExtra(actionName) ?: ""
+        viewModel.additionActionName.value = intent.getStringExtra(actionName) ?: blank
     }
 
     private fun observeDate() {
@@ -75,7 +76,7 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun initDate() {
         binding.tvAdditionDate.text =
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern(datePattern))
     }
 
     private fun postMission() {
@@ -102,20 +103,14 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun makeErrorToast(text: String) {
         when (text) {
-            "낫투두를 3개 이상 추가할 수 없습니다." -> {
-                Toast.makeText(this, "낫투두 추가는 하루 최대 3개까지 가능합니다.", Toast.LENGTH_SHORT).show()
+            responseNoMoreThanThree -> {
+                CustomSnackBar.makeSnackBar(binding.root, snackBarTextNoMoreThanThree).show()
             }
-            "이미 존재하는 낫투두 입니다." -> {
-                Toast.makeText(this, "이미 같은 내용의 낫투두가 있어요", Toast.LENGTH_SHORT).show()
-            }
-            "올바르지 않은 날짜 형식입니다." -> {
-                Toast.makeText(this, "올바르지 않은 날짜입니다.", Toast.LENGTH_SHORT).show()
-            }
-            "액션은 최대 2개까지만 추가할 수 있습니다." -> {
-                Toast.makeText(this, "액션은 최대 2개까지만 추가할 수 있습니다.", Toast.LENGTH_SHORT).show()
+            responseAlreadyExist -> {
+                CustomSnackBar.makeSnackBar(binding.root, snackBarTextAlreadyExist).show()
             }
             else -> {
-                Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+                CustomSnackBar.makeSnackBar(binding.root, text).show()
             }
         }
     }
@@ -294,5 +289,11 @@ class AdditionActivity : AppCompatActivity() {
         const val situationName = "situationName"
         const val currentMissionName = "currentMissionName"
         const val input = "입력하기"
+        const val responseNoMoreThanThree = "낫투두를 3개 이상 추가할 수 없습니다."
+        const val responseAlreadyExist = "이미 존재하는 낫투두 입니다."
+        const val snackBarTextNoMoreThanThree = "낫투두 추가는 하루 최대 3개까지 가능합니다"
+        const val snackBarTextAlreadyExist = "이미 같은 내용의 낫투두가 있어요"
+        const val datePattern = "yyyy.MM.dd"
+
     }
 }
