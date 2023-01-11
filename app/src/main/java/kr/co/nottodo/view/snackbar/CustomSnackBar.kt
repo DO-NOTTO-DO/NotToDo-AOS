@@ -16,7 +16,7 @@ class CustomSnackBar(view: View, private val message: String) {
     }
 
     private val context = view.context
-    private val snackbar = Snackbar.make(view, input, 1000)
+    private val snackbar = Snackbar.make(view, input, 2000)
     private val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
 
     private val inflater = LayoutInflater.from(context)
