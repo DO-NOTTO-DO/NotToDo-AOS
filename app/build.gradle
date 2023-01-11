@@ -89,6 +89,8 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.6.1"
     // Coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
-    //ballon
+    // ballon
     implementation "com.github.skydoves:balloon:1.5.0"
+    // flexbox
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }

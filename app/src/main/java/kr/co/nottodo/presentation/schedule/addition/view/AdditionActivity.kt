@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.databinding.ActivityAdditionBinding
-import kr.co.nottodo.presentation.addsituation.AddSituationActivity
+import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
@@ -48,7 +48,8 @@ class AdditionActivity : AppCompatActivity() {
             moveToAddSituationActivity()
         }
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
-            moveToActionActivity()
+            // TODO by 김준서 : 추천 액티비티 구현 시 구현
+            // moveToActionActivity()
         }
 
         observeEditText()
@@ -63,7 +64,7 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun initActionName() {
-        viewModel.additionActionName.value = intent.getStringExtra("") ?: ""
+        viewModel.additionActionName.value = intent.getStringExtra(actionName) ?: ""
     }
 
     private fun observeDate() {
@@ -144,9 +145,6 @@ class AdditionActivity : AppCompatActivity() {
                 if (it.resultCode == RESULT_OK) {
                     viewModel.additionActionName.value =
                         it.data?.getStringExtra(actionName) ?: blank
-                    viewModel.isAdditionSituationNameFilled.value =
-                        it.data?.getStringExtra(actionName) != blank
-
                 }
             }
 
@@ -155,6 +153,8 @@ class AdditionActivity : AppCompatActivity() {
                 if (it.resultCode == RESULT_OK) {
                     viewModel.additionSituationName.value =
                         it.data?.getStringExtra(situationName) ?: blank
+                    viewModel.isAdditionSituationNameFilled.value =
+                        it.data?.getStringExtra(situationName) != blank
                 }
             }
 
@@ -166,11 +166,9 @@ class AdditionActivity : AppCompatActivity() {
         missionNameResultLauncher.launch(intent)
     }
 
-    private fun moveToActionActivity() {
+    private fun moveToRecommendActionActivity() {
         val intent = Intent(Intent(this, SearchActivity::class.java))
         actionNameResultLauncher.launch(intent)
-        viewModel.additionSituationName.value = "입력하기"
-        viewModel.isAdditionSituationNameFilled.value = true
     }
 
     private fun moveToAddSituationActivity() {
