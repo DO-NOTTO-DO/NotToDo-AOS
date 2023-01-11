@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.skydoves.balloon.Balloon
 import kr.co.nottodo.R
+import kr.co.nottodo.data.local.HomeDailyResponse
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
@@ -24,13 +25,13 @@ class HomeFragment : Fragment() {
     private lateinit var outterAdapter: HomeOutterAdapter
     private val stringBuilder = StringBuilder()
     private lateinit var lable: String
+    private lateinit var dataId: HomeDailyResponse.HomeDaily
     lateinit var mainActivity: MainActivity
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         // 2. Context를 Activity로 형변환하여 할당
         mainActivity = context as MainActivity
     }
@@ -73,7 +74,6 @@ class HomeFragment : Fragment() {
         }.start()
     }
 
-
     private fun initAdapter() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
             viewModel.initServer("2023-01-07")
@@ -81,6 +81,7 @@ class HomeFragment : Fragment() {
         }
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
+
                 binding.rvHomeShowTodo.adapter = outterAdapter
                 outterAdapter.submitList(it.toMutableList())
                 Timber.e("submitList $it")
@@ -110,7 +111,6 @@ class HomeFragment : Fragment() {
         if (balloon.isShowing) {
             balloon.dismiss()
         } else balloon.showAlignTop(view)
-
 
         fail.setOnClickListener {
             Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
