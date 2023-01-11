@@ -21,11 +21,28 @@ class AddSituationActivity : AppCompatActivity() {
 
         initBinding()
 
-        setAnimation()
-        setCompleteTvClickEvent()
-
         viewModel.getSituationList()
 
+        setAnimation()
+        setCompleteTvClickEvent()
+        setBackIvClickEvent()
+
+        observeResponseSituation()
+        observeSituationName()
+    }
+
+    private fun observeSituationName() {
+        viewModel.situationText.observe(this) {
+            binding.tvAddSituationTextWatcher.text = it.length.toString() + "/15"
+            if (it.isEmpty()) {
+                binding.etAddSituationWriteDirect.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
+            } else {
+                binding.etAddSituationWriteDirect.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
+            }
+        }
+    }
+
+    private fun observeResponseSituation() {
         viewModel.recommendSituationList.observe(this) {
             for (element in it) {
                 binding.layoutAdditionSituationRecommendKeywordList.addTextview(
@@ -43,14 +60,11 @@ class AddSituationActivity : AppCompatActivity() {
                 )
             }
         }
+    }
 
-        viewModel.situationText.observe(this) {
-            binding.tvAddSituationTextWatcher.text = it.length.toString() + "/15"
-            if (it.isEmpty()) {
-                binding.etAddSituationWriteDirect.setBackgroundResource(R.drawable.rectangle_border_gray4_1)
-            } else {
-                binding.etAddSituationWriteDirect.setBackgroundResource(R.drawable.rectangle_border_gray2_1)
-            }
+    private fun setBackIvClickEvent() {
+        binding.ivAddSituationBack.setOnClickListener {
+            finish()
         }
     }
 
