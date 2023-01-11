@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.co.nottodo.databinding.ActivityRecommendationBinding
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
@@ -28,7 +29,6 @@ class RecommendationActivity : AppCompatActivity() {
 
         viewModel.categorySituation.observe(this) { categorySituationList ->
             if (categorySituationList.isNotEmpty()) {
-                // 어댑터한테 데이터를 넣어줬어요
                 recommendationAdapter.submitList(categorySituationList)
                 recommendationAdapter.notifyFirstItemIsClick()
             }
@@ -51,7 +51,7 @@ class RecommendationActivity : AppCompatActivity() {
             }
         )
         parentAdapter = RecommendationParentAdapter { view, childData ->
-            startActivity(Intent(this, RecommendationActivity::class.java))
+            startActivity(Intent(this, AdditionActivity::class.java))
         }
     }
 
@@ -69,7 +69,6 @@ class RecommendationActivity : AppCompatActivity() {
             }
         }
     }
-
 
 }
 
