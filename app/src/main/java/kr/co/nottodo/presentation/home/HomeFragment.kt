@@ -43,7 +43,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-//        title()
         return binding.root
     }
 
@@ -59,14 +58,18 @@ class HomeFragment : Fragment() {
     private fun observerData() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
             viewModel.initServer("2023-01-07")
-            Timber.e("home2 $it")
+            //체크박스 값이 바뀌면 서버통신 다시
+        }
+        viewModel.missionId.observe(viewLifecycleOwner) { missionId ->
+            viewModel.setMissionId(missionId)
+
         }
     }
 
+    //todo adapter초기화에서 observer빼기
     private fun initAdapter() {
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
-
                 binding.rvHomeShowTodo.adapter = outterAdapter
                 outterAdapter.submitList(it.toMutableList())
                 Timber.e("submitList $it")
@@ -76,14 +79,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun menuClick(index: Int) {
-        Timber.e(index.toString())
+        Timber.e("index ${index}}")
         val bottomSheetDialogFragment = HomeBottomFragment()
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
 
     private lateinit var balloon: Balloon
 
-    private fun todoClick(index: Int, view: View) {
+    private fun todoClick(index: Int, view: View, itemId: Int) {
         Timber.e(index.toString())
 
         balloon = HomeBallonFactory().create(requireContext(), viewLifecycleOwner)
@@ -99,15 +102,15 @@ class HomeFragment : Fragment() {
 
         fail.setOnClickListener {
             Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
-            viewModel.responseHomeMissionCheck(28, "AMBIGUOUS")
+            //todo dataId
+            viewModel.responseHomeMissionCheck(itemId, "AMBIGUOUS")
             Timber.e("home1 $it")
 
             balloon.dismiss()
         }
         complete.setOnClickListener {
             Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
-            viewModel.responseHomeMissionCheck(28, "FINISH")
-
+            viewModel.responseHomeMissionCheck(itemId, "FINISH")
             balloon.dismiss()
         }
         balloon.dismiss()

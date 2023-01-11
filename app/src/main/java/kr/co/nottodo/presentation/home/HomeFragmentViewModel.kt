@@ -18,6 +18,10 @@ class HomeFragmentViewModel() : ViewModel() {
     private val _missionDailyDate: MutableLiveData<List<HomeDaily.Action>> = MutableLiveData()
     val missionDailyDate: LiveData<List<HomeDaily.Action>> = _missionDailyDate
 
+    //리사이클러뷰 missionId값 조회
+    private val _missionId: MutableLiveData<Int> = MutableLiveData()
+    val missionId: LiveData<Int> = _missionId
+
     //리사이클러뷰 조회
     private val _responseResult: MutableLiveData<List<HomeDaily>> = MutableLiveData()
     val responseResult: LiveData<List<HomeDaily>> get() = _responseResult
@@ -61,6 +65,10 @@ class HomeFragmentViewModel() : ViewModel() {
             })
 
         }
+    }
+
+    fun setMissionId(id:Int){
+        _missionId.value = id
     }
 
     //patch

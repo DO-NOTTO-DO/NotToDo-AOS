@@ -11,8 +11,6 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 import kr.co.nottodo.presentation.home.HomeFragment
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationFragment
 
 
@@ -40,12 +38,6 @@ class MainActivity : AppCompatActivity() {
         initTransaction()
 
     }
-
-//    private fun clickFbtn() {
-//        binding.fbtnHomeFloating.setOnClickListener {
-//            startActivity(Intent(this, AdditionActivity::class.java))
-//        }
-//    }
 
     private fun initTransaction() {
         binding.homeCustomBottom.setOnItemSelectedListener { item ->

@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class HomeOutterAdapter(
     private val menuItemClick: (Int) -> Unit,
-    private val todoItemClick: (Int, View) -> Unit,
+    private val todoItemClick: (Int, View, Int) -> Unit,
 ) :
     ListAdapter<HomeDaily, HomeOutterAdapter.OutterViewHolder>(diffUtil) {
     lateinit var binding: ItemHomeOutBinding
@@ -31,14 +31,15 @@ class HomeOutterAdapter(
     class OutterViewHolder(
         private val binding: ItemHomeOutBinding,
         private val menuItemClick: (Int) -> Unit,
-        private val todoItemClick: (Int, View) -> Unit,
+        private val todoItemClick: (Int, View, Int) -> Unit,
     ) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(data: HomeDaily) {
             binding.ivHomeOutCheckbox.setOnClickListener {
                 todoItemClick(
                     absoluteAdapterPosition,
-                    it
+                    it,
+                    data.id
                 )
             }
             if (data.completionStatus == "NOTYET") {
@@ -51,14 +52,14 @@ class HomeOutterAdapter(
                 binding.tvHomeItemOutTitle!!.setPaintFlags(binding.tvHomeItemOutTitle!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
                 binding.tvHomeItemOutTitleNotodo!!.setPaintFlags(binding.tvHomeItemOutTitleNotodo!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
             }
-
             binding.tvHomeItemOutTitle.text = data.title
             binding.tvHomeItemOutTitleNotodo.text = data.situation
             binding.tvHomeOutterDesciption.text = data.goal
             binding.ivHomeItemOutMeatball.setOnClickListener { menuItemClick(absoluteAdapterPosition) }
-            Timber.e("out ${data.actions}")
+            Timber.e("out ${data.id}")
             binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter().apply {
                 submitList(data.actions)
+
             }
 
         }
