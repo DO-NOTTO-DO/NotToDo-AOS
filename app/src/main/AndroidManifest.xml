@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.addsituation.AddSituationActivity"
+            android:name=".presentation.addsituation.view.AddSituationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
