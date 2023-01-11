@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
     private val stringBuilder = StringBuilder()
-    private var lable = ""
     private lateinit var dataId: HomeDailyResponse.HomeDaily
     lateinit var mainActivity: MainActivity
 
@@ -39,65 +38,22 @@ class HomeFragment : Fragment() {
         mainActivity = context as MainActivity
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        title()
+//        title()
         return binding.root
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun title() {
-        lifecycleScope.launch {
-            val isThreadRun = false
-            var position = -1
-            while (!isThreadRun) {
-                delay(100)
-                mainActivity.runOnUiThread {
-                    Timber.e("homeFragment")
-                    if (position < lable.length - 1) {
-                        position += 1
-                        binding.tvHomeMotiveDescription.text =
-                            binding.tvHomeMotiveDescription.text.toString() + lable[position].toString()
-                        Timber.e("asdfasdf")
-                    }
-                }
-            }
-
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         clickFbtn()
-        initStatus()
+        initServer()
         observerData()
-        refreshHomeBanner()
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onStart() {
-        super.onStart()
-//        var isThreadRun = true
-//        var position = -1
-//        Thread {
-//            while (isThreadRun) {
-//                Thread.sleep(300)
-//                mainActivity.runOnUiThread {
-//                    if (position < lable.length - 1) {
-//                        position += 1
-//                        binding.tvHomeMotiveDescription.setText(binding.tvHomeMotiveDescription.text.toString() + lable[position].toString())
-////                        Timber.e(binding.tvHomeMotiveDescription.text.toString())
-//                    } else {
-//                        isThreadRun = false
-//                    }
-//                }
-//            }
-//        }.start()
+        showBanner()
     }
 
     private fun observerData() {
@@ -108,7 +64,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initAdapter() {
-
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
 
@@ -158,15 +113,15 @@ class HomeFragment : Fragment() {
         balloon.dismiss()
     }
 
-    private fun initStatus() {
+    private fun initServer() {
         viewModel.initServer("2023-01-07")
+        viewModel.homeBannerInitServer()
     }
 
     private fun refreshHomeBanner() {
-        viewModel.homeBannerInitServer()
-        showBanner()
         binding.homeSwipeRefreshLayout.setOnRefreshListener {
             viewModel.homeBannerInitServer()
+            binding.tvHomeMotiveDescription.text = ""
             binding.homeSwipeRefreshLayout.isRefreshing = false
         }
     }
@@ -179,8 +134,26 @@ class HomeFragment : Fragment() {
                 "이미지3" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic3)
                 "이미지4" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic4)
             }
-            lable = it.title
-//            binding.tvHomeMotiveDescription.text = it.title
+            typingTitle(it.title).toString()
+        }
+        refreshHomeBanner()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun typingTitle(title: String) {
+        lifecycleScope.launch {
+            val isThreadRun = false
+            var position = 0
+            while (!isThreadRun) {
+                delay(100)
+                mainActivity.runOnUiThread {
+                    if (position < title.length) {
+                        binding.tvHomeMotiveDescription.text =
+                            binding.tvHomeMotiveDescription.text.toString() + title[position].toString()
+                        position += 1
+                    }
+                }
+            }
         }
     }
 
