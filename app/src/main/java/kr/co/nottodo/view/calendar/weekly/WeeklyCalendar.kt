@@ -105,12 +105,6 @@ class WeeklyCalendar @JvmOverloads constructor(
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
     }
 
-    fun refresh() {
-        currentDate = LocalDate.now()
-        selectedDate = LocalDate.now()
-        weeklyAdapter.submitList(daysInWeek(currentDate))
-    }
-
     private fun removeDefaultItemAnimator() {
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     }
@@ -147,6 +141,12 @@ class WeeklyCalendar @JvmOverloads constructor(
             copy = copy.minusDays(1)
         }
         return null
+    }
+
+    fun refresh() {
+        currentDate = LocalDate.now()
+        selectedDate = LocalDate.now()
+        weeklyAdapter.submitList(daysInWeek(currentDate))
     }
 
     fun setNotToDoCountList(notToDoCountList: List<Pair<LocalDate,Int>>) {

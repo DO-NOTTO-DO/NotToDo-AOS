@@ -61,7 +61,7 @@ fun Calendar.isBeforeCalendar(otherCalendar: Calendar): Boolean {
     return if (get(MONTH) < otherCalendar.get(MONTH)) {
         true
     } else if (get(MONTH) == otherCalendar.get(MONTH)) {
-        get(DAY_OF_MONTH) < otherCalendar.get(DAY_OF_MONTH)
+        get(DAY_OF_MONTH) <= otherCalendar.get(DAY_OF_MONTH)
     } else {
         false
     }
