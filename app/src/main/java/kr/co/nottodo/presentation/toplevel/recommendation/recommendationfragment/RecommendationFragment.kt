@@ -13,7 +13,6 @@ import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.actionName
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
-import timber.log.Timber
 
 class RecommendationFragment : Fragment() {
 
@@ -93,7 +92,9 @@ class RecommendationFragment : Fragment() {
 
     private fun initListener() {
         binding.tvWriteDirect.setOnClickListener {
-            startActivity(Intent(context, AdditionActivity::class.java))
+            startActivity(Intent(context, AdditionActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            })
         }
 
     }

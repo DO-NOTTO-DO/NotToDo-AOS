@@ -2,6 +2,7 @@ package kr.co.nottodo.presentation.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -166,7 +167,9 @@ class HomeFragment : Fragment() {
 
     private fun clickFbtn() {
         binding.fbtnHomeFloating.setOnClickListener {
-            startActivity(Intent(context, AdditionActivity::class.java))
+            startActivity(Intent(context, AdditionActivity::class.java).apply {
+                addFlags(FLAG_ACTIVITY_SINGLE_TOP)
+            })
         }
     }
 
