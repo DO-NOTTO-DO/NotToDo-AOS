@@ -33,7 +33,7 @@ class SearchActivity : AppCompatActivity() {
         observeHistoryResult()
         observeSearchBar()
 
-        getSearchBarText()
+        getEditTextText()
 
         onCompleteBtnClick()
         hideKeyboard()
@@ -86,7 +86,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSearchBarText() {
+    private fun getEditTextText() {
         viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
     }
 

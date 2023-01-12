@@ -38,7 +38,6 @@ class AdditionViewModel : ViewModel() {
         }
 
     val additionSituationName: MutableLiveData<String> = MutableLiveData(input)
-
     val isAdditionSituationNameFilled: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val additionGoalName: MutableLiveData<String> = MutableLiveData(blank)
