@@ -84,7 +84,6 @@ class HomeFragment : Fragment() {
 
     private fun clickWeekly() {
         binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
-            binding.tvHomeMotiveDescription.text = ""
             weeklyData = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             Timber.d("date$weeklyData")
             initServer(weeklyData)
@@ -128,7 +127,7 @@ class HomeFragment : Fragment() {
     private fun refreshHomeBanner() {
         binding.homeSwipeRefreshLayout.setOnRefreshListener {
             initServer(todayData)
-            binding.tvHomeMotiveDescription.text = blank
+            binding.weekelyCalendar.refresh()
             binding.homeSwipeRefreshLayout.isRefreshing = false
             binding.weekelyCalendar.adapter?.notifyDataSetChanged()
         }
