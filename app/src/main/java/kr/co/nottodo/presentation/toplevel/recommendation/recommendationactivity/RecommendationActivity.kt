@@ -5,8 +5,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityRecommendationBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.actionName
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
@@ -25,6 +27,7 @@ class RecommendationActivity : AppCompatActivity() {
 
         initAdapter()
         initRecyclerView()
+        setAnimation()
 
 
         viewModel.categorySituation.observe(this) { categorySituationList ->
@@ -51,7 +54,11 @@ class RecommendationActivity : AppCompatActivity() {
             }
         )
         parentAdapter = RecommendationParentAdapter { view, childData ->
-            startActivity(Intent(this, AdditionActivity::class.java))
+           val intent =  Intent(this, AdditionActivity::class.java).putExtra(
+                actionName, childData.name
+            )
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 
@@ -68,6 +75,13 @@ class RecommendationActivity : AppCompatActivity() {
                 adapter = parentAdapter
             }
         }
+    }
+
+    private fun setAnimation() {
+        overridePendingTransition(
+            R.anim.animation_enter,
+            R.anim.animation_exit
+        )
     }
 
 }
