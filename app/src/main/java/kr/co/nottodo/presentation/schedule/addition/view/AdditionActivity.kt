@@ -20,7 +20,6 @@ import kr.co.nottodo.presentation.toplevel.recommendation.recommendationactivity
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
 import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.view.snackbar.CustomSnackBar
-import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -35,7 +34,6 @@ class AdditionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addition)
-        hideKeyboard()
         initBinding()
         initResultLauncher()
         initBottomSheet()
@@ -57,7 +55,6 @@ class AdditionActivity : AppCompatActivity() {
             moveToRecommendationActivity()
         }
         binding.layoutAddition.setOnClickListener {
-            Timber.e("click click")
             hideKeyboard()
         }
 
