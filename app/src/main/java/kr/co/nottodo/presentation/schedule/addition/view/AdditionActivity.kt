@@ -26,7 +26,6 @@ import java.time.format.DateTimeFormatter
 class AdditionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdditionBinding
     private val viewModel by viewModels<AdditionViewModel>()
-    private val viewModel1 by viewModels<RecommendationViewModel>()
     private lateinit var missionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var actionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var situationNameResultLauncher: ActivityResultLauncher<Intent>
@@ -176,8 +175,14 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun moveToAddSituationActivity() {
-        val intent = Intent(Intent(this, AddSituationActivity::class.java))
-        situationNameResultLauncher.launch(intent)
+        if(viewModel.isAdditionSituationNameFilled.value == true){
+            val intent = Intent(Intent(this, AddSituationActivity::class.java))
+                .putExtra(OLD_SITUATION_NAME, viewModel.additionSituationName.value)
+            situationNameResultLauncher.launch(intent)
+        }else{
+            val intent = Intent(Intent(this, AddSituationActivity::class.java))
+            situationNameResultLauncher.launch(intent)
+        }
     }
 
     private fun observePlusBtn() {
@@ -308,5 +313,6 @@ class AdditionActivity : AppCompatActivity() {
         const val snackBarTextNoMoreThanThree = "낫투두 추가는 하루 최대 3개까지 가능합니다"
         const val snackBarTextAlreadyExist = "이미 같은 내용의 낫투두가 있어요"
         const val datePattern = "yyyy.MM.dd"
+        const val OLD_SITUATION_NAME = "oldSituationName"
     }
 }
