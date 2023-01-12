@@ -29,6 +29,7 @@ class WeeklyCalendar @JvmOverloads constructor(
     private val weeklyAdapter = WeeklyAdapter(this)
     private var currentDate = LocalDate.now()
     var selectedDate = LocalDate.now()
+    var mondayDate: LocalDate? = null
     private lateinit var gestureDetector: GestureDetector
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
 
@@ -136,7 +137,10 @@ class WeeklyCalendar @JvmOverloads constructor(
         val oneWeekAgo = copy.minusWeeks(1)
 
         while (copy.isAfter(oneWeekAgo)) {
-            if (copy.dayOfWeek == DayOfWeek.MONDAY) return copy
+            if (copy.dayOfWeek == DayOfWeek.MONDAY) {
+                mondayDate = copy
+                return copy
+            }
             copy = copy.minusDays(1)
         }
         return null
