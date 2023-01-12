@@ -17,6 +17,8 @@ import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
+import kr.co.nottodo.presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity
+import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
 import kr.co.nottodo.view.snackbar.CustomSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -24,6 +26,7 @@ import java.time.format.DateTimeFormatter
 class AdditionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdditionBinding
     private val viewModel by viewModels<AdditionViewModel>()
+    private val viewModel1 by viewModels<RecommendationViewModel>()
     private lateinit var missionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var actionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var situationNameResultLauncher: ActivityResultLauncher<Intent>
@@ -49,8 +52,7 @@ class AdditionActivity : AppCompatActivity() {
             moveToAddSituationActivity()
         }
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
-            // TODO by 김준서 : 추천 액티비티 구현 시 구현
-            // moveToActionActivity()
+            moveToRecommendationActivity()
         }
 
         observeEditText()
@@ -161,8 +163,8 @@ class AdditionActivity : AppCompatActivity() {
         missionNameResultLauncher.launch(intent)
     }
 
-    private fun moveToRecommendActionActivity() {
-        val intent = Intent(Intent(this, SearchActivity::class.java))
+    private fun moveToRecommendationActivity() {
+        val intent = Intent(Intent(this, RecommendationActivity::class.java))
         actionNameResultLauncher.launch(intent)
     }
 
