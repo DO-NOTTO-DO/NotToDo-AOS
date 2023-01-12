@@ -63,5 +63,20 @@
     <string name="achievement_pager_empty_desc">아직 아무것도 없네요,\n새로운 낫투두를 작성해보세요!</string>
     <string name="achievement_pager_situation_title">언제 낫투두를 가장 많이 시도했을까요?</string>
     <string name="achievement_pager_mission_title">내가 달성한 낫투두의 순위는?</string>
+    <!--recommendation-->
+    <string name="recommendation_title">추천</string>
+    <string name="recommendation_write_direct">직접 작성하기</string>
+    <string name="recommendation_warning_message">* 박스 터치 시, 낫투두가 아닌 환경만 입력됩니다.</string>
+    <!--home-->
+    <string name="home_data">12월 3주차</string>
+    <string name="home_description">낫투두를 통해 본인만의 규율을 지켜보세요</string>
+    <string name="home_fbtn_floating">낫투두 추가</string>
+    <!--home blank-->
+    <string name="home_blank_home_nothing_nottodo">아직 아무것도 없네요, 새로운 낫투두를 작성해보세요!</string>
+<!--    &lt;!&ndash;home bottom&ndash;&gt;-->
+<!--    <string name="home_bottom_home_title_situation">다른 날도 할래요</string>-->
+<!--    <string name="home_bottom_home_title_nottodo">유튜브 보지 않기</string>-->
+<!--    <string name="home_bottom_home_trash">삭제하기</string>-->
+<!--    <string name="home_bottom_home_edit">수정하기</string>-->
 
 </resources>
