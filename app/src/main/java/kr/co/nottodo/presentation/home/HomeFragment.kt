@@ -1,7 +1,6 @@
 package kr.co.nottodo.presentation.home
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +10,13 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.skydoves.balloon.Balloon
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
-import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
 import timber.log.Timber
@@ -30,15 +30,9 @@ class HomeFragment : Fragment() {
     private val stringBuilder = StringBuilder()
     private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     private var weeklyData = todayData
-    lateinit var mainActivity: MainActivity
+    private var typingJob: Job? = null
 
     private val viewModel by viewModels<HomeFragmentViewModel>()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // 2. Context를 Activity로 형변환하여 할당
-        mainActivity = context as MainActivity
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -142,12 +136,9 @@ class HomeFragment : Fragment() {
 
     private fun showBanner() {
         viewModel.responseBannerResult.observe(viewLifecycleOwner) {
-            when (it.image) {
-                "이미지1" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic1)
-                "이미지2" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic2)
-                "이미지3" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic3)
-                "이미지4" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic4)
-            }
+            Glide.with(requireContext())
+                .load(it.image)
+                .into(binding.ivHomeNottoGraphic)
             typingTitle(it.title).toString()
         }
         refreshHomeBanner()
@@ -155,18 +146,19 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun typingTitle(title: String) {
-        lifecycleScope.launch {
-            val isThreadRun = false
+        typingJob = lifecycleScope.launch {
+            typingJob?.cancel()
+            var isThreadRun = false
             var position = 0
             binding.tvHomeMotiveDescription.text = blank
             while (!isThreadRun) {
                 delay(100)
-                mainActivity.runOnUiThread {
-                    if (position < title.length) {
-                        binding.tvHomeMotiveDescription.text =
-                            binding.tvHomeMotiveDescription.text.toString() + title[position].toString()
-                        position += 1
-                    }
+                if (position < title.length) {
+                    binding.tvHomeMotiveDescription.text =
+                        binding.tvHomeMotiveDescription.text.toString() + title[position].toString()
+                    position += 1
+                } else {
+                    isThreadRun = true
                 }
             }
         }

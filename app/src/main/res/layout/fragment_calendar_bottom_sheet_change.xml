@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.MonthlyCalendarPicker
+        android:id="@+id/calendar_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="33dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="28dp"
+        app:calendar_picker_mode="change"
+        app:layout_constraintBottom_toTopOf="@id/btn_calendar_bottom_sheet_choice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_calendar_bottom_sheet_choice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/rectangle_solid_black_radius_100"
+        android:text="@string/calendar_bottom_sheet_complete"
+        android:textColor="@color/white"
+        android:theme="@style/B18"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

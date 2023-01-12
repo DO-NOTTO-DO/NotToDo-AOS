@@ -14,6 +14,7 @@ import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFragment() {
     private var _binding: FragmentHomeBottomBinding? = null
     private val binding get() = _binding ?: error("binding not init")
+    //todo 뷰모델에 변수 만들어서 거기에 저장해서 바텀시트에서 사용하기
     private var title = title
     private var situation = situation
 
@@ -45,7 +46,6 @@ class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFr
         binding.tvHomeBottomEdit.setOnClickListener { dismiss() }
         binding.tvHomeAnatherNatodo.setOnClickListener {
             CalendarBottomSheet().show(childFragmentManager, CalendarBottomSheet().tag)
-
         }
     }
 

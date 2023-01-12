@@ -1,14 +1,8 @@
 package kr.co.nottodo.data.remote.api
 
 import kr.co.nottodo.data.local.HomeDailyResponse
-import kr.co.nottodo.data.remote.model.HomeWeeklyDto
-import kr.co.nottodo.data.remote.model.RequestHomeMissionCheck
-import kr.co.nottodo.data.remote.model.ResponseHomeBannerDto
-import kr.co.nottodo.data.remote.model.ResponseHomeMissionCheckDto
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.PATCH
-import retrofit2.http.Path
+import kr.co.nottodo.data.remote.model.*
+import retrofit2.http.*
 
 interface HomeService {
 
@@ -31,4 +25,8 @@ interface HomeService {
         @Path("date") date: String
     ): HomeDailyResponse
 
+    @POST("mission/{missionId}")
+    suspend fun postHomeBottomCalander(
+        @Path("missionId") missionId: String
+    ): HomeBottomMissionDto
 }
