@@ -26,7 +26,6 @@ import java.time.format.DateTimeFormatter
 class AdditionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdditionBinding
     private val viewModel by viewModels<AdditionViewModel>()
-    private val viewModel1 by viewModels<RecommendationViewModel>()
     private lateinit var missionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var actionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var situationNameResultLauncher: ActivityResultLauncher<Intent>
