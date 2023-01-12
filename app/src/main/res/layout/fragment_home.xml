@@ -7,6 +7,7 @@
     android:background="@color/bg_f5f5f5"
     tools:context=".presentation.home.HomeFragment">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_home_Motivation"
         android:layout_width="match_parent"
@@ -17,17 +18,17 @@
 
         <ImageView
             android:id="@+id/iv_home_notto_graphic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="180dp"
+            android:layout_height="160dp"
             android:layout_marginTop="26dp"
             android:layout_marginBottom="@dimen/size_spacing_14"
             android:ellipsize="none"
             android:singleLine="false"
-            android:src="@drawable/img_home_graphic1"
             app:layout_constraintBottom_toBottomOf="@id/cl_home_Motivation"
             app:layout_constraintEnd_toEndOf="@id/cl_home_Motivation"
             app:layout_constraintStart_toEndOf="@id/tv_home_motive_description"
-            app:layout_constraintTop_toTopOf="@id/cl_home_Motivation" />
+            app:layout_constraintTop_toTopOf="@id/cl_home_Motivation"
+            tools:src="@drawable/img_home_graphic1" />
 
         <TextView
             android:id="@+id/tv_home_date"
@@ -53,7 +54,6 @@
             android:layout_marginBottom="25dp"
             android:ellipsize="none"
             android:maxEms="7"
-            android:text="@string/home_motive_description"
             android:theme="@style/Typography.B25"
             app:layout_constraintBottom_toBottomOf="@id/cl_home_Motivation"
             app:layout_constraintEnd_toStartOf="@id/iv_home_notto_graphic"
@@ -63,38 +63,47 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/sv_home_scroll"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/home_swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cl_home_Motivation">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_home_recyclerview_scroll"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sv_home_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_home_Motivation">
 
-            <kr.co.nottodo.view.calendar.weekly.WeeklyCalendar
-                android:id="@+id/weekely_calendar"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_home_recyclerview_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/cl_home_recyclerview_scroll" />
+                android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_home_show_todo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
-                android:layout_marginBottom="62dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="@id/cl_home_recyclerview_scroll"
-                app:layout_constraintTop_toBottomOf="@id/weekely_calendar"
-                tools:listitem="@layout/item_home_out" />
+                <kr.co.nottodo.view.calendar.weekly.WeeklyCalendar
+                    android:id="@+id/weekely_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_border_gray2_05"
+                    app:layout_constraintTop_toTopOf="@id/cl_home_recyclerview_scroll" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_home_show_todo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginBottom="62dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="@id/cl_home_recyclerview_scroll"
+                    app:layout_constraintTop_toBottomOf="@id/weekely_calendar"
+                    tools:listitem="@layout/item_home_out" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fbtn_home_floating"
@@ -112,4 +121,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

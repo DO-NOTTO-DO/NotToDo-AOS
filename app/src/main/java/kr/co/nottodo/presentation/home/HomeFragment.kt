@@ -1,24 +1,37 @@
 package kr.co.nottodo.presentation.home
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.skydoves.balloon.Balloon
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
+    private val stringBuilder = StringBuilder()
+    private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    private var weeklyData = todayData
+    private var typingJob: Job? = null
+
     private val viewModel by viewModels<HomeFragmentViewModel>()
 
     override fun onCreateView(
@@ -33,15 +46,25 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         clickFbtn()
-        initStatus()
+        initServer(weeklyData)
+        clickWeekly()
+        observerData()
         showBanner()
     }
 
-    private fun initAdapter() {
+    private fun observerData() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
-            viewModel.initServer("2023-01-07")
-            Timber.e("home2 $it")
+            viewModel.initServer(weeklyData)
+            //체크박스 값이 바뀌면 서버통신 다시
         }
+//        viewModel.missionId.observe(viewLifecycleOwner) { missionId ->
+//            viewModel.setMissionId(missionId)
+//
+//        }
+    }
+
+    //todo adapter초기화에서 observer빼기
+    private fun initAdapter() {
         viewModel.responseResult.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.rvHomeShowTodo.adapter = outterAdapter
@@ -52,15 +75,25 @@ class HomeFragment : Fragment() {
         outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
     }
 
-    private fun menuClick(index: Int) {
-        Timber.e(index.toString())
-        val bottomSheetDialogFragment = HomeBottomFragment()
+    private fun menuClick(indexId: Int, title: String, situation: String) {
+//        Timber.e("index $index")
+        val bottomSheetDialogFragment = HomeBottomFragment(title, situation)
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
+
+    }
+
+    private fun clickWeekly() {
+        binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
+            binding.tvHomeMotiveDescription.text = ""
+            weeklyData = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+            Timber.d("date$weeklyData")
+            initServer(weeklyData)
+        }
     }
 
     private lateinit var balloon: Balloon
 
-    private fun todoClick(index: Int, view: View) {
+    private fun todoClick(index: Int, view: View, itemId: Int) {
         Timber.e(index.toString())
 
         balloon = HomeBallonFactory().create(requireContext(), viewLifecycleOwner)
@@ -74,41 +107,60 @@ class HomeFragment : Fragment() {
             balloon.dismiss()
         } else balloon.showAlignTop(view)
 
-
         fail.setOnClickListener {
-            Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
-            viewModel.responseHomeMissionCheck(28, "AMBIGUOUS")
+            viewModel.responseHomeMissionCheck(itemId, "AMBIGUOUS")
             Timber.e("home1 $it")
-            //todo patch에서 데이터 클래스 observe하고 변했을 경우에 get 서버통신 다시하기
 
             balloon.dismiss()
         }
         complete.setOnClickListener {
-            Toast.makeText(context, "complete", Toast.LENGTH_SHORT).show()
-            viewModel.responseHomeMissionCheck(28, "FINISH")
-
+            viewModel.responseHomeMissionCheck(itemId, "FINISH")
             balloon.dismiss()
         }
         balloon.dismiss()
     }
 
-    private fun initStatus() {
-        viewModel.initServer("2023-01-07")
+    private fun initServer(day: String) {
+        viewModel.initServer(day)
         viewModel.homeBannerInitServer()
-//        viewModel.homeMissionCheckInitServer(1)
+    }
+
+    private fun refreshHomeBanner() {
+        binding.homeSwipeRefreshLayout.setOnRefreshListener {
+            initServer(todayData)
+            binding.tvHomeMotiveDescription.text = blank
+            binding.homeSwipeRefreshLayout.isRefreshing = false
+            binding.weekelyCalendar.adapter?.notifyDataSetChanged()
+        }
     }
 
     private fun showBanner() {
         viewModel.responseBannerResult.observe(viewLifecycleOwner) {
-            when (it.image) {
-                "이미지1" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic1)
-                "이미지2" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic2)
-                "이미지3" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic3)
-                "이미지4" -> binding.ivHomeNottoGraphic.setImageResource(R.drawable.img_home_graphic4)
-            }
+            Glide.with(requireContext())
+                .load(it.image)
+                .into(binding.ivHomeNottoGraphic)
+            typingTitle(it.title).toString()
+        }
+        refreshHomeBanner()
+    }
 
-            it.image
-            binding.tvHomeMotiveDescription.text = it.title
+    @SuppressLint("SetTextI18n")
+    private fun typingTitle(title: String) {
+        typingJob = lifecycleScope.launch {
+            typingJob?.cancel()
+            var isThreadRun = false
+            var position = 0
+            binding.tvHomeMotiveDescription.text = blank
+            while (!isThreadRun) {
+                delay(100)
+                if (position < title.length) {
+                    binding.tvHomeMotiveDescription.text =
+                        binding.tvHomeMotiveDescription.text.toString() + title[position].toString()
+                    position += 1
+                } else {
+                    isThreadRun = true
+                }
+            }
         }
     }
 

@@ -42,12 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    private fun clickFbtn() {
-//        binding.fbtnHomeFloating.setOnClickListener {
-//            startActivity(Intent(this, AdditionActivity::class.java))
-//        }
-//    }
-
     private fun initTransaction() {
         binding.homeCustomBottom.setOnItemSelectedListener { item ->
             changeFragment(
