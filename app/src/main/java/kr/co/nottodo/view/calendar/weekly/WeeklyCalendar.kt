@@ -1,17 +1,19 @@
 package kr.co.nottodo.view.calendar.weekly
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import androidx.core.content.ContextCompat
-import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.R
+import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
@@ -32,7 +34,6 @@ class WeeklyCalendar @JvmOverloads constructor(
     private var currentDate = LocalDate.now()
     var selectedDate = LocalDate.now()
     private lateinit var gestureDetector: GestureDetector
-
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
 
     init {
@@ -103,6 +104,12 @@ class WeeklyCalendar @JvmOverloads constructor(
         weeklyAdapter.submitList(daysInWeek(LocalDate.now()))
     }
 
+    fun refresh() {
+        currentDate = LocalDate.now()
+        selectedDate = LocalDate.now()
+        weeklyAdapter.submitList(daysInWeek(currentDate))
+    }
+
     private fun removeDefaultItemAnimator() {
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
     }
@@ -113,7 +120,7 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     private fun daysInWeek(date: LocalDate): List<LocalDate> {
         val days = mutableListOf<LocalDate>()
-        var current = sundayForDate(date)
+        var current = mondayForDate(date)
         return if (current == null) {
             emptyList()
         } else {
@@ -127,12 +134,12 @@ class WeeklyCalendar @JvmOverloads constructor(
         }
     }
 
-    private fun sundayForDate(currentDate: LocalDate): LocalDate? {
+    private fun mondayForDate(currentDate: LocalDate): LocalDate? {
         var copy = LocalDate.from(currentDate)
         val oneWeekAgo = copy.minusWeeks(1)
 
         while (copy.isAfter(oneWeekAgo)) {
-            if (copy.dayOfWeek == DayOfWeek.SUNDAY) return copy
+            if (copy.dayOfWeek == DayOfWeek.MONDAY) return copy
             copy = copy.minusDays(1)
         }
         return null
