@@ -3,7 +3,6 @@ package kr.co.nottodo.presentation.schedule.addition.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -19,7 +18,9 @@ import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
+import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.view.snackbar.CustomSnackBar
+import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -34,6 +35,7 @@ class AdditionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addition)
+        hideKeyboard()
         initBinding()
         initResultLauncher()
         initBottomSheet()
@@ -54,6 +56,10 @@ class AdditionActivity : AppCompatActivity() {
         binding.layoutAdditionMoveRecommendPage.setOnClickListener {
             moveToRecommendationActivity()
         }
+        binding.layoutAddition.setOnClickListener {
+            Timber.e("click click")
+            hideKeyboard()
+        }
 
         observeEditText()
         observeDate()
@@ -64,6 +70,10 @@ class AdditionActivity : AppCompatActivity() {
         observePlusBtn()
 
         observeResponse()
+    }
+
+    private fun hideKeyboard() {
+        KeyBoardUtil.hide(this)
     }
 
     private fun initActionName() {
@@ -226,10 +236,8 @@ class AdditionActivity : AppCompatActivity() {
                     binding.btnAdditionDeleteActionSecond.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else {
+                    hideKeyboard()
                     CustomSnackBar.makeSnackBar(binding.root, additionToastText).show()
-//                    Toast.makeText(
-//                        this@AdditionActivity, additionToastText, Toast.LENGTH_SHORT
-//                    ).show()
                 }
             }
 
@@ -244,7 +252,13 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun initBottomSheet() {
         binding.layoutAdditionCalendar.setOnClickListener {
-            CalendarBottomSheet().show(supportFragmentManager, CalendarBottomSheet().tag)
+            val calendarBottomSheet =
+                supportFragmentManager.findFragmentByTag(CalendarBottomSheet.TAG) as? CalendarBottomSheet
+                    ?: CalendarBottomSheet()
+            if (!calendarBottomSheet.isAdded) calendarBottomSheet.show(
+                supportFragmentManager,
+                CalendarBottomSheet.TAG
+            )
         }
     }
 
