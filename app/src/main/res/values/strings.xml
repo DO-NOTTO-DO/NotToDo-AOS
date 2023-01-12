@@ -71,8 +71,8 @@
     <string name="home_data">12월 3주차</string>
     <string name="home_description">낫투두를 통해 본인만의 규율을 지켜보세요</string>
     <string name="home_fbtn_floating">낫투두 추가</string>
-<!--    &lt;!&ndash;home blank&ndash;&gt;-->
-<!--    <string name="home_blank_home_nothing_nottodo">아직 아무것도 없네요, 새로운 낫투두를 작성해보세요!</string>-->
+    <!--home blank-->
+    <string name="home_blank_home_nothing_nottodo">아직 아무것도 없네요, 새로운 낫투두를 작성해보세요!</string>
 <!--    &lt;!&ndash;home bottom&ndash;&gt;-->
 <!--    <string name="home_bottom_home_title_situation">다른 날도 할래요</string>-->
 <!--    <string name="home_bottom_home_title_nottodo">유튜브 보지 않기</string>-->
