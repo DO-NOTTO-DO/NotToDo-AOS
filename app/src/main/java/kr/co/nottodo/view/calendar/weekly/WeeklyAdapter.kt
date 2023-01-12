@@ -1,17 +1,14 @@
 package kr.co.nottodo.view.calendar.weekly
 
 import android.annotation.SuppressLint
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewWeeklyCalendarDayBinding
-import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.util.isTheSameDay
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
-import java.math.RoundingMode.valueOf
 import java.time.LocalDate
 import java.util.*
 
@@ -28,7 +25,7 @@ class WeeklyAdapter(
 
     private var selectedDay: LocalDate = LocalDate.now()
 
-    private val notToDoCountList = mutableListOf<Pair<Date?,Int>>()
+    private val notToDoCountList = mutableListOf<Pair<Date?, Int>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -44,7 +41,7 @@ class WeeklyAdapter(
             it.first?.isTheSameDay(date) == true
         }.also {
             if (it != -1) {
-                holder.onNotToDoBind(weeklyDays[position],it)
+                holder.onNotToDoBind(weeklyDays[position], it)
             } else {
                 if (selectedDay.isEqual(weeklyDays[position])) {
                     holder.onSelectBind(weeklyDays[position])
