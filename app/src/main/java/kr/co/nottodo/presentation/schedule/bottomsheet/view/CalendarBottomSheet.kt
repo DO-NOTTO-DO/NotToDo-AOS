@@ -33,7 +33,7 @@ class CalendarBottomSheet : BottomSheetDialogFragment() {
     private fun selectDate() {
         binding.btnCalendarBottomSheetChoice.setOnClickListener {
             viewModel.additionDate.value =
-                binding.calendarBottomSheet.selectedDate?.toInstant()?.atOffset(
+                binding.calendarBottomSheet.selectedDate.toInstant()?.atOffset(
                     ZoneOffset.UTC
                 )?.format(DateTimeFormatter.ofPattern(datePattern))
             dismiss()
@@ -46,6 +46,7 @@ class CalendarBottomSheet : BottomSheetDialogFragment() {
     }
 
     companion object {
+        val TAG = this::class.java.simpleName
         const val datePattern = "yyyy.MM.dd"
     }
 }

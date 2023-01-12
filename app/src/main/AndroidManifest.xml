@@ -19,11 +19,7 @@
         <activity
             android:name=".presentation.addsituation.view.AddSituationActivity"
             android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity"
             android:exported="false">
@@ -33,21 +29,16 @@
         </activity>
         <activity
             android:name=".presentation.onboard.view.OnBoardHeaderActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.onboard.view.OnBoardBodyActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.schedule.search.view.SearchActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait" />
         </activity>
         <service
             android:name=".FirebaseMessagingService"
@@ -59,10 +50,10 @@
 
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+
+            android:exported="true"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,13 +63,10 @@
         <activity
             android:name=".presentation.schedule.addition.view.AdditionActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         </activity>
 
-
     </application>
-
 </manifest>
