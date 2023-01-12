@@ -66,14 +66,23 @@ class HomeFragment : Fragment() {
     //todo adapter초기화에서 observer빼기
     private fun initAdapter() {
         viewModel.responseResult.observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (it.isNotEmpty()) {
+                binding.clHomeNotodoRecyler.visibility = View.VISIBLE
+                binding.clHomeNotodo.visibility = View.INVISIBLE
                 binding.rvHomeShowTodo.adapter = outterAdapter
                 outterAdapter.submitList(it.toMutableList())
-                Timber.e("submitList $it")
+                Timber.e("visibility1${binding.clHomeNotodo.visibility}")
+                Timber.e("visibility2${it}")
+            } else {
+                binding.clHomeNotodoRecyler.visibility = View.INVISIBLE
+                binding.clHomeNotodo.visibility = View.VISIBLE
+                Timber.e("visibility3${it}")
+                Timber.e("visibility${binding.clHomeNotodo.visibility}")
             }
         }
         outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
     }
+
 
     private fun menuClick(indexId: Int, title: String, situation: String) {
 //        Timber.e("index $index")
@@ -129,6 +138,7 @@ class HomeFragment : Fragment() {
             initServer(todayData)
             binding.weekelyCalendar.refresh()
             binding.homeSwipeRefreshLayout.isRefreshing = false
+
             binding.weekelyCalendar.adapter?.notifyDataSetChanged()
         }
     }

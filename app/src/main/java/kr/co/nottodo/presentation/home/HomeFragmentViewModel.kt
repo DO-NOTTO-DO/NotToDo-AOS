@@ -38,9 +38,9 @@ class HomeFragmentViewModel() : ViewModel() {
     val responseCheckResult: LiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> get() = _responseCheckResult
 
     //위클리 투두 개수 확인
-    private val _responseWeeklyResult: MutableLiveData<List<HomeWeeklyDto>> =
+    private val _responseWeeklyResult: MutableLiveData<List<HomeWeeklyDto.Data>> =
         MutableLiveData()
-    val responseWeeklyResult: LiveData<List<HomeWeeklyDto>> get() = _responseWeeklyResult
+    val responseWeeklyResult: LiveData<List<HomeWeeklyDto.Data>> get() = _responseWeeklyResult
 
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
@@ -56,7 +56,6 @@ class HomeFragmentViewModel() : ViewModel() {
                 postService.getHomeDaily(date)
             }.fold({
                 _responseResult.value = it.data
-//                Timber.e("asdf ${_responseResult.value}")
             }, { _errorMessageSituation.value = it.message })
         }
     }
@@ -83,9 +82,8 @@ class HomeFragmentViewModel() : ViewModel() {
             }.fold({
                 _responseWeeklyResult.value = it.data
             }, {
-                _responseWeeklyResult.value = it.message
+//                _responseWeeklyResult.value = it.message
             })
-
         }
     }
 
