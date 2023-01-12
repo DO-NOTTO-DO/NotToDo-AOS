@@ -21,7 +21,7 @@ class WeeklyAdapter(
 
     companion object {
         private const val WEEKLY_CALENDAR_START_POSITION = 0
-        private const val WEEKLY_CALENDAR_END_POSITION = 6
+        private const val WEEKLY_CALENDAR_END_POSITION = 7
     }
 
     private val weeklyDays = mutableListOf<LocalDate>()
