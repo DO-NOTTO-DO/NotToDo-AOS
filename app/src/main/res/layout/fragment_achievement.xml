@@ -17,6 +17,7 @@
             android:layout_marginTop="31dp"
             android:text="@string/achievement_title"
             android:textStyle="bold"
+            android:textColor="@color/gray_1_626068"
             android:theme="@style/Sb22"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
