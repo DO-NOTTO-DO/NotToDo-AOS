@@ -30,17 +30,16 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
-    private val stringBuilder = StringBuilder()
     private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     private var weeklyData = todayData
     private var typingJob: Job? = null
-
     private val viewModel by viewModels<HomeFragmentViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
