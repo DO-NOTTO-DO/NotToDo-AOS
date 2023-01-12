@@ -16,12 +16,8 @@ import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
-
-import kr.co.nottodo.util.extension.KeyBoardUtil
-
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity
-import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
-
+import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.view.snackbar.CustomSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -157,10 +153,15 @@ class AdditionActivity : AppCompatActivity() {
         situationNameResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_OK) {
-                    viewModel.additionSituationName.value =
-                        it.data?.getStringExtra(situationName) ?: blank
-                    viewModel.isAdditionSituationNameFilled.value =
-                        it.data?.getStringExtra(situationName) != blank
+                    if ((it.data?.getStringExtra(situationName) ?: blank) == blank) {
+                        viewModel.additionSituationName.value = input
+                        viewModel.isAdditionSituationNameFilled.value = false
+                    } else {
+                        viewModel.additionSituationName.value =
+                            it.data?.getStringExtra(situationName) ?: input
+                        viewModel.isAdditionSituationNameFilled.value = true
+                    }
+
                 }
             }
 
@@ -178,11 +179,11 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun moveToAddSituationActivity() {
-        if(viewModel.isAdditionSituationNameFilled.value == true){
+        if (viewModel.isAdditionSituationNameFilled.value == true) {
             val intent = Intent(Intent(this, AddSituationActivity::class.java))
                 .putExtra(OLD_SITUATION_NAME, viewModel.additionSituationName.value)
             situationNameResultLauncher.launch(intent)
-        }else{
+        } else {
             val intent = Intent(Intent(this, AddSituationActivity::class.java))
             situationNameResultLauncher.launch(intent)
         }
