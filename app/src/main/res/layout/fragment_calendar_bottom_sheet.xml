@@ -11,7 +11,6 @@
         android:layout_marginHorizontal="33dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="28dp"
-        app:calendar_picker_mode="create"
         app:layout_constraintBottom_toTopOf="@id/btn_calendar_bottom_sheet_choice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

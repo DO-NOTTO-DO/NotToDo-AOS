@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="MonthlyCalendarPicker">
-        <attr name="calendar_picker_mode" format="enum">
-            <enum name = "create" value="0"/>
-            <enum name = "change" value="1"/>
-        </attr>
-    </declare-styleable>
-</resources>
