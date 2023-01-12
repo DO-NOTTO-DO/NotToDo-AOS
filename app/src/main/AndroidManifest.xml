@@ -25,6 +25,13 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".presentation.onboard.view.OnBoardHeaderActivity"
             android:exported="true">
             <meta-data
@@ -41,11 +48,7 @@
         <activity
             android:name=".presentation.schedule.search.view.SearchActivity"
             android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
-
         <service
             android:name=".FirebaseMessagingService"
             android:exported="false">
@@ -57,6 +60,9 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,6 +77,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
 
     </application>
 
