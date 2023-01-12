@@ -226,9 +226,10 @@ class AdditionActivity : AppCompatActivity() {
                     binding.btnAdditionDeleteActionSecond.visibility = View.VISIBLE
                     viewModel.additionActionName.value = blank
                 } else {
-                    Toast.makeText(
-                        this@AdditionActivity, additionToastText, Toast.LENGTH_SHORT
-                    ).show()
+                    CustomSnackBar.makeSnackBar(binding.root, additionToastText).show()
+//                    Toast.makeText(
+//                        this@AdditionActivity, additionToastText, Toast.LENGTH_SHORT
+//                    ).show()
                 }
             }
 
@@ -296,6 +297,5 @@ class AdditionActivity : AppCompatActivity() {
         const val snackBarTextNoMoreThanThree = "낫투두 추가는 하루 최대 3개까지 가능합니다"
         const val snackBarTextAlreadyExist = "이미 같은 내용의 낫투두가 있어요"
         const val datePattern = "yyyy.MM.dd"
-
     }
 }
