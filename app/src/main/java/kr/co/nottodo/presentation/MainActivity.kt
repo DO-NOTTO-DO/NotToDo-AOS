@@ -11,6 +11,9 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityMainBinding
 import kr.co.nottodo.presentation.achievement.view.AchievementFragment
 import kr.co.nottodo.presentation.home.HomeFragment
+import kr.co.nottodo.presentation.mypage.view.MyPageFragment
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationFragment
 
 
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_home -> HomeFragment()
                     R.id.menu_recommend -> RecommendationFragment()
                     R.id.menu_result -> AchievementFragment()
-                    else -> HomeFragment()
+                    else -> MyPageFragment()
                 }
             )
             true
