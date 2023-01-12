@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_btn_back"
+                android:id="@+id/ic_btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -32,7 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_recommend"
+                android:id="@+id/tv_recommendation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="94dp"
@@ -43,7 +43,7 @@
                 android:textStyle="bold"
                 android:theme="@style/Sb22"
                 app:layout_constraintBottom_toTopOf="@id/rv_recommendation"
-                app:layout_constraintStart_toEndOf="@id/iv_btn_back"
+                app:layout_constraintStart_toEndOf="@id/ic_btn_back"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView

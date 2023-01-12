@@ -47,7 +47,11 @@
         <activity
             android:name=".presentation.schedule.search.view.SearchActivity"
             android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
+
         <service
             android:name=".FirebaseMessagingService"
             android:exported="false">
