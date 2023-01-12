@@ -24,6 +24,7 @@
         app:itemTextColor="@drawable/menu_text_color_selector"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu" />
+        app:menu="@menu/menu"
+        app:itemRippleColor="@color/gray_3_c4c4c4"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
