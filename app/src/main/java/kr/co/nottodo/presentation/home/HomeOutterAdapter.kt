@@ -13,7 +13,7 @@ import kr.co.nottodo.util.DiffUtilItemCallback
 import timber.log.Timber
 
 class HomeOutterAdapter(
-    private val menuItemClick: (Int) -> Unit,
+    private val menuItemClick: (Int, String, String) -> Unit,
     private val todoItemClick: (Int, View, Int) -> Unit,
 ) :
     ListAdapter<HomeDaily, HomeOutterAdapter.OutterViewHolder>(diffUtil) {
@@ -30,7 +30,7 @@ class HomeOutterAdapter(
 
     class OutterViewHolder(
         private val binding: ItemHomeOutBinding,
-        private val menuItemClick: (Int) -> Unit,
+        private val menuItemClick: (Int, String, String) -> Unit,
         private val todoItemClick: (Int, View, Int) -> Unit,
     ) :
         RecyclerView.ViewHolder(binding.root) {
@@ -55,7 +55,13 @@ class HomeOutterAdapter(
             binding.tvHomeItemOutTitle.text = data.title
             binding.tvHomeItemOutTitleNotodo.text = data.situation
             binding.tvHomeOutterDesciption.text = data.goal
-            binding.ivHomeItemOutMeatball.setOnClickListener { menuItemClick(absoluteAdapterPosition) }
+            binding.ivHomeItemOutMeatball.setOnClickListener {
+                menuItemClick(
+                    absoluteAdapterPosition,
+                    data.title,
+                    data.situation
+                )
+            }
             Timber.e("out ${data.id}")
             binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter().apply {
                 submitList(data.actions)

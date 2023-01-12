@@ -11,9 +11,11 @@ import kr.co.nottodo.databinding.FragmentHomeBottomBinding
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 
 
-class HomeBottomFragment : BottomSheetDialogFragment() {
+class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFragment() {
     private var _binding: FragmentHomeBottomBinding? = null
     private val binding get() = _binding ?: error("binding not init")
+    private var title = title
+    private var situation = situation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +36,8 @@ class HomeBottomFragment : BottomSheetDialogFragment() {
 
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_COLLAPSED
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        binding.tvHomeBottomTitleSituation.text = title
+        binding.tvHomeBottomTitleNottodo.text = situation
     }
 
     private fun click() {

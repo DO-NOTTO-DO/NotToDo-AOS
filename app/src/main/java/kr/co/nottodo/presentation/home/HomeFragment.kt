@@ -81,9 +81,11 @@ class HomeFragment : Fragment() {
         outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
     }
 
-    private fun menuClick(index: Int) {
-        val bottomSheetDialogFragment = HomeBottomFragment()
+    private fun menuClick(indexId: Int, title: String, situation: String) {
+//        Timber.e("index $index")
+        val bottomSheetDialogFragment = HomeBottomFragment(title, situation)
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
+
     }
 
     private fun clickWeekly() {
