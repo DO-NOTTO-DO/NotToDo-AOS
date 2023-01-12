@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.MonthlyCalendarPicker
+    <kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.MonthlyCalendarMultiplePicker
         android:id="@+id/calendar_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="33dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="28dp"
-        app:calendar_picker_mode="change"
         app:layout_constraintBottom_toTopOf="@id/btn_calendar_bottom_sheet_choice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

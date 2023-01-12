@@ -21,32 +21,27 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewCalendarWeekDescriptionBinding
 import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.view.NoRippleRecyclerView
-import kr.co.nottodo.view.calendar.monthly.model.*
-import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.adapter.MonthlyCalendarPickerDayAdapter
+import kr.co.nottodo.view.calendar.monthly.model.DAY_COLUMN_COUNT
+import kr.co.nottodo.view.calendar.monthly.model.DateType
+import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
+import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
+import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.adapter.MonthlyCalendarMultiplePickerDayAdapter
 import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.listener.MonthlyCalendarPickerClickListener
-import kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker.type.CalendarPickerType
 import kr.co.nottodo.view.calendar.monthly.util.*
 import java.util.*
 
-/**
- * created by ssong-develop on 2022.12.31
- *
- * No Swipe Effection MonthlyCalendar
- *
- * 생성 뷰에서 사용합니다.
- *
- *
- */
-class MonthlyCalendarPicker @JvmOverloads constructor(
+class MonthlyCalendarMultiplePicker @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle), MonthlyCalendarPickerClickListener {
+
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
-    var selectedDate: Date = Calendar.getInstance().time
-    private var monthlyCalendarPickerClickListener : MonthlyCalendarPickerClickListener? = null
-    private val monthlyCalendarPickerDayAdapter = MonthlyCalendarPickerDayAdapter(this)
+    val selectedDays = mutableListOf<Date>()
+    private var monthlyCalendarPickerClickListener: MonthlyCalendarPickerClickListener? = null
+    private val monthlyCalendarMultiplePickerDayAdapter =
+        MonthlyCalendarMultiplePickerDayAdapter(this)
     private val calendar = Calendar.getInstance(timeZone, locale)
     private var calendarDataList: List<MonthlyCalendarDay> = listOf()
     private var currentDate = calendar.toPrettyMonthString(locale = locale)
@@ -62,8 +57,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         setTextColor(ContextCompat.getColor(context, R.color.black_2a292d))
-        typeface = ResourcesCompat.getFont(context,R.font.pretendard_bold)
-        setTextSize(TypedValue.COMPLEX_UNIT_DIP,18f)
+        typeface = ResourcesCompat.getFont(context, R.font.pretendard_bold)
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18f)
     }
 
     private val calendarPickerHeaderLinearLayout = LinearLayout(context).apply {
@@ -93,7 +88,12 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
                 }
-                setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
+                setPadding(
+                    context.dpToPx(6),
+                    context.dpToPx(6),
+                    context.dpToPx(6),
+                    context.dpToPx(6)
+                )
                 addCircleRipple()
             }
         )
@@ -111,7 +111,12 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
                     currentDate = calendar.toPrettyMonthString(locale = locale)
                     initCalendarData()
                 }
-                setPadding(context.dpToPx(6),context.dpToPx(6),context.dpToPx(6),context.dpToPx(6))
+                setPadding(
+                    context.dpToPx(6),
+                    context.dpToPx(6),
+                    context.dpToPx(6),
+                    context.dpToPx(6)
+                )
                 addCircleRipple()
             }
         )
@@ -123,7 +128,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 
     private val monthRecyclerView = NoRippleRecyclerView(context).apply {
         id = ViewCompat.generateViewId()
-        adapter = monthlyCalendarPickerDayAdapter
+        adapter = monthlyCalendarMultiplePickerDayAdapter
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -161,7 +166,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
 
     private fun initCalendarData() {
         calendarDataList = buildCalendarData()
-        monthlyCalendarPickerDayAdapter.submitList(calendarDataList)
+        monthlyCalendarMultiplePickerDayAdapter.submitList(calendarDataList)
     }
 
     private fun buildCalendarData(): List<MonthlyCalendarDay> {
@@ -178,7 +183,9 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
         (1..totalDayInMonth).forEach { day ->
             proxyCalendar.set(Calendar.DAY_OF_MONTH, day)
             val dayOfWeek = proxyCalendar.get(Calendar.DAY_OF_WEEK)
-            val dateType = if (proxyCalendar.isWeekend()) {
+            val dateType = if (proxyCalendar.isBeforeCalendar(todayCalendar)) {
+                DateType.DISABLED
+            } else if (proxyCalendar.isWeekend()) {
                 DateType.WEEKEND
             } else {
                 DateType.WEEKDAY
@@ -288,7 +295,8 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             else -> 0
         }
 
-        var startDayInPreviousMonth = previousCalendar.getActualMaximum(Calendar.DAY_OF_MONTH) - numberOfEmptyView + 1
+        var startDayInPreviousMonth =
+            previousCalendar.getActualMaximum(Calendar.DAY_OF_MONTH) - numberOfEmptyView + 1
 
         val listEmpty = mutableListOf<MonthlyCalendarDay.Empty>()
         repeat((0 until numberOfEmptyView).count()) {
@@ -316,8 +324,12 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
     }
 
     override fun onDayClick(view: View, date: Date) {
-        selectedDate = date
-        monthlyCalendarPickerDayAdapter.selectedDate = date
         monthlyCalendarPickerClickListener?.onDayClick(view, date)
+        monthlyCalendarMultiplePickerDayAdapter.setSelectedDay(date)
+        if (selectedDays.contains(date)) {
+            selectedDays.remove(date)
+        } else {
+            selectedDays.add(date)
+        }
     }
 }
