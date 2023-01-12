@@ -14,6 +14,7 @@ import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Compan
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.missionName
 import kr.co.nottodo.presentation.schedule.search.adapter.SearchRecyclerViewAdapter
 import kr.co.nottodo.presentation.schedule.search.viewmodel.SearchViewModel
+import kr.co.nottodo.util.extension.KeyBoardUtil
 import timber.log.Timber
 
 class SearchActivity : AppCompatActivity() {
@@ -53,6 +54,13 @@ class SearchActivity : AppCompatActivity() {
         viewModel.errorMessage.observe(this) {
             Timber.d(it)
         }
+        binding.layoutSearch.setOnClickListener {
+            hideKeyboard()
+        }
+    }
+
+    private fun hideKeyboard() {
+        KeyBoardUtil.hide(this)
     }
 
     private fun onCompleteBtnClick() {
