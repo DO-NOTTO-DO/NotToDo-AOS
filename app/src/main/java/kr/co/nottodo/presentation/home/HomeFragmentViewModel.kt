@@ -76,13 +76,16 @@ class HomeFragmentViewModel() : ViewModel() {
 
     //홈 위클리 성공조회
     fun homeWeeklyInitServer(startDate: String) {
+//        Timber.e("weekly1")
         viewModelScope.launch {
             runCatching {
-                postService.getWeekCount(startDate)
+                postService.getWeekCount("2023-01-09")
             }.fold({
                 _responseWeeklyResult.value = it.data
+                Timber.e("weekly$it")
             }, {
 //                _responseWeeklyResult.value = it.message
+//                Timber.e("weekly1$it")
             })
         }
     }

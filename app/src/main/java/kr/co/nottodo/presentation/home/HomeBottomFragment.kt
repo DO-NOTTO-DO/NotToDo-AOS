@@ -44,7 +44,14 @@ class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFr
         binding.tvHomeBottomTrash.setOnClickListener { dismiss() }
         binding.tvHomeBottomEdit.setOnClickListener { dismiss() }
         binding.tvHomeAnatherNatodo.setOnClickListener {
-            CalendarBottomSheetChange().show(childFragmentManager, CalendarBottomSheetChange().tag)
+//            CalendarBottomSheetChange().show(childFragmentManager, CalendarBottomSheetChange().tag)
+            val calendarBottomSheet =
+                childFragmentManager.findFragmentByTag(CalendarBottomSheetChange.TAG) as? CalendarBottomSheetChange
+                    ?: CalendarBottomSheetChange()
+            if (!calendarBottomSheet.isAdded) calendarBottomSheet.show(
+                childFragmentManager,
+                CalendarBottomSheetChange.TAG
+            )
         }
     }
 

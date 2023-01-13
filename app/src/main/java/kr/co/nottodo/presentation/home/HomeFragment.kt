@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
         clickWeekly()
         observerData()
         showBanner()
+        initMonth()
     }
 
     private fun observerData() {
@@ -59,25 +60,34 @@ class HomeFragment : Fragment() {
         }
 //        viewModel.missionId.observe(viewLifecycleOwner) { missionId ->
 //            viewModel.setMissionId(missionId)
-//
 //        }
+        viewModel.responseWeeklyResult.observe(viewLifecycleOwner) {
+
+            Timber.e("Not $weeklyData")
+        }
+    }
+
+    private fun initMonth() {
+        binding.tvHomeDate.text =
+            binding.weekelyCalendar.mondayDate?.format(DateTimeFormatter.ofPattern(MONTH_PATTERN))
+        Timber.e(
+            "initMonth${
+                binding.weekelyCalendar.mondayDate
+            }"
+        )
     }
 
     //todo adapter초기화에서 observer빼기
     private fun initAdapter() {
         viewModel.responseResult.observe(viewLifecycleOwner) {
+            binding.rvHomeShowTodo.adapter = outterAdapter
             if (it.isNotEmpty()) {
                 binding.clHomeNotodoRecyler.visibility = View.VISIBLE
                 binding.clHomeNotodo.visibility = View.INVISIBLE
-                binding.rvHomeShowTodo.adapter = outterAdapter
                 outterAdapter.submitList(it.toMutableList())
-                Timber.e("visibility1${binding.clHomeNotodo.visibility}")
-                Timber.e("visibility2${it}")
             } else {
                 binding.clHomeNotodoRecyler.visibility = View.INVISIBLE
                 binding.clHomeNotodo.visibility = View.VISIBLE
-                Timber.e("visibility3${it}")
-                Timber.e("visibility${binding.clHomeNotodo.visibility}")
             }
         }
         outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
@@ -85,17 +95,16 @@ class HomeFragment : Fragment() {
 
 
     private fun menuClick(indexId: Int, title: String, situation: String) {
-//        Timber.e("index $index")
         val bottomSheetDialogFragment = HomeBottomFragment(title, situation)
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
-
     }
 
     private fun clickWeekly() {
         binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
-            weeklyData = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            Timber.d("date$weeklyData")
+            weeklyData = date.format(DateTimeFormatter.ofPattern(YEAR_PATTERN))
             initServer(weeklyData)
+            viewModel.homeWeeklyInitServer(weeklyData)
+            initMonth()
         }
     }
 
@@ -116,13 +125,11 @@ class HomeFragment : Fragment() {
         } else balloon.showAlignTop(view)
 
         fail.setOnClickListener {
-            viewModel.responseHomeMissionCheck(itemId, "AMBIGUOUS")
-            Timber.e("home1 $it")
-
+            viewModel.responseHomeMissionCheck(itemId, AMBIGUOUS)
             balloon.dismiss()
         }
         complete.setOnClickListener {
-            viewModel.responseHomeMissionCheck(itemId, "FINISH")
+            viewModel.responseHomeMissionCheck(itemId, FINISH)
             balloon.dismiss()
         }
         balloon.dismiss()
@@ -138,7 +145,6 @@ class HomeFragment : Fragment() {
             initServer(todayData)
             binding.weekelyCalendar.refresh()
             binding.homeSwipeRefreshLayout.isRefreshing = false
-
             binding.weekelyCalendar.adapter?.notifyDataSetChanged()
         }
     }
@@ -161,7 +167,7 @@ class HomeFragment : Fragment() {
             var position = 0
             binding.tvHomeMotiveDescription.text = blank
             while (!isThreadRun) {
-                delay(100)
+                delay(200)
                 if (position < title.length) {
                     binding.tvHomeMotiveDescription.text =
                         binding.tvHomeMotiveDescription.text.toString() + title[position].toString()
@@ -184,5 +190,12 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        const val MONTH_PATTERN = "yyyy.MM"
+        const val YEAR_PATTERN = "yyyy-MM-dd"
+        const val AMBIGUOUS = "AMBIGUOUS"
+        const val FINISH = "FINISH"
     }
 }
