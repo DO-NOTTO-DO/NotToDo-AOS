@@ -1,10 +1,7 @@
 package kr.co.nottodo.view.calendar.monthly.monthlycalendar
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
@@ -73,13 +70,13 @@ class MonthlyCalendar @JvmOverloads constructor(
     private var monthlyCalendarNextMonthListener: MonthlyCalendarNextMonthListener? = null
     private var monthlyCalendarPrevMonthListener: MonthlyCalendarPrevMonthListener? = null
 
-    private val currentDateTextView = TextView(context, null, R.style.M14).apply {
+    private val currentDateTextView = TextView(context, null, R.style.B14).apply {
         id = ViewCompat.generateViewId()
         text = currentDate
         layoutParams =
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         gravity = Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
-        typeface = ResourcesCompat.getFont(context,R.font.pretendard_medium)
+        typeface = ResourcesCompat.getFont(context,R.font.pretendard_semibold)
         setTextColor(ContextCompat.getColor(context, R.color.black_2a292d))
         setTextSize(TypedValue.COMPLEX_UNIT_DIP,14f)
         setBackgroundResource(R.drawable.bg_monthly_calendar_current_month)

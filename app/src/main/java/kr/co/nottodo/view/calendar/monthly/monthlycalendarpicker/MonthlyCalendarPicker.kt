@@ -2,6 +2,7 @@ package kr.co.nottodo.view.calendar.monthly.monthlycalendarpicker
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -62,7 +63,7 @@ class MonthlyCalendarPicker @JvmOverloads constructor(
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         setTextColor(ContextCompat.getColor(context, R.color.black_2a292d))
-        typeface = ResourcesCompat.getFont(context,R.font.pretendard_bold)
+        typeface = ResourcesCompat.getFont(context,R.font.pretendard_semibold)
         setTextSize(TypedValue.COMPLEX_UNIT_DIP,18f)
     }
 

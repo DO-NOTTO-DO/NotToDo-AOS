@@ -56,7 +56,7 @@ class MonthlyCalendarMultiplePicker @JvmOverloads constructor(
             LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         setTextColor(ContextCompat.getColor(context, R.color.black_2a292d))
-        typeface = ResourcesCompat.getFont(context, R.font.pretendard_bold)
+        typeface = ResourcesCompat.getFont(context, R.font.pretendard_semibold)
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18f)
     }
 
