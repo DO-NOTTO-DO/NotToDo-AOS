@@ -45,14 +45,16 @@ class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFr
         binding.clHomeBottomDelete.setOnClickListener { dismiss() }
         binding.clHomeBottomEditTodo.setOnClickListener { dismiss() }
         binding.clHomeBottomAddAnother.setOnClickListener {
-//            CalendarBottomSheetChange().show(childFragmentManager, CalendarBottomSheetChange().tag)
             val calendarBottomSheet =
                 childFragmentManager.findFragmentByTag(CalendarBottomSheetChange.TAG) as? CalendarBottomSheetChange
                     ?: CalendarBottomSheetChange()
-            if (!calendarBottomSheet.isAdded) calendarBottomSheet.show(
-                childFragmentManager,
-                CalendarBottomSheetChange.TAG
-            )
+            if (!calendarBottomSheet.isAdded) {
+                calendarBottomSheet.show(
+                    childFragmentManager,
+                    CalendarBottomSheetChange.TAG
+                )
+            }
+
         }
     }
 

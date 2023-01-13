@@ -27,6 +27,6 @@ interface HomeService {
 
     @POST("mission/{missionId}")
     suspend fun postHomeBottomCalander(
-        @Path("missionId") missionId: String
+        @Path("missionId") missionId: Int
     ): HomeBottomMissionDto
 }

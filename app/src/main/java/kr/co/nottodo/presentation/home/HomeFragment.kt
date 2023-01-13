@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
+import kr.co.nottodo.view.calendar.monthly.util.convertToLocalDate
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import kr.co.nottodo.util.extension.setStatusBarColor
 import timber.log.Timber
@@ -34,7 +34,10 @@ class HomeFragment : Fragment() {
     private lateinit var outterAdapter: HomeOutterAdapter
     private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     private var weeklyData = todayData
+
     private var typingJob: Job? = null
+    private lateinit var balloon: Balloon
+
     private val viewModel by viewModels<HomeFragmentViewModel>()
 
     override fun onCreateView(
@@ -49,28 +52,92 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        clickFbtn()
-        initServer(weeklyData)
-        clickWeekly()
+        initRecyclerView()
+        initListener()
         observerData()
-        showBanner()
-        swipeWeekly()
+
+        initServer(weeklyData)
         initMonth()
         setStatusBarColor(activity as MainActivity, R.color.white)
+    }
+
+    private fun initAdapter() {
+        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
+    }
+
+    private fun initRecyclerView() {
+        with(binding) {
+            rvHomeShowTodo.apply {
+                adapter = outterAdapter
+            }
+        }
+    }
+
+    private fun initListener() {
+        binding.fbtnHomeFloating.setOnClickListener {
+            startActivity(Intent(context, AdditionActivity::class.java).apply {
+                addFlags(FLAG_ACTIVITY_SINGLE_TOP)
+            })
+        }
+
+        binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
+            weeklyData = date.format(DateTimeFormatter.ofPattern(YEAR_PATTERN))
+            viewModel.initServer(weeklyData)
+        }
+
+        binding.homeSwipeRefreshLayout.setOnRefreshListener {
+            binding.weekelyCalendar.refresh()
+            initServer(todayData)
+            binding.homeSwipeRefreshLayout.isRefreshing = false
+        }
+
+        binding.weekelyCalendar.setOnWeeklyCalendarSwipeListener(object :
+            OnWeeklyCalendarSwipeListener {
+            override fun onSwipe(mondayDate: LocalDate?) {
+                if (mondayDate != null) {
+                    // Monday 에 따라서 주간 캘린더에 보여줄 낫투두 리스트 값 갱신
+                    viewModel.homeWeeklyInitServer(mondayDate.toString())
+                    initMonth()
+                }
+            }
+        })
     }
 
     private fun observerData() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
             viewModel.initServer(weeklyData)
-            //체크박스 값이 바뀌면 서버통신 다시
         }
-//        viewModel.missionId.observe(viewLifecycleOwner) { missionId ->
-//            viewModel.setMissionId(missionId)
-//        }
-        viewModel.responseWeeklyResult.observe(viewLifecycleOwner) {
 
-            Timber.e("Not $weeklyData")
+        viewModel.responseWeeklyResult.observe(viewLifecycleOwner) { resultList ->
+            val notToDoCountList = resultList?.map {
+                it.actionDate.convertToLocalDate() to it.percentage
+            } ?: emptyList()
+            binding.weekelyCalendar.setNotToDoCount(notToDoCountList)
         }
+
+        viewModel.responseResult.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                binding.clHomeNotodoRecyler.visibility = View.VISIBLE
+                binding.clHomeNotodo.visibility = View.INVISIBLE
+                outterAdapter.submitList(it)
+            } else {
+                binding.clHomeNotodoRecyler.visibility = View.INVISIBLE
+                binding.clHomeNotodo.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.responseBannerResult.observe(viewLifecycleOwner) {
+            Glide.with(requireContext())
+                .load(it.image)
+                .into(binding.ivHomeNottoGraphic)
+            animateTypingTitle(it.title).toString()
+        }
+    }
+
+    private fun initServer(day: String) {
+        viewModel.initServer(day)
+        viewModel.homeBannerInitServer()
+        viewModel.homeWeeklyInitServer(binding.weekelyCalendar.mondayDate.toString())
     }
 
     private fun initMonth() {
@@ -78,36 +145,10 @@ class HomeFragment : Fragment() {
             binding.weekelyCalendar.mondayDate?.format(DateTimeFormatter.ofPattern(MONTH_PATTERN))
     }
 
-    //todo adapter초기화에서 observer빼기
-    private fun initAdapter() {
-        viewModel.responseResult.observe(viewLifecycleOwner) {
-            binding.rvHomeShowTodo.adapter = outterAdapter
-            if (it.isNotEmpty()) {
-                binding.clHomeNotodoRecyler.visibility = View.VISIBLE
-                binding.clHomeNotodo.visibility = View.INVISIBLE
-                outterAdapter.submitList(it.toMutableList())
-            } else {
-                binding.clHomeNotodoRecyler.visibility = View.INVISIBLE
-                binding.clHomeNotodo.visibility = View.VISIBLE
-            }
-        }
-        outterAdapter = HomeOutterAdapter(::menuClick, ::todoClick)
-    }
-
-
     private fun menuClick(indexId: Int, title: String, situation: String) {
         val bottomSheetDialogFragment = HomeBottomFragment(title, situation)
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
-
-    private fun clickWeekly() {
-        binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
-            weeklyData = date.format(DateTimeFormatter.ofPattern(YEAR_PATTERN))
-            initServer(weeklyData)
-        }
-    }
-
-    private lateinit var balloon: Balloon
 
     private fun todoClick(index: Int, view: View, itemId: Int) {
         Timber.e(index.toString())
@@ -134,45 +175,6 @@ class HomeFragment : Fragment() {
         balloon.dismiss()
     }
 
-    private fun initServer(day: String) {
-        viewModel.initServer(day)
-        viewModel.homeBannerInitServer()
-    }
-
-    private fun refreshHomeBanner() {
-        binding.homeSwipeRefreshLayout.setOnRefreshListener {
-            initServer(todayData)
-            binding.weekelyCalendar.refresh()
-            binding.homeSwipeRefreshLayout.isRefreshing = false
-            binding.weekelyCalendar.adapter?.notifyDataSetChanged()
-        }
-    }
-
-    private fun showBanner() {
-        viewModel.responseBannerResult.observe(viewLifecycleOwner) {
-            Glide.with(requireContext())
-                .load(it.image)
-                .into(binding.ivHomeNottoGraphic)
-            animateTypingTitle(it.title).toString()
-        }
-        refreshHomeBanner()
-    }
-
-    private fun swipeWeekly() {
-        binding.weekelyCalendar.setOnWeeklyCalendarSwipeListener(object :
-            OnWeeklyCalendarSwipeListener {
-            override fun onSwipe(mondayDate: LocalDate?) {
-                if (mondayDate != null) {
-                    Log.d("TAG", "onSwipe: $mondayDate")
-                    viewModel.homeWeeklyInitServer(
-                        mondayDate.toString()
-                    )
-                    initMonth()
-                }
-            }
-        })
-    }
-
     @SuppressLint("SetTextI18n")
     private fun animateTypingTitle(title: String) {
         typingJob = lifecycleScope.launch {
@@ -181,7 +183,7 @@ class HomeFragment : Fragment() {
             var position = 0
             binding.tvHomeMotiveDescription.text = blank
             while (!isThreadRun) {
-                delay(200)
+                delay(100)
                 if (position < title.length) {
                     binding.tvHomeMotiveDescription.text =
                         binding.tvHomeMotiveDescription.text.toString() + title[position].toString()
@@ -190,14 +192,6 @@ class HomeFragment : Fragment() {
                     isThreadRun = true
                 }
             }
-        }
-    }
-
-    private fun clickFbtn() {
-        binding.fbtnHomeFloating.setOnClickListener {
-            startActivity(Intent(context, AdditionActivity::class.java).apply {
-                addFlags(FLAG_ACTIVITY_SINGLE_TOP)
-            })
         }
     }
 

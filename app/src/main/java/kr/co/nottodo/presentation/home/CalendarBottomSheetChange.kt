@@ -5,8 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.launch
 import kr.co.nottodo.databinding.FragmentCalendarBottomSheetChangeBinding
+import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -37,17 +40,19 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
 
     private fun selectDate() {
         binding.btnCalendarBottomSheetChoice.setOnClickListener {
-//            viewModel.additionDate.value =
-//                binding.calendarBottomSheet.selectedDate?.toInstant()?.atOffset(
-//                    ZoneOffset.UTC
-//                )?.format(DateTimeFormatter.ofPattern(datePattern))
-//            dismiss()
             Log.d("ssong-develop", "${binding.calendarBottomSheet.selectedDays}")
+            //홈 바텀시트 다른날에도
+
+
             val apiDateList = binding.calendarBottomSheet.selectedDays.map {
                 it.convertApiDateString(binding.calendarBottomSheet.selectedDays) // date -> "2023-01-11"
             }
+            dismiss()
+            Timber.e("apidate$apiDateList")
         }
     }
+
+
 
     override fun onDestroyView() {
         _binding = null

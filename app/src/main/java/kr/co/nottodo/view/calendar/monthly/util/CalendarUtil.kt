@@ -1,6 +1,8 @@
 package kr.co.nottodo.view.calendar.monthly.util
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.Calendar.*
 
@@ -40,6 +42,14 @@ fun String.convertStringToDate(): Date? {
         format.parse(this)
     }.getOrNull()
 }
+
+fun String.convertToLocalDate(): LocalDate? {
+    val format = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+    return runCatching {
+        LocalDate.parse(this,format)
+    }.getOrNull()
+}
+
 
 fun Date.convertDateToString(): String? {
     val dateFormat = SimpleDateFormat("yyyy.MM.dd")

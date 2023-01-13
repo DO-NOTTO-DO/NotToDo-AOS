@@ -13,10 +13,6 @@ import timber.log.Timber
 
 class HomeFragmentViewModel() : ViewModel() {
 
-//    //리사이클러뷰 missionId값 조회
-//    private val _missionId: MutableLiveData<Int> = MutableLiveData()
-//    val missionId: LiveData<Int> = _missionId
-
     //리사이클러뷰 조회
     private val _responseResult: MutableLiveData<List<HomeDaily>> = MutableLiveData()
     val responseResult: LiveData<List<HomeDaily>> get() = _responseResult
@@ -74,16 +70,13 @@ class HomeFragmentViewModel() : ViewModel() {
 
     //홈 위클리 성공조회
     fun homeWeeklyInitServer(startDate: String) {
-//        Timber.e("weekly1")
         viewModelScope.launch {
             runCatching {
                 postService.getWeekCount(startDate)
             }.fold({
                 _responseWeeklyResult.value = it.data
                 Timber.e("weekly$it")
-            }, {
-//                _responseWeeklyResult.value = it.message
-//                Timber.e("weekly1$it")
+            }, { throwable ->
             })
         }
     }
@@ -100,27 +93,28 @@ class HomeFragmentViewModel() : ViewModel() {
             }.fold({
                 _responseCheckResult.value = it.data
                 Timber.d("mission ${it.data}")
+            }, { throwable ->
+                _errorMessageSituation.value = throwable.message
+            })
+
+        }
+    }
+
+    // TODO 윤정
+    // 여기가 값이 이상해 ㅇㅇ???
+    fun responseHomeAnotherDay(id: Int) {
+        viewModelScope.launch {
+            runCatching {
+                postService.postHomeBottomCalander(
+                    id
+                )
+            }.fold({
+                _missionAddDate.value = listOf(HomeBottomMissionDto.BottomCalender(it.data.dates))
+                Timber.d("mission ${it.data}")
             }, {
                 _errorMessageSituation.value = it.message
             })
 
         }
     }
-
-//    //홈 바텀시트 다른날에도
-//    fun responseHomeAnotherDay(id: Int) {
-//        viewModelScope.launch {
-//            runCatching {
-//                postService.postHomeBottomCalander(
-//                    id
-//                )
-//            }.fold({
-//                _responseCheckResult.value = it.data
-//                Timber.d("mission ${it.data}")
-//            }, {
-//                _errorMessageSituation.value = it.message
-//            })
-//
-//        }
-//    }
 }
