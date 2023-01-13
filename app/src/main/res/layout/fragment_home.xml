@@ -7,7 +7,6 @@
     android:background="@color/bg_f5f5f5"
     tools:context=".presentation.home.HomeFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_home_Motivation"
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
 
         <ImageView
             android:id="@+id/iv_home_notto_graphic"
-            android:layout_width="180dp"
+            android:layout_width="144dp"
             android:layout_height="160dp"
             android:layout_marginTop="26dp"
             android:layout_marginBottom="@dimen/size_spacing_14"
@@ -28,6 +27,7 @@
             app:layout_constraintEnd_toEndOf="@id/cl_home_Motivation"
             app:layout_constraintStart_toEndOf="@id/tv_home_motive_description"
             app:layout_constraintTop_toTopOf="@id/cl_home_Motivation"
+            app:layout_constraintVertical_bias="0.0"
             tools:src="@drawable/img_home_graphic1" />
 
         <TextView
@@ -39,7 +39,6 @@
             android:background="@color/yellow_basic_fef652"
             android:paddingHorizontal="4dp"
             android:paddingVertical="1dp"
-            android:text="@string/home_date"
             android:textColor="@color/black_2a292d"
             android:theme="@style/B18"
             app:layout_constraintStart_toStartOf="@id/cl_home_Motivation"
@@ -63,12 +62,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/v_home_banner_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_2_8e8e93"
+        app:layout_constraintTop_toBottomOf="@id/cl_home_Motivation" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/home_swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_home_Motivation">
+        app:layout_constraintTop_toBottomOf="@id/v_home_banner_divider">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/sv_home_scroll"
@@ -87,19 +93,66 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_border_gray2_05"
+                    android:paddingVertical="7dp"
                     app:layout_constraintTop_toTopOf="@id/cl_home_recyclerview_scroll" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_home_show_todo"
+                <View
+                    android:id="@+id/v_home_banner_bottom_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray_2_8e8e93"
+                    app:layout_constraintTop_toBottomOf="@id/weekely_calendar" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_home_notodo_recyler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:layout_marginBottom="62dp"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="@id/cl_home_recyclerview_scroll"
-                    app:layout_constraintTop_toBottomOf="@id/weekely_calendar"
-                    tools:listitem="@layout/item_home_out" />
+                    app:layout_constraintTop_toBottomOf="@id/weekely_calendar">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_home_show_todo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginBottom="62dp"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="@id/cl_home_notodo_recyler"
+                        app:layout_constraintTop_toTopOf="@id/cl_home_notodo_recyler"
+                        tools:listitem="@layout/item_home_out" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_home_notodo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toBottomOf="@id/weekely_calendar">
+
+                    <ImageView
+                        android:id="@+id/tv_home_nothing_heart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="80dp"
+                        android:src="@drawable/ic_img_home_heart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_home_nothing_nottodo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text="@string/home_nothing_nottodo"
+                        android:textColor="@color/gray_2_8e8e93"
+                        android:theme="@style/Sb16"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_home_nothing_heart"
+                        app:layout_constraintStart_toStartOf="@+id/tv_home_nothing_heart"
+                        app:layout_constraintTop_toBottomOf="@id/tv_home_nothing_heart" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

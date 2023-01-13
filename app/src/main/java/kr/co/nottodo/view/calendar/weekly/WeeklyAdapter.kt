@@ -15,6 +15,7 @@ import java.math.RoundingMode.valueOf
 import java.time.LocalDate
 import java.util.*
 
+
 class WeeklyAdapter(
     private val onWeeklyDayClickListener: OnWeeklyDayClickListener
 ) : RecyclerView.Adapter<WeeklyViewHolder>() {

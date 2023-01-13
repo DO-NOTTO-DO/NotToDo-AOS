@@ -8,7 +8,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.nottodo.databinding.FragmentHomeBottomBinding
-import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 
 
 class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFragment() {
@@ -45,7 +44,14 @@ class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFr
         binding.tvHomeBottomTrash.setOnClickListener { dismiss() }
         binding.tvHomeBottomEdit.setOnClickListener { dismiss() }
         binding.tvHomeAnatherNatodo.setOnClickListener {
-            CalendarBottomSheet().show(childFragmentManager, CalendarBottomSheet().tag)
+//            CalendarBottomSheetChange().show(childFragmentManager, CalendarBottomSheetChange().tag)
+            val calendarBottomSheet =
+                childFragmentManager.findFragmentByTag(CalendarBottomSheetChange.TAG) as? CalendarBottomSheetChange
+                    ?: CalendarBottomSheetChange()
+            if (!calendarBottomSheet.isAdded) calendarBottomSheet.show(
+                childFragmentManager,
+                CalendarBottomSheetChange.TAG
+            )
         }
     }
 

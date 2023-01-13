@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeBottomMissionDto(
-    val `data`: Data,
+    val data: BottomCalender,
     val message: String,
     val status: Int,
     val success: Boolean
 ) {
     @Serializable
-    data class Data(
+    data class BottomCalender(
         val dates: List<String>
     )
 }

@@ -38,9 +38,9 @@ class HomeFragmentViewModel() : ViewModel() {
     val responseCheckResult: LiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> get() = _responseCheckResult
 
     //위클리 투두 개수 확인
-    private val _responseWeeklyResult: MutableLiveData<HomeWeeklyDto> =
+    private val _responseWeeklyResult: MutableLiveData<List<HomeWeeklyDto.WeeklyPercent>> =
         MutableLiveData()
-    val responseWeeklyResult: LiveData<HomeWeeklyDto> get() = _responseWeeklyResult
+    val responseWeeklyResult: LiveData<List<HomeWeeklyDto.WeeklyPercent>> get() = _responseWeeklyResult
 
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
@@ -56,7 +56,6 @@ class HomeFragmentViewModel() : ViewModel() {
                 postService.getHomeDaily(date)
             }.fold({
                 _responseResult.value = it.data
-//                Timber.e("asdf ${_responseResult.value}")
             }, { _errorMessageSituation.value = it.message })
         }
     }
@@ -74,23 +73,22 @@ class HomeFragmentViewModel() : ViewModel() {
 
         }
     }
-//    //홈 위클리 성공조회
-//    fun homeWeeklyInitServer() {
-//        viewModelScope.launch {
-//            runCatching {
-//                postService.getWeekCount()
-//            }.fold({
-//                _responseBannerResult.value = it.data
-//            }, {
-//                _errorMessageSituation.value = it.message
-//            })
-//
-//        }
-//    }
 
-//    fun setMissionId(id: Int) {
-//        _missionId.value = id
-//    }
+    //홈 위클리 성공조회
+    fun homeWeeklyInitServer(startDate: String) {
+//        Timber.e("weekly1")
+        viewModelScope.launch {
+            runCatching {
+                postService.getWeekCount(startDate)
+            }.fold({
+                _responseWeeklyResult.value = it.data
+                Timber.e("weekly$it")
+            }, {
+//                _responseWeeklyResult.value = it.message
+//                Timber.e("weekly1$it")
+            })
+        }
+    }
 
     //patch
     fun responseHomeMissionCheck(id: Int, completionStatus: String) {
