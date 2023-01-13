@@ -38,7 +38,7 @@ class AchievementMissionAdapter(
         fun onBind(item: ResponseMissionStatisticDto.MissionStatistic, position: Int) {
             binding.ivAchievementRvMission.setImageResource(icRankList[position])
             binding.layoutAchievementRvMission.setBackgroundResource(backgroundList[position])
-            binding.tvAchievementRvMissionCount.text = item.count.toString()
+            binding.tvAchievementRvMissionCount.text = item.count.toString() + COUNT
             binding.tvAchievementRvMissionName.text = item.title
             when (position) {
                 0 -> {
@@ -68,5 +68,9 @@ class AchievementMissionAdapter(
 
     override fun getItemCount(): Int {
         return missionStatisticList.size
+    }
+
+    companion object {
+        const val COUNT = "회"
     }
 }

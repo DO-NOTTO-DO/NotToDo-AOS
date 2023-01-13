@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementRvSituationParentBinding
+import kr.co.nottodo.presentation.achievement.adapter.AchievementMissionAdapter.Companion.COUNT
 
 class AchievementSituationParentAdapter(
     context: Context,
@@ -44,7 +45,7 @@ class AchievementSituationParentAdapter(
             )
 
         fun onBind(item: ResponseSituationStatisticDto.SituationStatistic, position: Int) {
-            binding.tvAchievementRvSituationParentCount.text = item.count.toString()
+            binding.tvAchievementRvSituationParentCount.text = item.count.toString() + COUNT
             binding.tvAchievementRvSituationParentName.text = item.name
             binding.rvAchievementPagerSituationChild.adapter =
                 AchievementSituationChildAdapter(binding.root.context, item.missions)

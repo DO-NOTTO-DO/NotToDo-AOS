@@ -16,12 +16,8 @@ import kr.co.nottodo.presentation.addsituation.view.AddSituationActivity
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.presentation.schedule.bottomsheet.view.CalendarBottomSheet
 import kr.co.nottodo.presentation.schedule.search.view.SearchActivity
-
-import kr.co.nottodo.util.extension.KeyBoardUtil
-
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity
-import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
-
+import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.view.snackbar.CustomSnackBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -29,7 +25,6 @@ import java.time.format.DateTimeFormatter
 class AdditionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdditionBinding
     private val viewModel by viewModels<AdditionViewModel>()
-    private val viewModel1 by viewModels<RecommendationViewModel>()
     private lateinit var missionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var actionNameResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var situationNameResultLauncher: ActivityResultLauncher<Intent>
@@ -158,10 +153,15 @@ class AdditionActivity : AppCompatActivity() {
         situationNameResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_OK) {
-                    viewModel.additionSituationName.value =
-                        it.data?.getStringExtra(situationName) ?: blank
-                    viewModel.isAdditionSituationNameFilled.value =
-                        it.data?.getStringExtra(situationName) != blank
+                    if ((it.data?.getStringExtra(situationName) ?: blank) == blank) {
+                        viewModel.additionSituationName.value = input
+                        viewModel.isAdditionSituationNameFilled.value = false
+                    } else {
+                        viewModel.additionSituationName.value =
+                            it.data?.getStringExtra(situationName) ?: input
+                        viewModel.isAdditionSituationNameFilled.value = true
+                    }
+
                 }
             }
 
@@ -179,8 +179,14 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun moveToAddSituationActivity() {
-        val intent = Intent(Intent(this, AddSituationActivity::class.java))
-        situationNameResultLauncher.launch(intent)
+        if (viewModel.isAdditionSituationNameFilled.value == true) {
+            val intent = Intent(Intent(this, AddSituationActivity::class.java))
+                .putExtra(OLD_SITUATION_NAME, viewModel.additionSituationName.value)
+            situationNameResultLauncher.launch(intent)
+        } else {
+            val intent = Intent(Intent(this, AddSituationActivity::class.java))
+            situationNameResultLauncher.launch(intent)
+        }
     }
 
     private fun observePlusBtn() {
@@ -300,7 +306,7 @@ class AdditionActivity : AppCompatActivity() {
 
     companion object {
         const val blank = ""
-        const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
+        const val additionToastText = "실천 방법 추가는 2개까지만 가능해요"
         const val missionName = "missionName"
         const val actionName = "actionName"
         const val situationName = "situationName"
@@ -311,5 +317,6 @@ class AdditionActivity : AppCompatActivity() {
         const val snackBarTextNoMoreThanThree = "낫투두 추가는 하루 최대 3개까지 가능합니다"
         const val snackBarTextAlreadyExist = "이미 같은 내용의 낫투두가 있어요"
         const val datePattern = "yyyy.MM.dd"
+        const val OLD_SITUATION_NAME = "oldSituationName"
     }
 }

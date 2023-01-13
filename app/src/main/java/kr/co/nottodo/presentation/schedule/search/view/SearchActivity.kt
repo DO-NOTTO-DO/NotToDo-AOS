@@ -26,13 +26,37 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        overridePendingTransition(
-            R.anim.animation_enter,
-            R.anim.animation_exit
-        )
-
+        setAnimation()
         initBinding()
         viewModel.getHistory()
+
+        observeHistoryResult()
+        observeSearchBar()
+
+        getEditTextText()
+
+        onCompleteBtnClick()
+        hideKeyboard()
+        setHideKeyBoard()
+    }
+
+    private fun setHideKeyBoard() {
+        binding.layoutSearch.setOnClickListener {
+            hideKeyboard()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setFocusOnEditText()
+    }
+
+    private fun setFocusOnEditText() {
+        binding.etSearchSearchBar.requestFocus()
+    }
+
+
+    private fun observeHistoryResult() {
         viewModel.getHistoryResult.observe(this) {
             itemList = it.data
             initRecyclerView(itemList)
@@ -40,23 +64,13 @@ class SearchActivity : AppCompatActivity() {
         viewModel.errorMessage.observe(this) {
             Timber.d(it)
         }
+    }
 
-        observeSearchBar()
-
-        getSearchBarText()
-
-        onCompleteBtnClick()
-
-        viewModel.getHistory()
-        viewModel.getHistoryResult.observe(this) {
-            itemList = it.data
-        }
-        viewModel.errorMessage.observe(this) {
-            Timber.d(it)
-        }
-        binding.layoutSearch.setOnClickListener {
-            hideKeyboard()
-        }
+    private fun setAnimation() {
+        overridePendingTransition(
+            R.anim.animation_enter,
+            R.anim.animation_exit
+        )
     }
 
     private fun hideKeyboard() {
@@ -72,7 +86,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSearchBarText() {
+    private fun getEditTextText() {
         viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
     }
 
