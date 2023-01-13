@@ -57,7 +57,7 @@ class HomeOutterAdapter(
             binding.tvHomeOutterDesciption.text = data.goal
             binding.ivHomeItemOutMeatball.setOnClickListener {
                 menuItemClick(
-                    absoluteAdapterPosition,
+                    data.id,
                     data.title,
                     data.situation
                 )

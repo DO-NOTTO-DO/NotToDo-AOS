@@ -106,6 +106,8 @@ class HomeFragment : Fragment() {
     private fun observerData() {
         viewModel.responseCheckResult.observe(viewLifecycleOwner) {
             viewModel.initServer(weeklyData)
+            viewModel.homeWeeklyInitServer(
+                binding.weekelyCalendar.mondayDate.toString())
         }
 
         viewModel.responseWeeklyResult.observe(viewLifecycleOwner) { resultList ->
@@ -146,7 +148,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun menuClick(indexId: Int, title: String, situation: String) {
-        val bottomSheetDialogFragment = HomeBottomFragment(title, situation)
+        val bottomSheetDialogFragment = HomeBottomFragment(title, situation, indexId)
         bottomSheetDialogFragment.show(childFragmentManager, bottomSheetDialogFragment.tag)
     }
 

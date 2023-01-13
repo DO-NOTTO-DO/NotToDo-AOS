@@ -2,6 +2,7 @@ package kr.co.nottodo.view.calendar.weekly
 
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -44,7 +45,11 @@ class WeeklyAdapter(
             it.first?.isEqual(weeklyDays[position]) == true
         }.also {
             if (it != -1) {
-                holder.onNotToDoBind(weeklyDays[position],notToDoCountList[it].second)
+                if (selectedDay.isEqual(weeklyDays[position])) {
+                    holder.onSelectedNotToDoBind(weeklyDays[position],notToDoCountList[it].second)
+                } else {
+                    holder.onNotToDoBind(weeklyDays[position],notToDoCountList[it].second)
+                }
             } else {
                 if (selectedDay.isEqual(weeklyDays[position])) {
                     holder.onSelectBind(weeklyDays[position])
@@ -66,14 +71,13 @@ class WeeklyAdapter(
         )
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setSelectedDay(localDate: LocalDate) {
         val lastPosition = weeklyDays.indexOfLast { it == selectedDay }
         selectedDay = localDate
-        val currentPosition = weeklyDays.indexOfLast { it == selectedDay }
         if (lastPosition != -1) {
             notifyItemChanged(lastPosition)
         }
+        val currentPosition = weeklyDays.indexOfLast { it == selectedDay }
         if (currentPosition != -1) {
             notifyItemChanged(currentPosition)
         }

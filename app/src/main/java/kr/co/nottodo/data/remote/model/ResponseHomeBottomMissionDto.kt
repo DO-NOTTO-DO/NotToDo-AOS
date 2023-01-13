@@ -4,7 +4,7 @@ package kr.co.nottodo.data.remote.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HomeBottomMissionDto(
+data class ResponseHomeBottomMissionDto(
     val data: BottomCalender,
     val message: String,
     val status: Int,
@@ -15,3 +15,8 @@ data class HomeBottomMissionDto(
         val dates: List<String>
     )
 }
+
+@Serializable
+data class RequestHomeBottomMissionDto(
+    val dates: List<String>
+)

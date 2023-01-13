@@ -33,9 +33,9 @@ class HomeFragmentViewModel() : ViewModel() {
     val responseWeeklyResult: LiveData<List<HomeWeeklyDto.WeeklyPercent>> get() = _responseWeeklyResult
 
     //바텀시트 다른날짜에도 하기
-    private val _missionAddDate: MutableLiveData<List<HomeBottomMissionDto.BottomCalender>> =
+    private val _missionAddDate: MutableLiveData<List<ResponseHomeBottomMissionDto.BottomCalender>> =
         MutableLiveData()
-    val missionDailyDate: LiveData<List<HomeBottomMissionDto.BottomCalender>> = _missionAddDate
+    val missionDailyDate: LiveData<List<ResponseHomeBottomMissionDto.BottomCalender>> = _missionAddDate
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
     val errorMessageSituation: LiveData<String>
@@ -102,16 +102,18 @@ class HomeFragmentViewModel() : ViewModel() {
 
     // TODO 윤정
     // 여기가 값이 이상해 ㅇㅇ???
-    fun responseHomeAnotherDay(id: Int) {
+    fun postMissionAnotherDay(id: Int, listDate: List<String> ) {
         viewModelScope.launch {
             runCatching {
-                postService.postHomeBottomCalander(
-                    id
+                postService.postHomeBottomCalender(
+                    id,
+                    RequestHomeBottomMissionDto(listDate)
                 )
             }.fold({
-                _missionAddDate.value = listOf(HomeBottomMissionDto.BottomCalender(it.data.dates))
-                Timber.d("mission ${it.data}")
+                Timber.tag("ssong-develop").e("mission ${it.data}")
+                _missionAddDate.value = listOf(ResponseHomeBottomMissionDto.BottomCalender(it.data.dates))
             }, {
+                Timber.tag("ssong-develop").e("mission $it")
                 _errorMessageSituation.value = it.message
             })
 

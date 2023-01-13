@@ -170,7 +170,7 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     override fun onWeeklyDayClick(view: View, date: LocalDate) {
         selectedDate = date
-        onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
         weeklyAdapter.setSelectedDay(date)
+        onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
     }
 }

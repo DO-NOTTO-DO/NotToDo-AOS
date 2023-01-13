@@ -26,7 +26,8 @@ interface HomeService {
     ): HomeDailyResponse
 
     @POST("mission/{missionId}")
-    suspend fun postHomeBottomCalander(
-        @Path("missionId") missionId: Int
-    ): HomeBottomMissionDto
+    suspend fun postHomeBottomCalender(
+        @Path("missionId") missionId: Int,
+        @Body dates: RequestHomeBottomMissionDto
+    ): ResponseHomeBottomMissionDto
 }

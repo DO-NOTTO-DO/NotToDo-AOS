@@ -10,7 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.nottodo.databinding.FragmentHomeBottomBinding
 
 
-class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFragment() {
+class HomeBottomFragment(title: String, situation: String, private val missionId: Int) :
+    BottomSheetDialogFragment() {
     private var _binding: FragmentHomeBottomBinding? = null
     private val binding get() = _binding ?: error("binding not init")
 
@@ -47,7 +48,7 @@ class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFr
         binding.clHomeBottomAddAnother.setOnClickListener {
             val calendarBottomSheet =
                 childFragmentManager.findFragmentByTag(CalendarBottomSheetChange.TAG) as? CalendarBottomSheetChange
-                    ?: CalendarBottomSheetChange()
+                    ?: CalendarBottomSheetChange(missionId)
             if (!calendarBottomSheet.isAdded) {
                 calendarBottomSheet.show(
                     childFragmentManager,
