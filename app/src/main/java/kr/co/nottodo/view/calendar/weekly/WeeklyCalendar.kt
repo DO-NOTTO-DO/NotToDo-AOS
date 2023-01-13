@@ -1,9 +1,6 @@
 package kr.co.nottodo.view.calendar.weekly
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -13,9 +10,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.R
-import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
-import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarDayClickListener
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -23,7 +20,7 @@ class WeeklyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyDayClickListener {
+) : RecyclerView(context, attrs, defStyleAttr), OnWeeklyCalendarDayClickListener {
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
@@ -32,10 +29,16 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     private val weeklyAdapter = WeeklyAdapter(this)
     private var currentDate = LocalDate.now()
-    var selectedDate = LocalDate.now()
+    var selectedDate: LocalDate = LocalDate.now()
     var mondayDate: LocalDate? = null
+        set(value) {
+            field = value?.let { getMondayFromDate(it) }
+        }
     private lateinit var gestureDetector: GestureDetector
-    private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
+
+    // Listener
+    private var onWeeklyCalendarDayClickListener: OnWeeklyCalendarDayClickListener? = null
+    private var onWeeklyCalendarSwipeListener: OnWeeklyCalendarSwipeListener? = null
 
     init {
         removeDefaultItemAnimator()
@@ -44,54 +47,58 @@ class WeeklyCalendar @JvmOverloads constructor(
         layoutManager = GridLayoutManager(context, TOTAL_COLUMN_COUNT)
         adapter = weeklyAdapter
         gestureDetector = GestureDetector(context, object : GestureDetector.OnGestureListener {
-                override fun onDown(e: MotionEvent): Boolean = false
+            override fun onDown(e: MotionEvent): Boolean = false
 
-                override fun onShowPress(e: MotionEvent) {
-                    /** no - op **/
-                    /** no - op **/
-                }
+            override fun onShowPress(e: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
 
-                override fun onSingleTapUp(e: MotionEvent): Boolean = false
+            override fun onSingleTapUp(e: MotionEvent): Boolean = false
 
-                override fun onScroll(
-                    e1: MotionEvent,
-                    e2: MotionEvent,
-                    distanceX: Float,
-                    distanceY: Float
-                ): Boolean = true
+            override fun onScroll(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                distanceX: Float,
+                distanceY: Float
+            ): Boolean = true
 
-                override fun onLongPress(e: MotionEvent) {
-                    /** no - op **/
-                    /** no - op **/
-                }
+            override fun onLongPress(e: MotionEvent) {
+                /** no - op **/
+                /** no - op **/
+            }
 
-                override fun onFling(
-                    e1: MotionEvent,
-                    e2: MotionEvent,
-                    velocityX: Float,
-                    velocityY: Float
-                ): Boolean {
-                    val result = false
-                    try {
-                        val diffY = e2.y - e1.y
-                        val diffX = e2.x - e1.x
-                        if (Math.abs(diffX) > Math.abs(diffY)) {
-                            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                                if (diffX > 0) {
-                                    weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
-                                    currentDate = currentDate.minusWeeks(1)
-                                } else {
-                                    weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
-                                    currentDate = currentDate.plusWeeks(1)
-                                }
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                val result = false
+                try {
+                    val diffY = e2.y - e1.y
+                    val diffX = e2.x - e1.x
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
+                                currentDate = currentDate.minusWeeks(1)
+                                mondayDate = currentDate
+                                onWeeklyCalendarSwipeListener?.onSwipe(mondayDate)
+                            } else {
+                                weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
+                                currentDate = currentDate.plusWeeks(1)
+                                mondayDate = currentDate
+                                onWeeklyCalendarSwipeListener?.onSwipe(mondayDate)
                             }
                         }
-                    } catch (exception: Exception) {
-                        exception.printStackTrace()
                     }
-                    return result
+                } catch (exception: Exception) {
+                    exception.printStackTrace()
                 }
-            })
+                return result
+            }
+        })
         addOnItemTouchListener(object : OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 gestureDetector.onTouchEvent(e)
@@ -134,10 +141,18 @@ class WeeklyCalendar @JvmOverloads constructor(
         val oneWeekAgo = copy.minusWeeks(1)
 
         while (copy.isAfter(oneWeekAgo)) {
-            if (copy.dayOfWeek == DayOfWeek.MONDAY) {
-                mondayDate = copy
-                return copy
-            }
+            if (copy.dayOfWeek == DayOfWeek.MONDAY) return copy
+            copy = copy.minusDays(1)
+        }
+        return null
+    }
+
+    private fun getMondayFromDate(currentDate: LocalDate): LocalDate? {
+        var copy = LocalDate.from(currentDate)
+        val oneWeekAgo = copy.minusWeeks(1)
+
+        while (copy.isAfter(oneWeekAgo)) {
+            if (copy.dayOfWeek == DayOfWeek.MONDAY) return copy
             copy = copy.minusDays(1)
         }
         return null
@@ -149,21 +164,25 @@ class WeeklyCalendar @JvmOverloads constructor(
         weeklyAdapter.submitList(daysInWeek(currentDate))
     }
 
-    fun setNotToDoCountList(notToDoCountList: List<Pair<LocalDate,Int>>) {
+    fun setNotToDoCountList(notToDoCountList: List<Pair<LocalDate, Int>>) {
         weeklyAdapter.submitNotTodoCountList(notToDoCountList)
     }
 
-    fun setOnWeeklyDayClickListener(onWeeklyDayClickListener: OnWeeklyDayClickListener) {
-        this.onWeeklyDayClickListener = onWeeklyDayClickListener
+    fun setOnWeeklyCalendarDayClickListener(onWeeklyCalendarDayClickListener: OnWeeklyCalendarDayClickListener) {
+        this.onWeeklyCalendarDayClickListener = onWeeklyCalendarDayClickListener
     }
 
-    fun setOnWeeklyDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
-        this.onWeeklyDayClickListener = OnWeeklyDayClickListener(block)
+    fun setOnWeeklyCalendarDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
+        this.onWeeklyCalendarDayClickListener = OnWeeklyCalendarDayClickListener(block)
     }
 
-    override fun onWeeklyDayClick(view: View, date: LocalDate) {
+    fun setOnWeeklyCalendarSwipeListener(onWeeklyCalendarSwipeListener: OnWeeklyCalendarSwipeListener) {
+        this.onWeeklyCalendarSwipeListener = onWeeklyCalendarSwipeListener
+    }
+
+    override fun onWeeklyCalendarDayClick(view: View, date: LocalDate) {
         selectedDate = date
-        onWeeklyDayClickListener?.onWeeklyDayClick(view, date)
+        onWeeklyCalendarDayClickListener?.onWeeklyCalendarDayClick(view, date)
         weeklyAdapter.setSelectedDay(date)
     }
 }

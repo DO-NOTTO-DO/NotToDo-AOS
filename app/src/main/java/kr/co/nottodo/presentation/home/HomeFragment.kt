@@ -3,6 +3,7 @@ package kr.co.nottodo.presentation.home
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -83,7 +85,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun clickWeekly() {
-        binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
+        binding.weekelyCalendar.setOnWeeklyCalendarDayClickListener { view, date ->
             binding.tvHomeMotiveDescription.text = ""
             weeklyData = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             Timber.d("date$weeklyData")

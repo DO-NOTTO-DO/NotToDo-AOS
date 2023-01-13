@@ -1,22 +1,18 @@
 package kr.co.nottodo.view.calendar.weekly
 
 import android.annotation.SuppressLint
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewWeeklyCalendarDayBinding
-import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
-import kr.co.nottodo.view.calendar.monthly.util.isTheSameDay
-import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
-import java.math.RoundingMode.valueOf
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarDayClickListener
 import java.time.LocalDate
 import java.util.*
 
 class WeeklyAdapter(
-    private val onWeeklyDayClickListener: OnWeeklyDayClickListener
+    private val onWeeklyCalendarDayClickListener: OnWeeklyCalendarDayClickListener
 ) : RecyclerView.Adapter<WeeklyViewHolder>() {
 
     companion object {
@@ -35,7 +31,7 @@ class WeeklyAdapter(
         val binding: ViewWeeklyCalendarDayBinding = DataBindingUtil.inflate(
             layoutInflater, R.layout.view_weekly_calendar_day, parent, false
         )
-        return WeeklyViewHolder(binding, onWeeklyDayClickListener)
+        return WeeklyViewHolder(binding, onWeeklyCalendarDayClickListener)
     }
 
     override fun onBindViewHolder(holder: WeeklyViewHolder, position: Int) {

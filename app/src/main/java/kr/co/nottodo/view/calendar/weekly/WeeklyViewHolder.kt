@@ -6,15 +6,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewWeeklyCalendarDayBinding
-import kr.co.nottodo.view.calendar.monthly.model.MonthlyCalendarDay
 import kr.co.nottodo.view.calendar.monthly.util.dayNameParseToKorea
-import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarDayClickListener
 import java.sql.Date
 import java.time.LocalDate
 
 class WeeklyViewHolder(
     private val binding: ViewWeeklyCalendarDayBinding,
-    private val onWeeklyDayClickListener: OnWeeklyDayClickListener
+    private val onWeeklyCalendarDayClickListener: OnWeeklyCalendarDayClickListener
 ) : ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var weeklyDate: LocalDate
@@ -98,7 +97,7 @@ class WeeklyViewHolder(
     }
 
     override fun onClick(view: View) {
-        onWeeklyDayClickListener.onWeeklyDayClick(view, weeklyDate)
+        onWeeklyCalendarDayClickListener.onWeeklyCalendarDayClick(view, weeklyDate)
     }
 
     override fun onLongClick(v: View?): Boolean = false
