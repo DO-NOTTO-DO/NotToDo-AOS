@@ -23,7 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/ic_rank_first" />
+            tools:src="@drawable/ic_rank_first"
+            android:paddingVertical="12dp"/>
 
         <TextView
             android:id="@+id/tv_achievement_rv_situation_parent_name"
