@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="상황 추가하기"
+            android:text="@string/add_situation_title"
             android:textColor="@color/gray_1_626068"
             android:theme="@style/B18"
             app:layout_constraintBottom_toTopOf="@id/view_add_situation_divider"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="9dp"
             android:padding="10dp"
-            android:text="완료"
+            android:text="@string/add_situation_complete"
             android:textColor="@color/black_2a292d"
             android:theme="@style/M16"
             app:layout_constraintBottom_toTopOf="@id/view_add_situation_divider"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="38dp"
-            android:text="낫투두가 추천하는 상황 키워드"
+            android:text="@string/add_situation_nottodo_situation_keyword"
             app:layout_constraintStart_toEndOf="@id/iv_add_situation_recommend"
             app:layout_constraintTop_toBottomOf="@id/view_add_situation_divider" />
 
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="21dp"
-            android:text="최근 사용한 키워드"
+            android:text="@string/add_situation_nottodo_recent_keyword"
             app:layout_constraintStart_toEndOf="@id/iv_add_situation_recent_use"
             app:layout_constraintTop_toBottomOf="@id/layout_addition_situation_recommend_keyword_list" />
 
@@ -135,7 +135,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rectangle_border_gray4_1"
-            android:hint="직접 입력하기..."
+            android:hint="@string/add_situation_wirte_direct_hint"
             android:maxLength="15"
             android:padding="15dp"
             android:text="@={vm.situationText}"
@@ -153,7 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:text="0/15"
+            android:text="@string/add_situation_text_watcher"
             android:textColor="@color/gray_2_8e8e93"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_add_situation_write_direct" />
