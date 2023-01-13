@@ -54,7 +54,7 @@
                 android:id="@+id/rv_recommendation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="19dp"
                 android:layout_marginBottom="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"

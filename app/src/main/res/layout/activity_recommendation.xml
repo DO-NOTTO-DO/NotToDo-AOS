@@ -40,32 +40,32 @@
                 android:textColor="@color/gray_1_626068"
                 android:textStyle="bold"
                 android:theme="@style/Sb22"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-            
+                app:layout_constraintTop_toTopOf="parent" />
+
             <View
                 android:id="@+id/view_recommendation_divider"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/gray_6_e5e5ea"
-                app:layout_constraintTop_toBottomOf="@id/tv_recommend"
                 android:layout_marginTop="21dp"
+                android:background="@color/gray_6_e5e5ea"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_recommend" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recommendation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="19dp"
                 android:layout_marginBottom="20dp"
-                app:layout_constraintTop_toBottomOf="@id/view_recommendation_divider"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:listitem="@layout/item_recommend"/>
+                app:layout_constraintTop_toBottomOf="@id/view_recommendation_divider"
+                tools:listitem="@layout/item_recommend" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

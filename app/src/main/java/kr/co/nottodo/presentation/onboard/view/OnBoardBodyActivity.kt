@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityOnBoardBodyBinding
@@ -24,6 +25,7 @@ class OnBoardBodyActivity : AppCompatActivity() {
         setBtnStartClickEvent()
         setTvSkipClickEvent()
         setArrowClickEvent()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.bg_f5f5f5)
     }
 
     private fun setArrowClickEvent() {

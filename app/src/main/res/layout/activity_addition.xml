@@ -21,10 +21,8 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/btn_addition_add"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_addition"
@@ -183,6 +181,8 @@
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/rectangle_border_gray4_1"
                         android:hint="@string/addition_action_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
                         android:maxLength="18"
                         android:padding="15dp"
                         android:text="@={vm.additionActionName}"
@@ -197,7 +197,6 @@
                         android:id="@+id/btn_addition_action_plus"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginEnd="19dp"
                         android:src="@drawable/ic_btn_plus_enabled"
                         app:layout_constraintBottom_toBottomOf="@id/et_addition_action_name"
                         app:layout_constraintDimensionRatio="1"
@@ -236,11 +235,13 @@
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_first"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="-0.5dp"
                         android:src="@drawable/ic_btn_delete_create"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_first"
+                        app:layout_constraintDimensionRatio="1"
                         app:layout_constraintStart_toEndOf="@id/tv_addition_action_first"
                         app:layout_constraintTop_toTopOf="@id/tv_addition_action_first" />
 
@@ -262,11 +263,13 @@
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_second"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="-0.5dp"
                         android:src="@drawable/ic_btn_delete_create"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_second"
+                        app:layout_constraintDimensionRatio="1"
                         app:layout_constraintStart_toEndOf="@id/tv_addition_action_second"
                         app:layout_constraintTop_toTopOf="@id/tv_addition_action_second" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -348,6 +351,8 @@
                         android:layout_marginTop="13dp"
                         android:background="@drawable/rectangle_border_gray4_1"
                         android:hint="@string/addition_goal_name"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
                         android:maxLength="18"
                         android:padding="15dp"
                         android:text="@={vm.additionGoalName}"

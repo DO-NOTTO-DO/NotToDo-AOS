@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
 import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import kr.co.nottodo.databinding.FragmentAchievementBinding
+import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.achievement.adapter.AchievementViewPagerAdapter
 import kr.co.nottodo.presentation.achievement.adapter.AchievementViewPagerEmptyDataAdapter
 import kr.co.nottodo.presentation.achievement.viewmodel.AchievementViewModel
+import kr.co.nottodo.util.extension.setStatusBarColor
 import kr.co.nottodo.view.calendar.monthly.util.achievementConvertStringToDate
 import kr.co.nottodo.view.calendar.monthly.util.toApiDateString
 import timber.log.Timber
@@ -40,7 +43,7 @@ class AchievementFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setStatusBarColor(activity as MainActivity, R.color.bg_f5f5f5)
         getStatistics()
         getAchievement()
         initViewPager()

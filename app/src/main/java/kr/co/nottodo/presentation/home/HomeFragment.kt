@@ -19,9 +19,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
+import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
+import kr.co.nottodo.util.extension.setStatusBarColor
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -54,6 +56,7 @@ class HomeFragment : Fragment() {
         showBanner()
         swipeWeekly()
         initMonth()
+        setStatusBarColor(activity as MainActivity, R.color.white)
     }
 
     private fun observerData() {
