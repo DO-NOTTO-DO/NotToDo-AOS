@@ -8,7 +8,7 @@ data class ResponseHomeBannerDto(
     val message: String,
     val status: Int,
     val success: Boolean,
-    val `data`: HomeBanner
+    val data: HomeBanner
 ) {
     @Serializable
     data class HomeBanner(

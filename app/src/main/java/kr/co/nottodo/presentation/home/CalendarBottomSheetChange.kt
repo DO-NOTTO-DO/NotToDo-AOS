@@ -31,7 +31,7 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
     }
 
     //localDate를 yyy-어쩌고로 바꾸는 함수
-    private fun Date.convertApiDateString(date: Date) {
+    private fun Date.convertApiDateString(date: MutableList<Date>) {
         LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     }
 
@@ -44,7 +44,7 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
 //            dismiss()
             Log.d("ssong-develop", "${binding.calendarBottomSheet.selectedDays}")
             val apiDateList = binding.calendarBottomSheet.selectedDays.map {
-//                it.convertApiDateString() // date -> "2023-01-11"
+                it.convertApiDateString(binding.calendarBottomSheet.selectedDays) // date -> "2023-01-11"
             }
         }
     }
@@ -56,9 +56,6 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
 
     companion object {
         val TAG = this::class.java.simpleName
-        const val datePattern = "yyyy.MM.dd"
+        const val YEARPattern = "yyyy-MM-dd"
     }
 }
-
-
-

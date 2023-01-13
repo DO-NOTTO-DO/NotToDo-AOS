@@ -53,6 +53,7 @@ class HomeFragment : Fragment() {
         observerData()
         showBanner()
         swipeWeekly()
+        initMonth()
     }
 
     private fun observerData() {
@@ -149,7 +150,7 @@ class HomeFragment : Fragment() {
             Glide.with(requireContext())
                 .load(it.image)
                 .into(binding.ivHomeNottoGraphic)
-            typingTitle(it.title).toString()
+            animateTypingTitle(it.title).toString()
         }
         refreshHomeBanner()
     }
@@ -170,7 +171,7 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun typingTitle(title: String) {
+    private fun animateTypingTitle(title: String) {
         typingJob = lifecycleScope.launch {
             typingJob?.cancel()
             var isThreadRun = false

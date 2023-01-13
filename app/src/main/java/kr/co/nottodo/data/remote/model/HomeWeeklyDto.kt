@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HomeWeeklyDto(
-    val `data`: List<Data>,
+    val data: List<WeeklyPercent>,
     val message: String,
     val status: Int,
     val success: Boolean
 ) {
     @Serializable
-    data class Data(
+    data class WeeklyPercent(
         val actionDate: String,
         val percentage: Double
     )

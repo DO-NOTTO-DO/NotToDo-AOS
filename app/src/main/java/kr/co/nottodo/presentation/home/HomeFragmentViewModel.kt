@@ -38,9 +38,9 @@ class HomeFragmentViewModel() : ViewModel() {
     val responseCheckResult: LiveData<ResponseHomeMissionCheckDto.HomeMissionCheckDto> get() = _responseCheckResult
 
     //위클리 투두 개수 확인
-    private val _responseWeeklyResult: MutableLiveData<List<HomeWeeklyDto.Data>> =
+    private val _responseWeeklyResult: MutableLiveData<List<HomeWeeklyDto.WeeklyPercent>> =
         MutableLiveData()
-    val responseWeeklyResult: LiveData<List<HomeWeeklyDto.Data>> get() = _responseWeeklyResult
+    val responseWeeklyResult: LiveData<List<HomeWeeklyDto.WeeklyPercent>> get() = _responseWeeklyResult
 
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
