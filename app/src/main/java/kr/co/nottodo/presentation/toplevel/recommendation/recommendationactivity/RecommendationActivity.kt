@@ -44,6 +44,9 @@ class RecommendationActivity : AppCompatActivity() {
         viewModel.categoryList.observe(this) { categoryList ->
             parentAdapter.submitList(categoryList)
         }
+        binding.ivBtnBack.setOnClickListener {
+            finish()
+        }
     }
 
 
