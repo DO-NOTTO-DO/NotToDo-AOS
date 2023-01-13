@@ -10,6 +10,7 @@ import kr.co.nottodo.databinding.ActivityRecommendationBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.actionName
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationAdapter
+import kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment.RecommendationFragment
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
 
@@ -57,7 +58,7 @@ class RecommendationActivity : AppCompatActivity() {
             }
         )
         parentAdapter = RecommendationParentAdapter { view, childData ->
-           val intent =  Intent(this, AdditionActivity::class.java).putExtra(
+            val intent = Intent(this, AdditionActivity::class.java).putExtra(
                 actionName, childData.name
             )
             setResult(RESULT_OK, intent)
@@ -71,6 +72,7 @@ class RecommendationActivity : AppCompatActivity() {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = recommendationAdapter
+                addItemDecoration(RecommendationFragment.RecommendationCategoryItemDecoration())
             }
 
             rvNottodoRecommendListTitle.apply {
@@ -86,6 +88,5 @@ class RecommendationActivity : AppCompatActivity() {
             R.anim.animation_exit
         )
     }
-
 }
 

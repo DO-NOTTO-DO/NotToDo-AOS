@@ -1,6 +1,7 @@
 package kr.co.nottodo.presentation.toplevel.recommendation.recommendationfragment
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentRecommendationBinding
 import kr.co.nottodo.presentation.MainActivity
@@ -15,6 +17,7 @@ import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.actionName
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
+import kr.co.nottodo.util.extension.dpToPx
 import kr.co.nottodo.util.extension.setStatusBarColor
 
 class RecommendationFragment : Fragment() {
@@ -85,6 +88,7 @@ class RecommendationFragment : Fragment() {
                 layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = recommendationAdapter
+                addItemDecoration(RecommendationCategoryItemDecoration())
             }
 
             rvNottodoRecommendListTitle.apply {
@@ -101,5 +105,19 @@ class RecommendationFragment : Fragment() {
             })
         }
 
+    }
+
+    class RecommendationCategoryItemDecoration() : RecyclerView.ItemDecoration() {
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            super.getItemOffsets(outRect, view, parent, state)
+            if (parent.getChildAdapterPosition(view) == state.itemCount - 1) {
+                outRect.right = parent.context.dpToPx(20)
+            }
+        }
     }
 }
