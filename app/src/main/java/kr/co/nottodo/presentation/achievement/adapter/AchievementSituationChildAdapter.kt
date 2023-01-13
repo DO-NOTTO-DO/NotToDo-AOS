@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementRvSituationChildBinding
+import kr.co.nottodo.presentation.achievement.adapter.AchievementMissionAdapter.Companion.COUNT
 
 class AchievementSituationChildAdapter(
     context: Context,
@@ -23,7 +24,7 @@ class AchievementSituationChildAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: ResponseMissionStatisticDto.MissionStatistic, position: Int) {
             binding.tvAchievementRvSituationChildRank.text = (position + 1).toString()
-            binding.tvAchievementRvSituationChildCount.text = item.count.toString()
+            binding.tvAchievementRvSituationChildCount.text = item.count.toString() + COUNT
             binding.tvAchievementRvSituationChildMissionName.text = item.title
         }
     }

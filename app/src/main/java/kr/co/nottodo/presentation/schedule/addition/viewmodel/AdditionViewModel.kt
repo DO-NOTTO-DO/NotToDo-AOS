@@ -2,12 +2,16 @@ package kr.co.nottodo.presentation.schedule.addition.viewmodel
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.data.remote.model.ResponseMissionDto
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.input
-import retrofit2.await
+import retrofit2.HttpException
+import timber.log.Timber
 
 class AdditionViewModel : ViewModel() {
 
@@ -34,7 +38,6 @@ class AdditionViewModel : ViewModel() {
         }
 
     val additionSituationName: MutableLiveData<String> = MutableLiveData(input)
-
     val isAdditionSituationNameFilled: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val additionGoalName: MutableLiveData<String> = MutableLiveData(blank)
@@ -75,19 +78,50 @@ class AdditionViewModel : ViewModel() {
     val errorMessageMission: LiveData<String>
         get() = _errorMessageMission
 
+    //    fun postMission(request: RequestMissionDto) {
+//        viewModelScope.launch {
+//            kotlin.runCatching {
+//                missionService.postMission(request).await()
+//            }.fold(
+//                onSuccess = {
+//                    _responsePostMission.value = it
+//                },
+//                onFailure = {
+//                    _errorMessageMission.value = it.message
+//                }
+//            )
+//        }
+//    }
     fun postMission(request: RequestMissionDto) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                missionService.postMission(request).await()
-            }.fold(
-                onSuccess = {
+
+            runCatching {
+                missionService.postMission(request)
+            }
+                .onSuccess {
+                    Timber.tag("AdditionViewModel").d(it.toString())
                     _responsePostMission.value = it
-                },
-                onFailure = {
-                    _errorMessageMission.value = it.message
                 }
-            )
+                .recover { e ->
+                    if (e is HttpException) {
+                        val raw = e.response()?.errorBody()?.string()
+                        Timber.tag("AdditionViewModel").e(raw)
+                        raw?.let { errorJson ->
+                            val dto = Json.decodeFromString<ErrorResponse>(errorJson)
+                            Timber.tag("AdditionViewModel").e(dto.toString())
+                            _errorMessageMission.value = dto.message
+                        }
+                    }
+                }.onFailure {
+                    Timber.e(it)
+                }
         }
     }
-
 }
+
+@Serializable
+data class ErrorResponse(
+    val status: Int,
+    val success: Boolean,
+    val message: String
+)

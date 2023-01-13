@@ -14,6 +14,7 @@ import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Compan
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.missionName
 import kr.co.nottodo.presentation.schedule.search.adapter.SearchRecyclerViewAdapter
 import kr.co.nottodo.presentation.schedule.search.viewmodel.SearchViewModel
+import kr.co.nottodo.util.extension.KeyBoardUtil
 import timber.log.Timber
 
 class SearchActivity : AppCompatActivity() {
@@ -25,13 +26,37 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        overridePendingTransition(
-            R.anim.animation_enter,
-            R.anim.animation_exit
-        )
-
+        setAnimation()
         initBinding()
         viewModel.getHistory()
+
+        observeHistoryResult()
+        observeSearchBar()
+
+        getEditTextText()
+
+        onCompleteBtnClick()
+        hideKeyboard()
+        setHideKeyBoard()
+    }
+
+    private fun setHideKeyBoard() {
+        binding.layoutSearch.setOnClickListener {
+            hideKeyboard()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setFocusOnEditText()
+    }
+
+    private fun setFocusOnEditText() {
+        binding.etSearchSearchBar.requestFocus()
+    }
+
+
+    private fun observeHistoryResult() {
         viewModel.getHistoryResult.observe(this) {
             itemList = it.data
             initRecyclerView(itemList)
@@ -39,20 +64,17 @@ class SearchActivity : AppCompatActivity() {
         viewModel.errorMessage.observe(this) {
             Timber.d(it)
         }
+    }
 
-        observeSearchBar()
+    private fun setAnimation() {
+        overridePendingTransition(
+            R.anim.animation_enter,
+            R.anim.animation_exit
+        )
+    }
 
-        getSearchBarText()
-
-        onCompleteBtnClick()
-
-        viewModel.getHistory()
-        viewModel.getHistoryResult.observe(this) {
-            itemList = it.data
-        }
-        viewModel.errorMessage.observe(this) {
-            Timber.d(it)
-        }
+    private fun hideKeyboard() {
+        KeyBoardUtil.hide(this)
     }
 
     private fun onCompleteBtnClick() {
@@ -64,7 +86,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSearchBarText() {
+    private fun getEditTextText() {
         viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
     }
 

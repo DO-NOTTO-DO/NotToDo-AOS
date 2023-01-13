@@ -19,36 +19,29 @@
         <activity
             android:name=".presentation.addsituation.view.AddSituationActivity"
             android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.toplevel.recommendation.recommendationactivity.RecommendationActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.onboard.view.OnBoardHeaderActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".presentation.onboard.view.OnBoardBodyActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.schedule.search.view.SearchActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <service
             android:name=".FirebaseMessagingService"
             android:exported="false">
@@ -59,26 +52,12 @@
 
         <activity
             android:name=".presentation.MainActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".presentation.schedule.addition.view.AdditionActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
     </application>
-
 </manifest>

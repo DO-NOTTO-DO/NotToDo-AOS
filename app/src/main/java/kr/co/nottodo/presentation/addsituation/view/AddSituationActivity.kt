@@ -9,7 +9,9 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityAddSituationBinding
 import kr.co.nottodo.presentation.addsituation.viewmodel.AddSituationViewModel
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.OLD_SITUATION_NAME
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.situationName
+import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.util.extension.addTextview
 
 class AddSituationActivity : AppCompatActivity() {
@@ -29,6 +31,25 @@ class AddSituationActivity : AppCompatActivity() {
 
         observeResponseSituation()
         observeSituationName()
+        setHideKeyboard()
+
+        getEditTextText()
+    }
+
+    private fun setHideKeyboard() {
+        binding.layoutAddSituation.setOnClickListener {
+            hideKeyboard()
+        }
+    }
+
+    private fun getEditTextText() {
+        if (intent.getStringExtra(OLD_SITUATION_NAME) != null) {
+            viewModel.situationText.value = intent.getStringExtra(OLD_SITUATION_NAME)
+        }
+    }
+
+    private fun hideKeyboard() {
+        KeyBoardUtil.hide(this)
     }
 
     private fun observeSituationName() {

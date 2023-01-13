@@ -29,3 +29,14 @@
 📁 presentation<br/>
 📁 view<br/>
 📁 util
+
+## 📚 Used Library
+- Kotlin, Coroutine
+- jetpack (viewModel, LiveData)
+- customview
+- flexboxLayout
+- swipeRefreshLayout
+- Timber
+- ballon
+- glide
+- retrofit, okHttp

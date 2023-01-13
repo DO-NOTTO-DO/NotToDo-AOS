@@ -39,7 +39,9 @@ class MainActivity : AppCompatActivity() {
         binding.homeCustomBottom.background = backgroundDrawable
         binding.homeCustomBottom.itemIconTintList = null
         initTransaction()
-
+        if (savedInstanceState == null) {
+            changeFragment(HomeFragment())
+        }
     }
 
     private fun initTransaction() {
@@ -55,7 +57,9 @@ class MainActivity : AppCompatActivity() {
             )
             true
         }
-        binding.homeCustomBottom.selectedItemId = R.id.menu_home
+        binding.homeCustomBottom.setOnItemReselectedListener {
+
+        }
     }
 
     private fun changeFragment(fragment: Fragment) {

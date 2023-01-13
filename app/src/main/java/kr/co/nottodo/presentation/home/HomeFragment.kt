@@ -2,6 +2,7 @@ package kr.co.nottodo.presentation.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,17 +28,16 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding ?: error("binding not init")
     private lateinit var outterAdapter: HomeOutterAdapter
-    private val stringBuilder = StringBuilder()
     private var todayData = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     private var weeklyData = todayData
     private var typingJob: Job? = null
-
     private val viewModel by viewModels<HomeFragmentViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -166,7 +166,9 @@ class HomeFragment : Fragment() {
 
     private fun clickFbtn() {
         binding.fbtnHomeFloating.setOnClickListener {
-            startActivity(Intent(context, AdditionActivity::class.java))
+            startActivity(Intent(context, AdditionActivity::class.java).apply {
+                addFlags(FLAG_ACTIVITY_SINGLE_TOP)
+            })
         }
     }
 
