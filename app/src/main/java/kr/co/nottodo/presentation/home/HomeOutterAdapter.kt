@@ -45,7 +45,7 @@ class HomeOutterAdapter(
             if (data.completionStatus == "NOTYET") {
                 binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_home_checkbox)
             } else if (data.completionStatus == "AMBIGUOUS") {
-                binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_fail)
+                binding.ivHomeOutCheckbox.setImageResource(R.drawable.checkbox_triangle)
                 Timber.e("outter에 submitList ${data.title}")
             } else {
                 binding.ivHomeOutCheckbox.setImageResource(R.drawable.ic_checkbox_circle)
@@ -65,9 +65,7 @@ class HomeOutterAdapter(
             Timber.e("out ${data.id}")
             binding.rvHomeInnerRecycler.adapter = HomeInnerAdapter().apply {
                 submitList(data.actions)
-
             }
-
         }
     }
 
