@@ -1,6 +1,7 @@
 package kr.co.nottodo.presentation.schedule.bottomsheet.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.nottodo.databinding.FragmentCalendarBottomSheetBinding
 import kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel
+import kr.co.nottodo.view.calendar.monthly.util.convertDateToString
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
@@ -33,9 +35,7 @@ class CalendarBottomSheet : BottomSheetDialogFragment() {
     private fun selectDate() {
         binding.btnCalendarBottomSheetChoice.setOnClickListener {
             viewModel.additionDate.value =
-                binding.calendarBottomSheet.selectedDate.toInstant()?.atOffset(
-                    ZoneOffset.UTC
-                )?.format(DateTimeFormatter.ofPattern(datePattern))
+                binding.calendarBottomSheet.selectedDate.convertDateToString()
             dismiss()
         }
     }
