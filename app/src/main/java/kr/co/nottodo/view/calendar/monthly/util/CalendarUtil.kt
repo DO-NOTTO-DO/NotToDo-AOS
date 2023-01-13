@@ -41,6 +41,13 @@ fun String.convertStringToDate(): Date? {
     }.getOrNull()
 }
 
+fun Date.convertDateToString(): String? {
+    val dateFormat = SimpleDateFormat("yyyy.MM.dd")
+    return runCatching {
+        dateFormat.format(this)
+    }.getOrNull()
+}
+
 // 성취 캘린더를 위한 함수
 fun String.achievementConvertStringToDate(): Date? {
     val format = SimpleDateFormat("yyyy.MM.dd")
