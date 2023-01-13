@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentRecommendationBinding
+import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.actionName
 import kr.co.nottodo.presentation.toplevel.recommendation.recommendationlist.RecommendationParentAdapter
 import kr.co.nottodo.presentation.toplevel.recommendation.viewmodel.RecommendationViewModel
+import kr.co.nottodo.util.extension.setStatusBarColor
 
 class RecommendationFragment : Fragment() {
 
@@ -36,6 +39,7 @@ class RecommendationFragment : Fragment() {
         initAdapter()
         initRecyclerView()
         initListener()
+        setStatusBarColor(activity as MainActivity, R.color.white)
 
         viewModel.categorySituation.observe(viewLifecycleOwner) { categorySituationList ->
             if (categorySituationList.isNotEmpty()) {

@@ -3,6 +3,8 @@ package kr.co.nottodo.presentation.onboard.view
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityOnBoardHeaderBinding
 
 class OnBoardHeaderActivity : AppCompatActivity() {
@@ -18,5 +20,7 @@ class OnBoardHeaderActivity : AppCompatActivity() {
             startActivity(Intent(this, OnBoardBodyActivity::class.java))
             finish()
         }
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.bg_f5f5f5)
     }
 }
