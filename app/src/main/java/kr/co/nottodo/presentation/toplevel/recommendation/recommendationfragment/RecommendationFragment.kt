@@ -89,6 +89,9 @@ class RecommendationFragment : Fragment() {
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter = recommendationAdapter
                 addItemDecoration(RecommendationCategoryItemDecoration())
+                recycledViewPool.run {
+                    setMaxRecycledViews(0,0)
+                }
             }
 
             rvNottodoRecommendListTitle.apply {
