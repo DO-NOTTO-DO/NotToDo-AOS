@@ -63,5 +63,51 @@
     <string name="achievement_pager_empty_desc">아직 아무것도 없네요,\n새로운 낫투두를 작성해보세요!</string>
     <string name="achievement_pager_situation_title">언제 낫투두를 가장 많이 시도했을까요?</string>
     <string name="achievement_pager_mission_title">내가 달성한 낫투두의 순위는?</string>
+    <!--recommendation-->
+    <string name="recommendation_title">추천</string>
+    <string name="recommendation_write_direct">직접 작성하기</string>
+    <string name="recommendation_warning_message">* 박스 터치 시, 낫투두가 아닌 환경만 입력됩니다.</string>
+    <!--activity recommendation-->
+    <string name="activity_recommendation_title">추천받기</string>
+    <string name="activity_recommendation_warning_message">* 박스 터치 시, 낫투두가 아닌 환경만 입력됩니다.</string>
+    <!--home-->
+    <string name="home_data">12월 3주차</string>
+    <string name="home_description">낫투두를 통해 본인만의 규율을 지켜보세요</string>
+    <string name="home_fbtn_floating">낫투두 추가</string>
+    <!--home blank-->
+    <string name="home_blank_nothing_nottodo">아직 아무것도 없네요, 새로운 낫투두를 작성해보세요!</string>
+    <!--add situation list text-->
+    <string name="add_situation_list_text">출근시간</string>
+    <!--add situation recent list text-->
+    <string name="add_situation_recent_list_text">출근시간</string>
+    <!--my page-->
+    <string name="my_page_title">내 정보</string>
+    <string name="my_page_user_name">홍서현</string>
+    <string name="my_page_user_id">ghdtjgus123!</string>
+    <string name="my_page_user_guide">낫투두 가이드</string>
+    <string name="my_page_user_question">자주 묻는 질문</string>
+    <string name="my_page_user_push">푸시 알림 설정</string>
+    <string name="my_page_user_announcement">공지사항</string>
+    <string name="my_page_user_contact">문의하기</string>
+    <string name="my_page_user_policies">약관 및 정책</string>
+    <string name="my_page_user_version">버전 정보 0.0.1</string>
+    <string name="my_page_user_logout">버전 정보 0.0.1</string>
+    <string name="my_page_user_withdrawal">버전 정보 0.0.1</string>
+    <!--add situation-->
+    <string name="add_situation_title">상황 추가하기</string>
+    <string name="add_situation_complete">완료</string>
+    <string name="add_situation_nottodo_situation_keyword">낫투두가 추천하는 상황 키워드</string>
+    <string name="add_situation_nottodo_recent_keyword">최근 사용한 키워드</string>
+    <string name="add_situation_text_watcher">0/15</string>
+    <string name="add_situation_wirte_direct_hint">직접 입력하기...</string>
+    <!--calendar week description-->
+    <string name="calendar_week_description_mon">월</string>
+    <string name="calendar_week_description_tue">화</string>
+    <string name="calendar_week_description_wed">수</string>
+    <string name="calendar_week_description_thu">목</string>
+    <string name="calendar_week_description_fri">금</string>
+    <string name="calendar_week_description_sat">토</string>
+    <string name="calendar_week_description_sun">일</string>
+
 
 </resources>
