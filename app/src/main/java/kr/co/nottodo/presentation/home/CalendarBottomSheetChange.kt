@@ -5,15 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.co.nottodo.databinding.FragmentCalendarBottomSheetChangeBinding
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class CalendarBottomSheetChange : BottomSheetDialogFragment() {
     private var _binding: FragmentCalendarBottomSheetChangeBinding? = null
     private val binding: FragmentCalendarBottomSheetChangeBinding
         get() = requireNotNull(_binding) { "_binding is null ,,,," }
-    private val viewModel: HomeFragmentViewModel by activityViewModels()
+//    private val viewModel: HomeFragmentViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -28,6 +30,11 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
         selectDate()
     }
 
+    //localDate를 yyy-어쩌고로 바꾸는 함수
+    private fun Date.convertApiDateString(date: Date) {
+        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    }
+
     private fun selectDate() {
         binding.btnCalendarBottomSheetChoice.setOnClickListener {
 //            viewModel.additionDate.value =
@@ -35,10 +42,10 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
 //                    ZoneOffset.UTC
 //                )?.format(DateTimeFormatter.ofPattern(datePattern))
 //            dismiss()
-        }
-        binding.calendarBottomSheet.setOnMonthlyCalendarPickerClickListener { view, date ->
-            // 클릭 시 발생하는 구간
-            Log.d("ssong-develop","${binding.calendarBottomSheet.selectedDays}")
+            Log.d("ssong-develop", "${binding.calendarBottomSheet.selectedDays}")
+            val apiDateList = binding.calendarBottomSheet.selectedDays.map {
+//                it.convertApiDateString() // date -> "2023-01-11"
+            }
         }
     }
 
@@ -52,3 +59,6 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
         const val datePattern = "yyyy.MM.dd"
     }
 }
+
+
+

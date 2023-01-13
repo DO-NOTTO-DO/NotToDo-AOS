@@ -79,7 +79,7 @@ class HomeFragmentViewModel() : ViewModel() {
 //        Timber.e("weekly1")
         viewModelScope.launch {
             runCatching {
-                postService.getWeekCount("2023-01-09")
+                postService.getWeekCount(startDate)
             }.fold({
                 _responseWeeklyResult.value = it.data
                 Timber.e("weekly$it")
@@ -89,10 +89,6 @@ class HomeFragmentViewModel() : ViewModel() {
             })
         }
     }
-
-//    fun setMissionId(id: Int) {
-//        _missionId.value = id
-//    }
 
     //patch
     fun responseHomeMissionCheck(id: Int, completionStatus: String) {

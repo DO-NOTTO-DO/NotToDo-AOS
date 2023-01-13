@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,6 @@ class HomeFragment : Fragment() {
         clickWeekly()
         observerData()
         showBanner()
-        initMonth()
         swipeWeekly()
     }
 
@@ -72,11 +72,6 @@ class HomeFragment : Fragment() {
     private fun initMonth() {
         binding.tvHomeDate.text =
             binding.weekelyCalendar.mondayDate?.format(DateTimeFormatter.ofPattern(MONTH_PATTERN))
-        Timber.e(
-            "initMonth${
-                binding.weekelyCalendar.mondayDate
-            }"
-        )
     }
 
     //todo adapter초기화에서 observer빼기
@@ -105,7 +100,6 @@ class HomeFragment : Fragment() {
         binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
             weeklyData = date.format(DateTimeFormatter.ofPattern(YEAR_PATTERN))
             initServer(weeklyData)
-            initMonth()
         }
     }
 
@@ -165,13 +159,11 @@ class HomeFragment : Fragment() {
             OnWeeklyCalendarSwipeListener {
             override fun onSwipe(mondayDate: LocalDate?) {
                 if (mondayDate != null) {
+                    Log.d("TAG", "onSwipe: $mondayDate")
                     viewModel.homeWeeklyInitServer(
-                        mondayDate.format(
-                            DateTimeFormatter.ofPattern(
-                                YEAR_PATTERN
-                            )
-                        )
+                        mondayDate.toString()
                     )
+                    initMonth()
                 }
             }
         })
