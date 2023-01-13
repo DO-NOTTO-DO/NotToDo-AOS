@@ -306,7 +306,7 @@ class AdditionActivity : AppCompatActivity() {
 
     companion object {
         const val blank = ""
-        const val additionToastText = "낫투두 액션은 2개 이상 불가능~"
+        const val additionToastText = "실천 방법 추가는 2개까지만 가능해요"
         const val missionName = "missionName"
         const val actionName = "actionName"
         const val situationName = "situationName"
