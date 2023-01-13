@@ -43,6 +43,7 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
     }
 
     companion object {
+        val TAG = this::class.java.simpleName
         const val datePattern = "yyyy.MM.dd"
     }
 }
