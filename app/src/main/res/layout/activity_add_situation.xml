@@ -136,6 +136,8 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/rectangle_border_gray4_1"
             android:hint="@string/add_situation_wirte_direct_hint"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:maxLength="15"
             android:padding="15dp"
             android:text="@={vm.situationText}"
