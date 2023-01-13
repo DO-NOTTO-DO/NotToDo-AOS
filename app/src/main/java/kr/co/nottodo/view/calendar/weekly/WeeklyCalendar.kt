@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kr.co.nottodo.R
 import kr.co.nottodo.view.calendar.monthly.model.TOTAL_COLUMN_COUNT
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyDayClickListener
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -32,6 +33,7 @@ class WeeklyCalendar @JvmOverloads constructor(
     var mondayDate: LocalDate? = null
     private lateinit var gestureDetector: GestureDetector
     private var onWeeklyDayClickListener: OnWeeklyDayClickListener? = null
+    private var onWeeklyCalendarSwipeListener: OnWeeklyCalendarSwipeListener? = null
 
     init {
         removeDefaultItemAnimator()
@@ -76,9 +78,13 @@ class WeeklyCalendar @JvmOverloads constructor(
                             if (diffX > 0) {
                                 weeklyAdapter.submitList(daysInWeek(currentDate.minusWeeks(1)))
                                 currentDate = currentDate.minusWeeks(1)
+                                mondayDate = mondayForDate(currentDate)
+                                onWeeklyCalendarSwipeListener?.onSwipe(mondayDate)
                             } else {
                                 weeklyAdapter.submitList(daysInWeek(currentDate.plusWeeks(1)))
                                 currentDate = currentDate.plusWeeks(1)
+                                mondayDate = mondayForDate(currentDate)
+                                onWeeklyCalendarSwipeListener?.onSwipe(mondayDate)
                             }
                         }
                     }
@@ -139,13 +145,10 @@ class WeeklyCalendar @JvmOverloads constructor(
         return null
     }
 
-    fun setNotToDoCountList(notToDoCountList: List<Pair<LocalDate, Int>>) {
-        weeklyAdapter.submitNotTodoCountList(notToDoCountList)
-    }
-
     fun refresh() {
         currentDate = LocalDate.now()
         selectedDate = LocalDate.now()
+        weeklyAdapter.setSelectedDay(selectedDate)
         weeklyAdapter.submitList(daysInWeek(currentDate))
     }
 
@@ -155,6 +158,10 @@ class WeeklyCalendar @JvmOverloads constructor(
 
     fun setOnWeeklyDayClickListener(block: (view: View, date: LocalDate) -> Unit) {
         this.onWeeklyDayClickListener = OnWeeklyDayClickListener(block)
+    }
+
+    fun setOnWeeklyCalendarSwipeListener(onWeeklyCalendarSwipeListener: OnWeeklyCalendarSwipeListener) {
+        this.onWeeklyCalendarSwipeListener = onWeeklyCalendarSwipeListener
     }
 
     override fun onWeeklyDayClick(view: View, date: LocalDate) {

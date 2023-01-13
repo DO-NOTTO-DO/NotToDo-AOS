@@ -20,6 +20,7 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
+import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -51,6 +52,7 @@ class HomeFragment : Fragment() {
         observerData()
         showBanner()
         initMonth()
+        swipeWeekly()
     }
 
     private fun observerData() {
@@ -103,7 +105,6 @@ class HomeFragment : Fragment() {
         binding.weekelyCalendar.setOnWeeklyDayClickListener { view, date ->
             weeklyData = date.format(DateTimeFormatter.ofPattern(YEAR_PATTERN))
             initServer(weeklyData)
-            viewModel.homeWeeklyInitServer(weeklyData)
             initMonth()
         }
     }
@@ -157,6 +158,23 @@ class HomeFragment : Fragment() {
             typingTitle(it.title).toString()
         }
         refreshHomeBanner()
+    }
+
+    private fun swipeWeekly() {
+        binding.weekelyCalendar.setOnWeeklyCalendarSwipeListener(object :
+            OnWeeklyCalendarSwipeListener {
+            override fun onSwipe(mondayDate: LocalDate?) {
+                if (mondayDate != null) {
+                    viewModel.homeWeeklyInitServer(
+                        mondayDate.format(
+                            DateTimeFormatter.ofPattern(
+                                YEAR_PATTERN
+                            )
+                        )
+                    )
+                }
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")

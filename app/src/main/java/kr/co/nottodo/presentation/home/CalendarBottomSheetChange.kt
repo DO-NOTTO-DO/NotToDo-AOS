@@ -1,6 +1,7 @@
 package kr.co.nottodo.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,10 @@ class CalendarBottomSheetChange : BottomSheetDialogFragment() {
 //                    ZoneOffset.UTC
 //                )?.format(DateTimeFormatter.ofPattern(datePattern))
 //            dismiss()
+        }
+        binding.calendarBottomSheet.setOnMonthlyCalendarPickerClickListener { view, date ->
+            // 클릭 시 발생하는 구간
+            Log.d("ssong-develop","${binding.calendarBottomSheet.selectedDays}")
         }
     }
 
