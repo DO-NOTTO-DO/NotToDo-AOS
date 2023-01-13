@@ -8,16 +8,10 @@ import kotlinx.coroutines.launch
 import kr.co.nottodo.data.local.HomeDailyResponse.HomeDaily
 import kr.co.nottodo.data.remote.api.HomeService
 import kr.co.nottodo.data.remote.api.ServicePool
-import kr.co.nottodo.data.remote.model.HomeWeeklyDto
-import kr.co.nottodo.data.remote.model.RequestHomeMissionCheck
-import kr.co.nottodo.data.remote.model.ResponseHomeBannerDto
-import kr.co.nottodo.data.remote.model.ResponseHomeMissionCheckDto
+import kr.co.nottodo.data.remote.model.*
 import timber.log.Timber
 
 class HomeFragmentViewModel() : ViewModel() {
-
-    private val _missionDailyDate: MutableLiveData<List<HomeDaily.Action>> = MutableLiveData()
-    val missionDailyDate: LiveData<List<HomeDaily.Action>> = _missionDailyDate
 
 //    //리사이클러뷰 missionId값 조회
 //    private val _missionId: MutableLiveData<Int> = MutableLiveData()
@@ -42,6 +36,10 @@ class HomeFragmentViewModel() : ViewModel() {
         MutableLiveData()
     val responseWeeklyResult: LiveData<List<HomeWeeklyDto.WeeklyPercent>> get() = _responseWeeklyResult
 
+    //바텀시트 다른날짜에도 하기
+    private val _missionAddDate: MutableLiveData<List<HomeBottomMissionDto.BottomCalender>> =
+        MutableLiveData()
+    val missionDailyDate: LiveData<List<HomeBottomMissionDto.BottomCalender>> = _missionAddDate
 
     private val _errorMessageSituation: MutableLiveData<String> = MutableLiveData()
     val errorMessageSituation: LiveData<String>
@@ -108,4 +106,21 @@ class HomeFragmentViewModel() : ViewModel() {
 
         }
     }
+
+//    //홈 바텀시트 다른날에도
+//    fun responseHomeAnotherDay(id: Int) {
+//        viewModelScope.launch {
+//            runCatching {
+//                postService.postHomeBottomCalander(
+//                    id
+//                )
+//            }.fold({
+//                _responseCheckResult.value = it.data
+//                Timber.d("mission ${it.data}")
+//            }, {
+//                _errorMessageSituation.value = it.message
+//            })
+//
+//        }
+//    }
 }
