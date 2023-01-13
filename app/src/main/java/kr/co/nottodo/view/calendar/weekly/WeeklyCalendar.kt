@@ -152,6 +152,10 @@ class WeeklyCalendar @JvmOverloads constructor(
         weeklyAdapter.submitList(daysInWeek(currentDate))
     }
 
+    fun setNotToDoCount(list: List<Pair<LocalDate, Float>>) {
+        weeklyAdapter.submitNotTodoCountList(list)
+    }
+
     fun setOnWeeklyDayClickListener(onWeeklyDayClickListener: OnWeeklyDayClickListener) {
         this.onWeeklyDayClickListener = onWeeklyDayClickListener
     }

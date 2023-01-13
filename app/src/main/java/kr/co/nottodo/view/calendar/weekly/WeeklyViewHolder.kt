@@ -65,7 +65,7 @@ class WeeklyViewHolder(
         }
     }
 
-    fun onNotToDoBind(weeklyDate: LocalDate, notToDoCount: Int) {
+    fun onNotToDoBind(weeklyDate: LocalDate, notToDoCount: Float) {
         val date: Date = Date.valueOf(weeklyDate.toString()) as Date
         this.weeklyDate = weeklyDate
         binding.apply {
@@ -73,24 +73,24 @@ class WeeklyViewHolder(
             dayString = weeklyDate.dayOfWeek.name.dayNameParseToKorea()
             ivToday.visibility = if (DateUtils.isToday(date.time)) View.VISIBLE else View.GONE
             when (notToDoCount) {
-                1 -> {
+                in 0f..0.15f -> {
+                    tvWeeklyCalendarDay.setBackgroundResource(
+                        R.drawable.bg_monthly_calendar_normal
+                    )
+                }
+                in 0.15f..0.5f -> {
                     tvWeeklyCalendarDay.setBackgroundResource(
                         R.drawable.bg_monthly_calendar_not_to_do_1
                     )
                 }
-                2 -> {
+                in 0.5f..0.75f -> {
                     tvWeeklyCalendarDay.setBackgroundResource(
                         R.drawable.bg_monthly_calendar_not_to_do_2
                     )
                 }
-                3 -> {
+                in 0.75f..1f -> {
                     tvWeeklyCalendarDay.setBackgroundResource(
                         R.drawable.bg_monthly_calendar_not_to_do_3
-                    )
-                }
-                else -> {
-                    tvWeeklyCalendarDay.setBackgroundResource(
-                        R.drawable.bg_monthly_calendar_normal
                     )
                 }
             }
