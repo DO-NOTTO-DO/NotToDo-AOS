@@ -65,7 +65,7 @@ class WeeklyViewHolder(
         }
     }
 
-    fun onNotToDoBind(weeklyDate: LocalDate, notToDoCount: Float) {
+    fun onNotToDoBind(weeklyDate: LocalDate, notToDoCount: Double) {
         val date: Date = Date.valueOf(weeklyDate.toString()) as Date
         this.weeklyDate = weeklyDate
         binding.apply {

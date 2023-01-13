@@ -29,7 +29,7 @@ class WeeklyAdapter(
 
     private var selectedDay: LocalDate = LocalDate.now()
 
-    private val notToDoCountList = mutableListOf<Pair<LocalDate,Float>>()
+    private val notToDoCountList = mutableListOf<Pair<LocalDate?,Double>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeeklyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -41,7 +41,7 @@ class WeeklyAdapter(
 
     override fun onBindViewHolder(holder: WeeklyViewHolder, position: Int) {
         notToDoCountList.indexOfLast {
-            it.first.isEqual(weeklyDays[position])
+            it.first?.isEqual(weeklyDays[position]) == true
         }.also {
             if (it != -1) {
                 holder.onNotToDoBind(weeklyDays[position],notToDoCountList[it].second)
@@ -80,7 +80,7 @@ class WeeklyAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitNotTodoCountList(list: List<Pair<LocalDate, Float>>) {
+    fun submitNotTodoCountList(list: List<Pair<LocalDate?, Double>>) {
         notToDoCountList.clear()
         notToDoCountList.addAll(list)
         notifyDataSetChanged()
