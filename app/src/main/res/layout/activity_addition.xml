@@ -237,11 +237,13 @@
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_first"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="-0.5dp"
                         android:src="@drawable/ic_btn_delete_create"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_first"
+                        app:layout_constraintDimensionRatio="1"
                         app:layout_constraintStart_toEndOf="@id/tv_addition_action_first"
                         app:layout_constraintTop_toTopOf="@id/tv_addition_action_first" />
 
@@ -263,11 +265,13 @@
 
                     <ImageView
                         android:id="@+id/btn_addition_delete_action_second"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="-0.5dp"
                         android:src="@drawable/ic_btn_delete_create"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/tv_addition_action_second"
+                        app:layout_constraintDimensionRatio="1"
                         app:layout_constraintStart_toEndOf="@id/tv_addition_action_second"
                         app:layout_constraintTop_toTopOf="@id/tv_addition_action_second" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
