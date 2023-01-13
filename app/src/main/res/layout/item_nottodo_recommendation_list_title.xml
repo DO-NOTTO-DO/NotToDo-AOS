@@ -16,7 +16,7 @@
             android:id="@+id/layout_recommendation_parent_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_recommendation_list_title"
+            android:background="@drawable/rectangle_no_bottom_gray2_0point5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -53,12 +53,16 @@
             android:id="@+id/rv_nottodo_recommend_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_recommendation_parent_list_title"
-            app:spanCount="5"
             tools:listitem="@layout/item_nottodo_recommendation_list" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_2_8e8e93"
+            app:layout_constraintTop_toBottomOf="@id/rv_nottodo_recommend_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
