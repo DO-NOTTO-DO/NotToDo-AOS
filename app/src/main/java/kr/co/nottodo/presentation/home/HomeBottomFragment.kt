@@ -13,6 +13,7 @@ import kr.co.nottodo.databinding.FragmentHomeBottomBinding
 class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFragment() {
     private var _binding: FragmentHomeBottomBinding? = null
     private val binding get() = _binding ?: error("binding not init")
+
     //todo 뷰모델에 변수 만들어서 거기에 저장해서 바텀시트에서 사용하기
     private var title = title
     private var situation = situation
@@ -41,9 +42,9 @@ class HomeBottomFragment(title: String, situation: String) : BottomSheetDialogFr
     }
 
     private fun click() {
-        binding.tvHomeBottomTrash.setOnClickListener { dismiss() }
-        binding.tvHomeBottomEdit.setOnClickListener { dismiss() }
-        binding.tvHomeAnatherNatodo.setOnClickListener {
+        binding.clHomeBottomDelete.setOnClickListener { dismiss() }
+        binding.clHomeBottomEditTodo.setOnClickListener { dismiss() }
+        binding.clHomeBottomAddAnother.setOnClickListener {
 //            CalendarBottomSheetChange().show(childFragmentManager, CalendarBottomSheetChange().tag)
             val calendarBottomSheet =
                 childFragmentManager.findFragmentByTag(CalendarBottomSheetChange.TAG) as? CalendarBottomSheetChange

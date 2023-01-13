@@ -28,26 +28,33 @@
         app:layout_constraintStart_toEndOf="@id/tv_home_bottom_title_situation"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/iv_home_bottom_trash"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_home_bottom_delete"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="26dp"
-        android:src="@drawable/ic_trash"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_title_nottodo" />
+        app:layout_constraintTop_toBottomOf="@id/tv_home_bottom_title_nottodo">
 
-    <TextView
-        android:id="@+id/tv_home_bottom_trash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="@string/home_bottom_trash"
-        android:theme="@style/M16"
-        app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_trash"
-        app:layout_constraintStart_toEndOf="@id/iv_home_bottom_trash"
-        app:layout_constraintTop_toTopOf="@id/iv_home_bottom_trash" />
+        <ImageView
+            android:id="@+id/iv_home_bottom_trash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="26dp"
+            android:src="@drawable/ic_trash"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cl_home_bottom_delete" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_trash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/home_bottom_trash"
+            android:theme="@style/M16"
+            app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_trash"
+            app:layout_constraintStart_toEndOf="@id/iv_home_bottom_trash"
+            app:layout_constraintTop_toTopOf="@id/iv_home_bottom_trash" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/v_home_trash"
@@ -55,28 +62,35 @@
         android:layout_height="1dp"
         android:layout_marginTop="13dp"
         android:background="@color/gray_4_d7d7d8"
-        app:layout_constraintTop_toBottomOf="@id/iv_home_bottom_trash" />
+        app:layout_constraintTop_toBottomOf="@id/cl_home_bottom_delete" />
 
-    <ImageView
-        android:id="@+id/iv_home_bottom_edit"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_home_bottom_edit_todo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="26dp"
-        android:src="@drawable/ic_edit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/v_home_trash" />
+        app:layout_constraintTop_toBottomOf="@id/v_home_trash">
 
-    <TextView
-        android:id="@+id/tv_home_bottom_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="@string/home_bottom_edit"
-        android:theme="@style/M16"
-        app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_edit"
-        app:layout_constraintStart_toEndOf="@id/iv_home_bottom_edit"
-        app:layout_constraintTop_toTopOf="@id/iv_home_bottom_edit" />
+        <ImageView
+            android:id="@+id/iv_home_bottom_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cl_home_bottom_edit_todo" />
+
+        <TextView
+            android:id="@+id/tv_home_bottom_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/home_bottom_edit"
+            android:theme="@style/M16"
+            app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_edit"
+            app:layout_constraintStart_toEndOf="@id/iv_home_bottom_edit"
+            app:layout_constraintTop_toTopOf="@id/iv_home_bottom_edit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/v_home_edit"
@@ -84,39 +98,51 @@
         android:layout_height="1dp"
         android:layout_marginTop="13dp"
         android:background="@color/gray_4_d7d7d8"
-        app:layout_constraintTop_toBottomOf="@id/iv_home_bottom_edit" />
+        app:layout_constraintTop_toBottomOf="@id/cl_home_bottom_edit_todo" />
 
-    <ImageView
-        android:id="@+id/iv_home_bottom_anather_natodo"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_home_bottom_add_another"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="14dp"
-        android:src="@drawable/ic_anotherday"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/v_home_edit" />
-
-    <TextView
-        android:id="@+id/tv_home_anather_natodo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="@string/home_bottom_another_day"
-        android:theme="@style/M16"
-        app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_anather_natodo"
-        app:layout_constraintStart_toEndOf="@id/iv_home_bottom_anather_natodo"
-        app:layout_constraintTop_toTopOf="@id/iv_home_bottom_anather_natodo" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/home_bottom_another_day_description"
-        android:theme="@style/R12"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tv_home_anather_natodo"
-        app:layout_constraintTop_toBottomOf="@id/tv_home_anather_natodo" />
+        app:layout_constraintTop_toBottomOf="@id/v_home_edit">
 
+        <ImageView
+            android:id="@+id/iv_home_bottom_anather_natodo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/ic_anotherday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/cl_home_bottom_add_another" />
 
+        <TextView
+            android:id="@+id/tv_home_anather_natodo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/home_bottom_another_day"
+            android:theme="@style/M16"
+            app:layout_constraintBottom_toBottomOf="@id/iv_home_bottom_anather_natodo"
+            app:layout_constraintStart_toEndOf="@id/iv_home_bottom_anather_natodo"
+            app:layout_constraintTop_toTopOf="@id/iv_home_bottom_anather_natodo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="32dp"
+            android:text="@string/home_bottom_another_day_description"
+            android:theme="@style/R12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_home_anather_natodo"
+            app:layout_constraintTop_toBottomOf="@id/tv_home_anather_natodo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/gray_4_d7d7d8"
+        app:layout_constraintTop_toBottomOf="@id/cl_home_bottom_add_another" />
 </androidx.constraintlayout.widget.ConstraintLayout>
