@@ -6,6 +6,6 @@
     android:foreground="?attr/selectableItemBackground"
     android:paddingHorizontal="21dp"
     android:paddingVertical="7dp"
-    android:text="출근시간"
+    android:text="@string/add_situation_list_text"
     android:textColor="@color/gray_1_626068"
     android:theme="@style/M14" />
