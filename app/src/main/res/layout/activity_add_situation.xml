@@ -14,7 +14,7 @@
         android:id="@+id/layout_add_situation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.schedule.addition.view.AdditionActivity">
+        tools:context=".presentation.mission.addition.view.AdditionActivity">
 
         <TextView
             android:id="@+id/tv_add_situation_title"

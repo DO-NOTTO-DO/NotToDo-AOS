@@ -1,4 +1,4 @@
-package kr.co.nottodo.presentation.home
+package kr.co.nottodo.presentation.mission.bottomsheet.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kr.co.nottodo.databinding.FragmentCalendarBottomSheetChangeBinding
+import kr.co.nottodo.databinding.FragmentCalendarBottomSheetBinding
+import kr.co.nottodo.presentation.mission.addition.viewmodel.AdditionViewModel
 import kr.co.nottodo.view.calendar.monthly.util.convertDateToString
-import timber.log.Timber
 
-class CalendarBottomSheetChange(private val missionId: Int) : BottomSheetDialogFragment() {
-    private var _binding: FragmentCalendarBottomSheetChangeBinding? = null
-    private val binding: FragmentCalendarBottomSheetChangeBinding
+class CalendarBottomSheet : BottomSheetDialogFragment() {
+    private var _binding: FragmentCalendarBottomSheetBinding? = null
+    private val binding: FragmentCalendarBottomSheetBinding
         get() = requireNotNull(_binding) { "_binding is null ,,,," }
-    private val viewModel: HomeFragmentViewModel by activityViewModels()
+    private val viewModel: AdditionViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCalendarBottomSheetChangeBinding.inflate(inflater, container, false)
+        _binding = FragmentCalendarBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -29,17 +29,11 @@ class CalendarBottomSheetChange(private val missionId: Int) : BottomSheetDialogF
         selectDate()
     }
 
-    //localDate를 yyy-어쩌고로 바꾸는 함수
-
     private fun selectDate() {
         binding.btnCalendarBottomSheetChoice.setOnClickListener {
-            //홈 바텀시트 다른날에도
-            val apiDateList: List<String> = binding.calendarBottomSheet.selectedDays.map {
-                it.convertDateToString()!!
-            }
+            viewModel.additionDate.value =
+                binding.calendarBottomSheet.selectedDate.convertDateToString()
             dismiss()
-            Timber.tag("ssong-develop").e("apidate$apiDateList")
-            viewModel.postMissionAnotherDay(missionId, apiDateList)
         }
     }
 

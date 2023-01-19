@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ViewSnackBarBinding
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.BLANK
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity.Companion.BLANK
 import kr.co.nottodo.util.extension.dpToPx
 
 class CustomSnackBar(view: View, private val message: String) {

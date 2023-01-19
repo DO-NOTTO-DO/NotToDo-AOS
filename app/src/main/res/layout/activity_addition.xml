@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="kr.co.nottodo.presentation.schedule.addition.viewmodel.AdditionViewModel" />
+            type="kr.co.nottodo.presentation.mission.addition.viewmodel.AdditionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
                 android:id="@+id/layout_addition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context=".presentation.schedule.addition.view.AdditionActivity">
+                tools:context=".presentation.mission.addition.view.AdditionActivity">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/layout_addition_title"

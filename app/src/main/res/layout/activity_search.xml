@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="kr.co.nottodo.presentation.schedule.search.viewmodel.SearchViewModel" />
+            type="kr.co.nottodo.presentation.mission.search.viewmodel.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.schedule.search.view.SearchActivity">
+        tools:context=".presentation.mission.search.view.SearchActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_search_search_bar"

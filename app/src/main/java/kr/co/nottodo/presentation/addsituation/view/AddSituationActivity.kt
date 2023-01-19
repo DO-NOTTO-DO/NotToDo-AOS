@@ -8,9 +8,9 @@ import androidx.databinding.DataBindingUtil
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityAddSituationBinding
 import kr.co.nottodo.presentation.addsituation.viewmodel.AddSituationViewModel
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.OLD_SITUATION_NAME
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.SITUATION_NAME
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity.Companion.OLD_SITUATION_NAME
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity.Companion.SITUATION_NAME
 import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.util.extension.addTextview
 

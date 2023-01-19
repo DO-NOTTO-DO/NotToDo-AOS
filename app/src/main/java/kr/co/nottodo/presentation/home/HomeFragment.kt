@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.MainActivity
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.BLANK
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity.Companion.BLANK
 import kr.co.nottodo.view.calendar.monthly.util.convertToLocalDate
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import kr.co.nottodo.util.extension.setStatusBarColor

@@ -10,7 +10,7 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.ActivityOnBoardBodyBinding
 import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.onboard.adapter.OnBoardViewPagerAdapter
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.BLANK
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity.Companion.BLANK
 
 class OnBoardBodyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnBoardBodyBinding
