@@ -4,15 +4,15 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.data.remote.model.ResponseHistoryDto
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.BLANK
 import retrofit2.await
 
 class SearchViewModel : ViewModel() {
     private val searchService by lazy { ServicePool.searchService }
 
-    val searchBarText: MutableLiveData<String> = MutableLiveData<String>(blank)
+    val searchBarText: MutableLiveData<String> = MutableLiveData<String>(BLANK)
     val isSearchBarTextFilled: LiveData<Boolean> = Transformations.map(searchBarText) {
-        it != blank
+        it != BLANK
     }
 
 

@@ -10,7 +10,7 @@ import kr.co.nottodo.databinding.ActivityAddSituationBinding
 import kr.co.nottodo.presentation.addsituation.viewmodel.AddSituationViewModel
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.OLD_SITUATION_NAME
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.situationName
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.SITUATION_NAME
 import kr.co.nottodo.util.extension.KeyBoardUtil
 import kr.co.nottodo.util.extension.addTextview
 
@@ -98,7 +98,7 @@ class AddSituationActivity : AppCompatActivity() {
     private fun setCompleteTvClickEvent() {
         binding.tvAddSituationComplete.setOnClickListener {
             val intent = Intent(this, AdditionActivity::class.java)
-            intent.putExtra(situationName, binding.etAddSituationWriteDirect.text.toString())
+            intent.putExtra(SITUATION_NAME, binding.etAddSituationWriteDirect.text.toString())
             setResult(RESULT_OK, intent)
             finish()
         }

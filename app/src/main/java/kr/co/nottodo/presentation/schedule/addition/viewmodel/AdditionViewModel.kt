@@ -8,8 +8,8 @@ import kotlinx.serialization.json.Json
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.data.remote.model.RequestMissionDto
 import kr.co.nottodo.data.remote.model.ResponseMissionDto
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.input
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.BLANK
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.INPUT
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -17,30 +17,30 @@ class AdditionViewModel : ViewModel() {
 
     private val missionService by lazy { ServicePool.missionService }
 
-    val additionMissionName: MutableLiveData<String> = MutableLiveData(blank)
+    val additionMissionName: MutableLiveData<String> = MutableLiveData(BLANK)
     val isAdditionMissionNameFilled: LiveData<Boolean> = Transformations.map(additionMissionName) {
         it.isNotEmpty()
     }
-    val additionActionName: MutableLiveData<String> = MutableLiveData(blank)
+    val additionActionName: MutableLiveData<String> = MutableLiveData(BLANK)
     val isAdditionActionNameFilled: LiveData<Boolean> = Transformations.map(additionActionName) {
         it.isNotEmpty()
     }
 
-    val additionActionNameFirst: MutableLiveData<String> = MutableLiveData(blank)
+    val additionActionNameFirst: MutableLiveData<String> = MutableLiveData(BLANK)
     private val isAdditionActionNameFirstFilled: LiveData<Boolean> =
         Transformations.map(additionActionNameFirst) {
             it.isNotEmpty()
         }
-    val additionActionNameSecond: MutableLiveData<String> = MutableLiveData(blank)
+    val additionActionNameSecond: MutableLiveData<String> = MutableLiveData(BLANK)
     val isAdditionActionNameSecondFilled: LiveData<Boolean> =
         Transformations.map(additionActionNameSecond) {
             it.isNotEmpty()
         }
 
-    val additionSituationName: MutableLiveData<String> = MutableLiveData(input)
+    val additionSituationName: MutableLiveData<String> = MutableLiveData(INPUT)
     val isAdditionSituationNameFilled: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val additionGoalName: MutableLiveData<String> = MutableLiveData(blank)
+    val additionGoalName: MutableLiveData<String> = MutableLiveData(BLANK)
     val isAdditionGoalNameFilled: LiveData<Boolean> = Transformations.map(additionGoalName) {
         it.isNotEmpty()
     }

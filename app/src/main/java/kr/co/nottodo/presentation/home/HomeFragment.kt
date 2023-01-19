@@ -20,7 +20,7 @@ import kr.co.nottodo.R
 import kr.co.nottodo.databinding.FragmentHomeBinding
 import kr.co.nottodo.presentation.MainActivity
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.BLANK
 import kr.co.nottodo.view.calendar.monthly.util.convertToLocalDate
 import kr.co.nottodo.view.calendar.weekly.listener.OnWeeklyCalendarSwipeListener
 import kr.co.nottodo.util.extension.setStatusBarColor
@@ -183,7 +183,7 @@ class HomeFragment : Fragment() {
             typingJob?.cancel()
             var isThreadRun = false
             var position = 0
-            binding.tvHomeMotiveDescription.text = blank
+            binding.tvHomeMotiveDescription.text = BLANK
             while (!isThreadRun) {
                 delay(100)
                 if (position < title.length) {

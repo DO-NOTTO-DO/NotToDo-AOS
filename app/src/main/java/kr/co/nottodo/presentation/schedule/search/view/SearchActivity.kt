@@ -10,8 +10,8 @@ import kr.co.nottodo.R
 import kr.co.nottodo.data.remote.model.ResponseHistoryDto
 import kr.co.nottodo.databinding.ActivitySearchBinding
 import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.currentMissionName
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.missionName
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.CURRENT_MISSION_NAME
+import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.MISSION_NAME
 import kr.co.nottodo.presentation.schedule.search.adapter.SearchRecyclerViewAdapter
 import kr.co.nottodo.presentation.schedule.search.viewmodel.SearchViewModel
 import kr.co.nottodo.util.extension.KeyBoardUtil
@@ -80,14 +80,14 @@ class SearchActivity : AppCompatActivity() {
     private fun onCompleteBtnClick() {
         binding.tvSearchComplete.setOnClickListener {
             val intent = Intent(this, AdditionActivity::class.java)
-            intent.putExtra(missionName, viewModel.searchBarText.value)
+            intent.putExtra(MISSION_NAME, viewModel.searchBarText.value)
             setResult(RESULT_OK, intent)
             finish()
         }
     }
 
     private fun getEditTextText() {
-        viewModel.searchBarText.value = intent.getStringExtra(currentMissionName)
+        viewModel.searchBarText.value = intent.getStringExtra(CURRENT_MISSION_NAME)
     }
 
     private fun observeSearchBar() {

@@ -72,7 +72,7 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     private fun initActionName() {
-        viewModel.additionActionName.value = intent.getStringExtra(actionName) ?: blank
+        viewModel.additionActionName.value = intent.getStringExtra(ACTION_NAME) ?: BLANK
     }
 
     private fun observeDate() {
@@ -83,7 +83,7 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun initDate() {
         binding.tvAdditionDate.text =
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern(datePattern))
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_PATTERN))
     }
 
     private fun postMission() {
@@ -110,11 +110,11 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun makeErrorToast(text: String) {
         when (text) {
-            responseNoMoreThanThree -> {
-                CustomSnackBar.makeSnackBar(binding.root, snackBarTextNoMoreThanThree).show()
+            RESPONSE_NO_MORE_THAN_THREE -> {
+                CustomSnackBar.makeSnackBar(binding.root, SNACK_BAR_TEXT_NO_MORE_THAN_THREE).show()
             }
-            responseAlreadyExist -> {
-                CustomSnackBar.makeSnackBar(binding.root, snackBarTextAlreadyExist).show()
+            RESPONSE_ALREADY_EXIST -> {
+                CustomSnackBar.makeSnackBar(binding.root, SNACK_BAR_TEXT_ALREADY_EXIST).show()
             }
             else -> {
                 CustomSnackBar.makeSnackBar(binding.root, text).show()
@@ -138,7 +138,7 @@ class AdditionActivity : AppCompatActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_OK) {
                     binding.tvAdditionMissionName.text =
-                        it.data?.getStringExtra(missionName) ?: blank
+                        it.data?.getStringExtra(MISSION_NAME) ?: BLANK
                 }
             }
 
@@ -146,19 +146,19 @@ class AdditionActivity : AppCompatActivity() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_OK) {
                     viewModel.additionActionName.value =
-                        it.data?.getStringExtra(actionName) ?: blank
+                        it.data?.getStringExtra(ACTION_NAME) ?: BLANK
                 }
             }
 
         situationNameResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == RESULT_OK) {
-                    if ((it.data?.getStringExtra(situationName) ?: blank) == blank) {
-                        viewModel.additionSituationName.value = input
+                    if ((it.data?.getStringExtra(SITUATION_NAME) ?: BLANK) == BLANK) {
+                        viewModel.additionSituationName.value = INPUT
                         viewModel.isAdditionSituationNameFilled.value = false
                     } else {
                         viewModel.additionSituationName.value =
-                            it.data?.getStringExtra(situationName) ?: input
+                            it.data?.getStringExtra(SITUATION_NAME) ?: INPUT
                         viewModel.isAdditionSituationNameFilled.value = true
                     }
 
@@ -169,7 +169,7 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun moveToSearchActivity() {
         val intent = Intent(Intent(this, SearchActivity::class.java))
-        intent.putExtra(currentMissionName, viewModel.additionMissionName.value)
+        intent.putExtra(CURRENT_MISSION_NAME, viewModel.additionMissionName.value)
         missionNameResultLauncher.launch(intent)
     }
 
@@ -208,20 +208,20 @@ class AdditionActivity : AppCompatActivity() {
     private fun btnDeleteActionOnClickListener() {
         with(binding) {
             btnAdditionDeleteActionFirst.setOnClickListener {
-                if (viewModel.additionActionNameSecond.value != blank) {
+                if (viewModel.additionActionNameSecond.value != BLANK) {
                     viewModel.additionActionNameFirst.value =
                         viewModel.additionActionNameSecond.value
-                    viewModel.additionActionNameSecond.value = blank
+                    viewModel.additionActionNameSecond.value = BLANK
                     tvAdditionActionSecond.visibility = View.GONE
                     btnAdditionDeleteActionSecond.visibility = View.GONE
                 } else {
-                    viewModel.additionActionNameFirst.value = blank
+                    viewModel.additionActionNameFirst.value = BLANK
                     tvAdditionActionFirst.visibility = View.GONE
                     btnAdditionDeleteActionFirst.visibility = View.GONE
                 }
             }
             btnAdditionDeleteActionSecond.setOnClickListener {
-                viewModel.additionActionNameSecond.value = blank
+                viewModel.additionActionNameSecond.value = BLANK
                 tvAdditionActionSecond.visibility = View.GONE
                 btnAdditionDeleteActionSecond.visibility = View.GONE
             }
@@ -230,20 +230,20 @@ class AdditionActivity : AppCompatActivity() {
 
     private fun btnActionPlusOnClickListener() {
         binding.btnAdditionActionPlus.setOnClickListener {
-            if (viewModel.additionActionName.value != blank) {
-                if (viewModel.additionActionNameFirst.value == blank) {
+            if (viewModel.additionActionName.value != BLANK) {
+                if (viewModel.additionActionNameFirst.value == BLANK) {
                     viewModel.additionActionNameFirst.value = viewModel.additionActionName.value
                     binding.tvAdditionActionFirst.visibility = View.VISIBLE
                     binding.btnAdditionDeleteActionFirst.visibility = View.VISIBLE
-                    viewModel.additionActionName.value = blank
-                } else if (viewModel.additionActionNameSecond.value == blank) {
+                    viewModel.additionActionName.value = BLANK
+                } else if (viewModel.additionActionNameSecond.value == BLANK) {
                     viewModel.additionActionNameSecond.value = viewModel.additionActionName.value
                     binding.tvAdditionActionSecond.visibility = View.VISIBLE
                     binding.btnAdditionDeleteActionSecond.visibility = View.VISIBLE
-                    viewModel.additionActionName.value = blank
+                    viewModel.additionActionName.value = BLANK
                 } else {
                     hideKeyboard()
-                    CustomSnackBar.makeSnackBar(binding.root, additionToastText).show()
+                    CustomSnackBar.makeSnackBar(binding.root, ADDITION_TOAST_TEXT).show()
                 }
             }
 
@@ -305,18 +305,18 @@ class AdditionActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val blank = ""
-        const val additionToastText = "실천 방법 추가는 2개까지만 가능해요"
-        const val missionName = "missionName"
-        const val actionName = "actionName"
-        const val situationName = "situationName"
-        const val currentMissionName = "currentMissionName"
-        const val input = "입력하기"
-        const val responseNoMoreThanThree = "낫투두를 3개 이상 추가할 수 없습니다."
-        const val responseAlreadyExist = "이미 존재하는 낫투두 입니다."
-        const val snackBarTextNoMoreThanThree = "낫투두 추가는 하루 최대 3개까지 가능합니다"
-        const val snackBarTextAlreadyExist = "이미 같은 내용의 낫투두가 있어요"
-        const val datePattern = "yyyy.MM.dd"
+        const val BLANK = ""
+        const val ADDITION_TOAST_TEXT = "실천 방법 추가는 2개까지만 가능해요"
+        const val MISSION_NAME = "missionName"
+        const val ACTION_NAME = "actionName"
+        const val SITUATION_NAME = "situationName"
+        const val CURRENT_MISSION_NAME = "currentMissionName"
+        const val INPUT = "입력하기"
+        const val RESPONSE_NO_MORE_THAN_THREE = "낫투두를 3개 이상 추가할 수 없습니다."
+        const val RESPONSE_ALREADY_EXIST = "이미 존재하는 낫투두 입니다."
+        const val SNACK_BAR_TEXT_NO_MORE_THAN_THREE = "낫투두 추가는 하루 최대 3개까지 가능합니다"
+        const val SNACK_BAR_TEXT_ALREADY_EXIST = "이미 같은 내용의 낫투두가 있어요"
+        const val DATE_PATTERN = "yyyy.MM.dd"
         const val OLD_SITUATION_NAME = "oldSituationName"
     }
 }
