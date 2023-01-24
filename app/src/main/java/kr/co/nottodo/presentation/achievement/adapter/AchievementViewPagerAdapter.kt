@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.co.nottodo.data.remote.model.ResponseMissionStatisticDto
 import kr.co.nottodo.data.remote.model.ResponseSituationStatisticDto
 import kr.co.nottodo.databinding.ItemAchievementPagerMissionBinding
-import kr.co.nottodo.presentation.achievement.view.AchievementFragment.Companion.missionStatisticTitle
-import kr.co.nottodo.presentation.achievement.view.AchievementFragment.Companion.situationStatisticTitle
+import kr.co.nottodo.presentation.achievement.view.AchievementFragment.Companion.MISSION_STATISTIC_TITLE
+import kr.co.nottodo.presentation.achievement.view.AchievementFragment.Companion.SITUATION_STATISTIC_TITLE
 
 class AchievementViewPagerAdapter(
     context: Context,
@@ -19,7 +19,7 @@ class AchievementViewPagerAdapter(
     RecyclerView.Adapter<AchievementViewPagerAdapter.AchievePagerViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
     lateinit var binding: ItemAchievementPagerMissionBinding
-    private val titleList: List<String> = listOf(missionStatisticTitle, situationStatisticTitle)
+    private val titleList: List<String> = listOf(MISSION_STATISTIC_TITLE, SITUATION_STATISTIC_TITLE)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AchievePagerViewHolder {
@@ -43,7 +43,7 @@ class AchievementViewPagerAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(title: String) {
             binding.tvAchievementPagerMissionTitle.text = title
-            if (title == missionStatisticTitle) {
+            if (title == MISSION_STATISTIC_TITLE) {
                 binding.rvAchievementPagerMission.adapter =
                     AchievementMissionAdapter(binding.root.context, missionStatisticList)
                 binding.rvAchievementPagerMission.layoutManager =

@@ -127,7 +127,7 @@ class AchievementFragment : Fragment() {
     }
 
     private fun initTabLayout() {
-        val tabTitles = listOf(missionStatisticForTab, situationStatisticForTab)
+        val tabTitles = listOf(MISSION_STATISTIC_FOR_TAB, SITUATION_STATISTIC_FOR_TAB)
         TabLayoutMediator(
             binding.tablayoutAchievementStatistics,
             binding.viewpagerAchievement
@@ -142,9 +142,9 @@ class AchievementFragment : Fragment() {
     }
 
     companion object {
-        const val missionStatisticForTab = "   낫투두 통계 보기   "
-        const val situationStatisticForTab = "   상황별 통계 보기   "
-        const val missionStatisticTitle = "내가 달성한 낫투두의 순위는?"
-        const val situationStatisticTitle = "언제 낫투두를 가장 많이 시도했을까요?"
+        const val MISSION_STATISTIC_FOR_TAB = "   낫투두 통계 보기   "
+        const val SITUATION_STATISTIC_FOR_TAB = "   상황별 통계 보기   "
+        const val MISSION_STATISTIC_TITLE = "내가 달성한 낫투두의 순위는?"
+        const val SITUATION_STATISTIC_TITLE = "언제 낫투두를 가장 많이 시도했을까요?"
     }
 }

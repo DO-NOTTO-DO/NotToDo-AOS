@@ -4,13 +4,12 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kr.co.nottodo.data.remote.api.ServicePool
 import kr.co.nottodo.data.remote.model.ResponseAddSituationDto
-import kr.co.nottodo.presentation.schedule.addition.view.AdditionActivity.Companion.blank
-import retrofit2.await
+import kr.co.nottodo.presentation.mission.addition.view.AdditionActivity.Companion.BLANK
 
 class AddSituationViewModel : ViewModel() {
     private val addSituationService by lazy { ServicePool.addSituationService }
 
-    val situationText: MutableLiveData<String> = MutableLiveData(blank)
+    val situationText: MutableLiveData<String> = MutableLiveData(BLANK)
 
     private val situationList: MutableLiveData<ResponseAddSituationDto.ResponseAddSituationDetailDto> =
         MutableLiveData()

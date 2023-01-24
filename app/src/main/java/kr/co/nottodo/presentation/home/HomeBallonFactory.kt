@@ -21,6 +21,5 @@ class HomeBallonFactory : Balloon.Factory() {
             .setBalloonAnimation(BalloonAnimation.CIRCULAR)
             .setLifecycleOwner(lifecycle)
             .build()
-
     }
 }
