@@ -16,7 +16,7 @@ class Application : Application() {
     }
 
     private fun setupKakaoSdk() {
-        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+        KakaoSdk.init(this, BuildConfig.KAKAO_APP_KEY)
     }
 
     private fun setupTimber() {

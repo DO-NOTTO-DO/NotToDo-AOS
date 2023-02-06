@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 def Properties properties = new Properties()
@@ -23,8 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", properties.getProperty("base_url"))
         buildConfigField("String", "ANDROID_TOKEN", properties.getProperty("android_token"))
-        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties.getProperty("kakao_native_key"))
-        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = properties.getProperty("kakao_native_key")
+        buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("kakao_native_key"))
     }
 
     buildTypes {

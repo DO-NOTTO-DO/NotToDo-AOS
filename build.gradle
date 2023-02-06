@@ -3,12 +3,13 @@ buildscript {
     repositories {
         google()  // Google's Maven repository
         mavenCentral()  // Maven Central repository
-        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}  // Kakao's Maven repository
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
+        // Kakao's Maven repository
     }
     dependencies {
         // Add the dependency for the Google services Gradle plugin
         classpath 'com.google.gms:google-services:4.3.14'
-
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
     }
 }
 
