@@ -95,4 +95,9 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     //swipeRefresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    //Kakao Login
+    implementation "com.kakao.sdk:v2-user:2.12.1"
+    //KakaoTalk message
+    implementation "com.kakao.sdk:v2-talk:2.12.1"
+    implementation "com.kakao.sdk:v2-share:2.12.1"
 }
