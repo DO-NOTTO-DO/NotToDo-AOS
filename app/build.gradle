@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 def Properties properties = new Properties()
@@ -23,6 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", properties.getProperty("base_url"))
         buildConfigField("String", "ANDROID_TOKEN", properties.getProperty("android_token"))
+        buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("kakao_native_key"))
     }
 
     buildTypes {
@@ -95,4 +97,9 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     //swipeRefresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    //Kakao Login
+    implementation "com.kakao.sdk:v2-user:2.12.1"
+    //KakaoTalk message
+    implementation "com.kakao.sdk:v2-talk:2.12.1"
+    implementation "com.kakao.sdk:v2-share:2.12.1"
 }
