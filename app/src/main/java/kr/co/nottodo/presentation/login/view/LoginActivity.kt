@@ -1,6 +1,7 @@
-package kr.co.nottodo.presentation
+package kr.co.nottodo.presentation.login.view
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.kakao.sdk.auth.AuthApiClient
@@ -9,26 +10,45 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import kr.co.nottodo.databinding.ActivityLoginBinding
+import kr.co.nottodo.presentation.login.viewmodel.LoginViewModel
 import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
+    private val viewModel by viewModels<LoginViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        observeIsLoggedIn()
         setKakaoLogin()
+        setKakaoLogout()
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun observeIsLoggedIn() {
+        viewModel.isLogged.observe(this) {
+            setUserProfile()
+        }
+    }
 
-        setUserProfile()
+    private fun setKakaoLogout() {
+        binding.btnLoginKakaoLogout.setOnClickListener {
+            UserApiClient.instance.logout { error ->
+                if (error != null) {
+                    Timber.e("로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                } else {
+                    Timber.i("로그아웃 성공. SDK에서 토큰 삭제됨")
+                    viewModel.isLogged.value = false
+                }
+            }
+        }
     }
 
     private fun setUserProfile() {
+        Timber.i("setUserProfile 함수 실행됨")
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.me { user, error ->
                 if (error != null) {
@@ -59,6 +79,9 @@ class LoginActivity : AppCompatActivity() {
                     )
                 }
             }
+        } else {
+            binding.tvLoginNickname.text = "로그인이 필요합니다."
+            binding.ivProfileImage.setImageDrawable(null)
         }
     }
 
@@ -68,6 +91,7 @@ class LoginActivity : AppCompatActivity() {
                 Timber.e("로그인 실패", error)
             } else if (token != null) {
                 Timber.i("로그인 성공 ${token.accessToken}")
+                viewModel.isLogged.value = true
             }
         }
         binding.btnLoginKakaoLogin.setOnClickListener {
