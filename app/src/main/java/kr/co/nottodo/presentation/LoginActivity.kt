@@ -2,12 +2,12 @@ package kr.co.nottodo.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import kr.co.nottodo.BuildConfig
 import kr.co.nottodo.databinding.ActivityLoginBinding
 import timber.log.Timber
 
@@ -22,12 +22,52 @@ class LoginActivity : AppCompatActivity() {
         setKakaoLogin()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        setUserProfile()
+    }
+
+    private fun setUserProfile() {
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.me { user, error ->
+                if (error != null) {
+                    Timber.e("사용자 정보 요청 실패", error)
+                } else if (user != null) {
+                    Timber.i(
+                        "사용자 정보 요청 성공" +
+                                "\n회원번호: ${user.id}" +
+                                "\n이메일: ${user.kakaoAccount?.email}" +
+                                "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
+                                "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
+                    )
+                    binding.tvLoginNickname.text = user.kakaoAccount?.profile?.nickname
+                    Glide.with(this)
+                        .load(user.kakaoAccount?.profile?.thumbnailImageUrl)
+                        .centerCrop()
+                        .into(binding.ivProfileImage)
+                }
+            }
+            UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+                if (error != null) {
+                    Timber.e("토큰 정보 보기 실패", error)
+                } else if (tokenInfo != null) {
+                    Timber.i(
+                        "토큰 정보 보기 성공" +
+                                "\n회원번호: ${tokenInfo.id}" +
+                                "\n만료시간: ${tokenInfo.expiresIn} 초"
+                    )
+                }
+            }
+        }
+    }
+
     private fun setKakaoLogin() {
-        val mCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        val kakaoLoginCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Timber.e("로그인 실패 $error")
+                Timber.e("로그인 실패", error)
             } else if (token != null) {
-                Timber.e("로그인 성공 ${token.accessToken}")
+                Timber.i("로그인 성공 ${token.accessToken}")
             }
         }
         binding.btnLoginKakaoLogin.setOnClickListener {
@@ -36,8 +76,8 @@ class LoginActivity : AppCompatActivity() {
                 UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                     // 로그인 실패 부분
                     if (error != null) {
-                        Timber.e("사용자 취소로 인한 로그인 실패 $error")
-                        // 사용자가 취소
+                        Timber.e("로그인 실패 $error")
+                        // 사용자 취소
                         if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                             return@loginWithKakaoTalk
                         }
@@ -45,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                         else {
                             UserApiClient.instance.loginWithKakaoAccount(
                                 this,
-                                callback = mCallback
+                                callback = kakaoLoginCallback
                             ) // 카카오 이메일 로그인
                         }
                     }
@@ -59,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
                 // 카카오 이메일 로그인
                 UserApiClient.instance.loginWithKakaoAccount(
                     this,
-                    callback = mCallback
+                    callback = kakaoLoginCallback
                 )
             }
         }
