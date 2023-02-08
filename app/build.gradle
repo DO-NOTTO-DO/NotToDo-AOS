@@ -20,11 +20,13 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", properties.getProperty("base_url"))
         buildConfigField("String", "ANDROID_TOKEN", properties.getProperty("android_token"))
         buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("kakao_native_key"))
+        buildConfigField("String", "GOOGLE_CLIENT_ID", properties.getProperty("GOOGLE_CLIENT_ID"))
     }
 
     buildTypes {
@@ -77,6 +79,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.1'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
     // Architecture Components
     // Room
     implementation "androidx.room:room-ktx:2.4.3"
@@ -102,4 +105,7 @@ dependencies {
     //KakaoTalk message
     implementation "com.kakao.sdk:v2-talk:2.12.1"
     implementation "com.kakao.sdk:v2-share:2.12.1"
+    //google Login
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'androidx.multidex:multidex:2.0.1'
 }
